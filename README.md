@@ -1,7 +1,7 @@
 # softeng
 Εργασία Τεχνολογίας Λογισμικού 2017-2018
 
-## Team Name: *"Λεωνίδα ένα άλογο"*
+## Team Name: [*"Λεωνίδα ένα άλογο"*](https://youtu.be/0xd9qtkMdLo?t=1m37s)
 
 # Table Of Contents
 - [softeng](#softeng)
