@@ -62,3 +62,6 @@ typings/
 
 # ESLint files
 *.eslintrc.json
+
+# DIA temp files
+*.dia~
