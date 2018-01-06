@@ -138,6 +138,7 @@ pop-up πάνω από τη σελίδα της εφαρμογής.
 ![Λογαριασμός Χρήστη Στοιχεία Γονέα](pngs/%CE%9B%CE%BF%CE%B3%CE%B1%CF%81%CE%B9%CE%B1%CF%83%CE%BC%CF%8C%CF%82%20%CE%A7%CF%81%CE%AE%CF%83%CF%84%CE%B7%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1.png)
 ![Λογαριασμός Χρήστη Στοιχεία Γονέα Αλλαγή Διεύθυνσης popup](pngs/%CE%9B%CE%BF%CE%B3%CE%B1%CF%81%CE%B9%CE%B1%CF%83%CE%BC%CF%8C%CF%82%20%CE%A7%CF%81%CE%AE%CF%83%CF%84%CE%B7%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%91%CE%BB%CE%BB%CE%B1%CE%B3%CE%AE%20%CE%94%CE%B9%CE%B5%CF%8D%CE%B8%CF%85%CE%BD%CF%83%CE%B7%CF%82%20popup.png)
 ![Λογαριασμός Χρήστη Στοιχεία Γονέα Αλλαγή Τηλεφώνου popup](pngs/%CE%9B%CE%BF%CE%B3%CE%B1%CF%81%CE%B9%CE%B1%CF%83%CE%BC%CF%8C%CF%82%20%CE%A7%CF%81%CE%AE%CF%83%CF%84%CE%B7%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%91%CE%BB%CE%BB%CE%B1%CE%B3%CE%AE%20%CE%A4%CE%B7%CE%BB%CE%B5%CF%86%CF%8E%CE%BD%CE%BF%CF%85%20popup.png)
+![Λογαριασμός Χρήστη Στοιχεία Γονέα Αλλαγή email popup](pngs/%CE%9B%CE%BF%CE%B3%CE%B1%CF%81%CE%B9%CE%B1%CF%83%CE%BC%CF%8C%CF%82%20%CE%A7%CF%81%CE%AE%CF%83%CF%84%CE%B7%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%91%CE%BB%CE%BB%CE%B1%CE%B3%CE%AE%20email.png)
 ![Λογαριασμός Χρήστη Στοιχεία Γονέα Αλλαγή Κωδικού popup](pngs/%CE%9B%CE%BF%CE%B3%CE%B1%CF%81%CE%B9%CE%B1%CF%83%CE%BC%CF%8C%CF%82%20%CE%A7%CF%81%CE%AE%CF%83%CF%84%CE%B7%20%CE%A3%CF%84%CE%BF%CE%B9%CF%87%CE%B5%CE%AF%CE%B1%20%CE%91%CE%BB%CE%BB%CE%B1%CE%B3%CE%AE%20%CE%9A%CF%89%CE%B4%CE%B9%CE%BA%CE%BF%CF%8D%20popup.png)
 
 
