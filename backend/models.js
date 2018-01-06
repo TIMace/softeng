@@ -27,7 +27,8 @@ const Sequelize = require('sequelize')
         user_last_name : { type : Sequelize.STRING, allowNull : false },
         user_address : { type : Sequelize.STRING, allowNull : false },
         user_phone_num : { type : Sequelize.STRING, allowNull : false },
-        user_credits : { type : Sequelize.INTEGER, validate : { min : 0 } }
+        user_credits : { type : Sequelize.INTEGER, validate : { min : 0 } },
+        user_active : { type : Sequelize.BOOLEAN, allowNull : false, defaultValue : true }
     })
 
     , Provider = sequelize.define('provider' , {
@@ -44,6 +45,7 @@ const Sequelize = require('sequelize')
         provider_ssn : { type : Sequelize.STRING, allowNull : false, unique : true }, // Should use a custom validator
         provider_bank_account : { type : Sequelize.STRING, allowNull : false }, // Should use a custom validator
         provider_credits : { type : Sequelize.INTEGER, validate : { min : 0 } },
+        provider_active : { type : Sequelize.BOOLEAN, allowNull : false, defaultValue : false }
     })
 
     , Evnt = sequelize.define('event', {
@@ -58,7 +60,8 @@ const Sequelize = require('sequelize')
         event_longtitude : Sequelize.STRING,
         event_minimum_age : { type : Sequelize.INTEGER, defaultValue : 0 },
         event_maximum_age : { type : Sequelize.INTEGER, defaultValue : 99 },
-        event_map_data : Sequelize.STRING
+        event_map_data : Sequelize.STRING,
+        event_is_paid : { type : Sequelize.BOOLEAN, allowNull : false, defaultValue : false }
     })
 
     , Transaction = sequelize.define('transaction', {
