@@ -23,7 +23,23 @@
 
 ## <a name="design_modeling"></a>Σχεδιασμός και μοντελοποίηση
 
+### Διάγραμμα Συσχτετίσεων Βάσης Δεδομένων
+
+![Διάγραμμα Συσχετίσεων Βάσης Δεδομένων](../architecture/DB_Diagram.png)
+
+### Αναλυτική Υλοποίηση Μοντέλων Βάσης Δεδομένων
+
+Την αναλυτική υλοποίηση των μοντέλων της βάσης δεδομένων μας μπορεί να βρει κανείς στο αρχείο models.js στον κατάλογο backend.
+
+### Διάγραμμα Entity-Relation Βάσης Δεδομένων
+
+![Διάγραμμα Entity-Relation Βάσης Δεδομένων](../architecture/ER_Diagram.png)
+
 ## <a name="arch_sustatika"></a>Αρχιτεκτονική και συστατικά
+
+### Σύνοψη Αρχιτεκτονικής
+
+![Σύνοψη Αρχιτεκτονικής](../architecture/Architecture_Diagram.png)
 
 ## <a name="interface_wireframes"></a>Διεπαφές και wireframes
 
