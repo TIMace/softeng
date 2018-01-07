@@ -69,11 +69,7 @@ web service κι εφόσον έχει τα αντίστοιχα δικαιώμ�
     - **Elasticsearch** (Για την αναζήτηση ελεύθερου κειμένου)
     - **PostgreSQL** (Για την αποθήκευση και την αναζήτηση των δομημένων δεδομέων της εφαρμογής)
 
-<center>
-
 ![Σύνοψη Αρχιτεκτονικής](../architecture/Architecture_Diagram.png)
-
-</center>
 
 ## <a name="interface_wireframes"></a>Διεπαφές και wireframes
 
