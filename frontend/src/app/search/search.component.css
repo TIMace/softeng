@@ -1,0 +1,46 @@
+.categories .btn {
+    padding: 1.5rem 1rem;
+    margin-right: 5px;
+}
+
+.categories .btn-outline-info.focus {
+    box-shadow: 0 0 0 0rem;
+}
+
+.categories .btn-outline-info:not([disabled]):not(.disabled).active {
+    box-shadow: 0 0 0 0rem;
+}
+
+agm-map {
+    height: 300px;
+}
+
+#single {
+    height: 100%;
+}
+
+.card-img-top {
+    height: 80%;
+    width: 100%;
+}
+
+.example-container {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+  
+.example-radio-group {
+    border: none;
+    background-color: #f8f9fa;
+    margin: 20px;
+    padding: 5px;
+}
+
+.example-radio-group:focus { outline: none; }
+
+.mat-drawer-content {
+    z-index: -1;
+}

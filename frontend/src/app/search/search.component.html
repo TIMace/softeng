@@ -1,0 +1,102 @@
+<div class="container-fluid color-light">
+  <div class="mat-app-background basic-container">
+    <mat-sidenav-container class="example-container">
+      <mat-sidenav #sidenav mode="side" class="col-lg-2 col-md-2 text-center">
+        <p><button mat-button class="example-radio-group" (click)="show_filters=!show_filters; sidenav.toggle()">Κλείσιμο</button></p>
+        <ul>
+          <li class="nav-item">
+            <div>
+                Κόστος: {{cost}}€
+            </div>
+            <div>
+              <mat-slider thumbLabel tickInterval="auto" min="0" max="100" step="10" [value]="cost" [(ngModel)]="cost" (drag)=selectCost(cost)></mat-slider>
+            </div>
+          </li>
+          <li class="nav-item">
+            <div>
+              Ηλικία:
+              <input type="text" size="2" maxlength="2" class="age" [(ngModel)]="age">
+            </div>
+          </li>
+          <li class="nav-item">
+            <div>
+                Απόσταση: {{distance}}km
+            </div>
+            <div>
+              <mat-slider thumbLabel tickInterval="auto" min="0" max="10" step="1" [value]="distance" [(ngModel)]="distance" (drag)=selectCost(cost)></mat-slider>
+            </div>
+          </li>
+        </ul>
+      </mat-sidenav>
+    
+      <mat-sidenav-content>
+            <!--  -->
+            <div class="container-fluid categories align-items-stretch">
+              <div *ngIf="show_filters">
+                <button mat-button class="example-radio-group" (click)="show_filters=!show_filters; sidenav.toggle()">Φίλτρα</button>
+              </div>
+              <div class="btn-group" data-toggle="buttons"
+                *ngFor="let category of categories" 
+                (click)="onSelect(category)">
+                <label class="btn btn-outline-info" id={{category.id}} [class.active]="category.id === checked">
+                  <input type="checkbox"> {{category.name}}
+                </label>
+              </div> 
+            </div>
+            
+            <div class="categories_show">
+              <div class="card" *ngFor="let category of selectedCategories">
+                <div class="row">
+                  <div class="col-lg-2 col-md-3 col-5 text-center">
+                    <img class="card-img-top" src="{{category.img}}" alt="Card image cap">
+                    <div>
+                      Πόντοι: {{category.id}}
+                    </div>
+                  </div>
+                  <div class="col-lg-7 col-md-6 col-7">
+                    <h5 class="card-title text-center">{{category.name}}</h5>
+                    <div class="row">
+                      <div class="col-md">
+                        {{category.location}}
+                      </div>
+                      <div class="col-md">
+                        {{category.date}}
+                      </div>
+                    </div>
+                    <div class="border border-secondary">
+                        <p class="card-text">
+                          Περιγραφή: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                        </p>
+                    </div>
+                    <a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>
+                  </div>
+                  <div class="col-lg-3 col-md-3 col">
+                    <agm-map id="single" [latitude]="category.lat" [longitude]="category.lng" [scrollwheel]="true" [zoom]="13">
+                        <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
+                    </agm-map>
+                  </div>
+                </div>
+              </div>
+            </div>
+        
+      
+
+        <div class="container-fluid">
+          <div class="form-group">
+          </div>
+          <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="zoom">
+            <agm-marker *ngFor = "let m of selectedCategories; let i = index" 
+            [latitude]="m.lat" [longitude]="m.lng" [label]="m.id.toString()">
+            <agm-info-window>
+              <strong>{{m.name}}</strong>
+            </agm-info-window>
+            </agm-marker>
+          </agm-map>
+        </div>
+
+        <!--  -->
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+</div>

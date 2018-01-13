@@ -1,0 +1,35 @@
+.categories .btn {
+    padding: 1.5rem 1rem;
+    margin-right: 5px;
+}
+
+.categories .btn-outline-info.focus {
+    box-shadow: 0 0 0 0rem;
+}
+
+.categories .btn-outline-info:not([disabled]):not(.disabled).active {
+    box-shadow: 0 0 0 0rem;
+}
+
+agm-map {
+    height: 300px;
+}
+
+.container {
+    text-align: center;
+}
+
+.form {
+    text-align: center;
+    padding-top: 5rem;
+}
+
+.categories {
+    padding-top: 10px;
+}
+
+.cat {
+    padding-top: 20px;
+    /* justify-content: center; */
+    /* display: inline-block; */
+}

@@ -1,0 +1,177 @@
+<div class="modal fade" id="register-parent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Εγγραφή Γονέα</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" [formGroup]="formRegister" (ngSubmit)="doRegister()">
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="name">Όνομα</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <input type="text" id="parent_name" class="form-control" formControlName="name" 
+                                placeholder="Γιάννης" required autofocus>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-control-feedback">
+                          <span class="text-danger align-middle">
+                            <!-- Put name validation error messages here -->
+                            <div *ngIf="formRegister.get('name').hasError('required')">
+                                Oops, please provide a name!
+                              </div>
+                          </span>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="lastname">Επίθετο</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <input type="text" id="parent_lastname" class="form-control" formControlName="lastname" 
+                                placeholder="Παπαδόπουλος" required>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-control-feedback">
+                          <span class="text-danger align-middle">
+                            <!-- Put name validation error messages here -->
+                            <div *ngIf="formRegister.get('lastname').hasError('required')">
+                                Απαραίτητο πεδίο!
+                              </div>
+                          </span>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="location">Διεύθυνση κατοικίας</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-map-marker"></i></div>
+                          <input type="text" id="parent_location" class="form-control" formControlName="location" required>
+                      </div>
+
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="phone">Τηλέφωνο επικοινωνίας</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-phone"></i></div>
+                          <input type="text" id="parent_phone" class="form-control" formControlName="phone" required>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="username">Username</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                          <input type="text" id="parent_username" class="form-control" formControlName="username" 
+                                  placeholder="JohnPapa" required>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-control-feedback">
+                          <span class="text-danger align-middle">
+                            <!-- Put name validation error messages here -->
+                            <div *ngIf="formRegister.get('username').hasError('required')">
+                                Απαραίτητο πεδίο!
+                              </div>
+                          </span>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="email">E-Mail</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
+                          <input type="text" id="parent_email" class="form-control" formControlName="email"
+                                  placeholder="you@example.com" required autofocus>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-control-feedback">
+                          <span class="text-danger align-middle">
+                              <!-- Put e-mail validation error messages here -->
+                              <div *ngIf="(!formRegister.controls['email'].valid)&&(formRegister.get('email').touched)">
+                                Oops, wrong pattern buddy!
+                              </div>                        
+                          </span>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="password">Password</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group has-danger">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
+                          <input type="password" id="parent_password" class="form-control" formControlName="password"
+                                  placeholder="Password" required>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="form-control-feedback">
+                          <span class="text-danger align-middle">
+                              <!-- <i class="fa fa-close"> Example Error Message</i> -->
+                          </span>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-3 field-label-responsive">
+                  <label for="password">Confirm Password</label>
+              </div>
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon" style="width: 2.6rem">
+                              <i class="fa fa-repeat"></i>
+                          </div>
+                          <input type="password" id="parent_confirm_password" class="form-control" formControlName="confirm_password" 
+                                placeholder="Password" required>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" [disabled]="formRegister.invalid"><i class="fa fa-user-plus"></i> Εγγραφή</button>
+          </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>

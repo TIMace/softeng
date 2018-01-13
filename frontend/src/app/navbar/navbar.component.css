@@ -1,0 +1,45 @@
+img {
+    max-width: 60px;
+}
+
+.navbar {
+    padding: .0rem .0rem;
+}
+
+.nav-link {
+    font-size: 3vh;
+}
+
+.form-control {
+    padding: .0rem .3rem;
+    border: 0px solid #ced4da;
+}
+
+.input-group-addon {
+    width: 1.5rem;
+    /* padding: .375rem .2rem; */
+    padding: 0px 0px;
+    font-size: 0.85rem;
+    border: 0px solid #ced4da;
+    background-color: #FFF;
+}
+
+.btn {
+    padding: 0rem .3rem;
+}
+
+agm-map {
+    height: 200px;
+    width: 200px;
+}
+
+.loc {
+    padding: 0px 0px;
+    /* background-color: white;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border: none; */
+}
+
+.navbar-collapse {
+    z-index: 1000;
+}
