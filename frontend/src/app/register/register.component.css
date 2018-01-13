@@ -1,0 +1,24 @@
+.container {
+    text-align: center;
+    padding-top: 100px;
+}
+
+.modal-footer{
+    justify-content: center;
+}
+
+button {
+    padding: 3rem 1rem;
+    background-color: #f8f9fa;
+    color: black;
+    border: 1px solid #17a2b8;
+    margin: 1rem;
+}
+
+#provider {
+    padding: 1rem 1rem;
+}
+
+button:hover {
+    background-color: #17a2b8;
+}

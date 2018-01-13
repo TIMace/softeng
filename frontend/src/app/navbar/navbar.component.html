@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="nav-item active ">
+    <a class="nav-link" routerLink="">Home <span class="sr-only">(current)</span></a>
+  </div>
+  
+  <!-- <img src="https://i.pinimg.com/236x/9d/ab/e9/9dabe9c9d2e63a10c0bb8329133f6847--animation.jpg" class="img-thumbnail img-responsive"> -->
+  
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse">
+
+    <form *ngIf="categoriesService.getNavbar()" class="form-inline mx-auto" (ngSubmit)="onSubmit()">
+      <label class="sr-only">Search</label>
+      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input type="text" name="activity" id="activity" [(ngModel)]="activity"
+                placeholder="Τι αναζητάτε;" required> 
+                <!-- autofocus -->
+      </div>
+      <label class="sr-only">Location</label>
+      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+          <button class= "loc" (click)="CurrPos()"><div class="input-group-addon"><i class="fa fa-map-marker"></i></div></button>
+          <div class="form-group">
+            <input type="text" name="location" id="location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+            #search [formControl]="searchControl" placeholder="Σε ποια περιοχή;" required>
+          </div>
+      </div>
+      <div>
+        <button type="submit" class="btn btn-outline-info">Submit</button>
+      </div>
+    </form>
+
+    <ul class="nav navbar-nav ml-auto">
+      <li class="nav-item">
+          <div>
+              <a class="nav-link" routerLink="register">Register</a>
+          </div>
+      </li>
+      <li class="nav-item">
+        <div> <!-- data-toggle="collapse" data-target=".navbar-collapse" -->
+            <a class="nav-link" routerLink="login">Login</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  
+</nav>
+
+<!-- <div class="container col-md-offset-2">
+  
+  <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+  </agm-map>
+</div> -->
+
+
