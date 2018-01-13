@@ -66,6 +66,9 @@ typings/
 # DIA temp files
 *.dia~
 
+# EditorConfiguration Files
+*.editorconfig
+
 
 # angular2
 frontend/dist
