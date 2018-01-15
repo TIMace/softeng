@@ -15,6 +15,7 @@ import { CategoriesService } from '../categories.service';
 export class SearchComponent implements OnInit {
   
   show_filters = 1;
+  show_map = 0;
 
   public latitude: number;
   public longitude: number;
@@ -36,11 +37,10 @@ export class SearchComponent implements OnInit {
     else {
       this.selectedCategories.push(category);
     }
-    console.log("lalala");
     console.log(JSON.stringify(this.selectedCategories));
   }
 
-  cost: number = 50;
+  cost = 50;
   selectCost(Cost: number): void {
     this.cost = Cost;
     console.log(this.cost);

@@ -8,3 +8,10 @@ export class Category {
     lng: number;
     description: string;
 }
+
+// export class Category {
+//     id: number;
+//     name: string;
+//     description: string;
+// }
+

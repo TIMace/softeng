@@ -1,3 +1,13 @@
+.container {
+    text-align: center;
+}
+
+/* Categories */
+
+.categories {
+    padding-top: 60px;
+}
+
 .categories .btn {
     padding: 1.5rem 1rem;
     margin-right: 5px;
@@ -11,25 +21,31 @@
     box-shadow: 0 0 0 0rem;
 }
 
-agm-map {
-    height: 300px;
-}
+/* Form */
 
-.container {
-    text-align: center;
-}
-
-.form {
+.form-horizontal {
     text-align: center;
     padding-top: 5rem;
 }
 
-.categories {
-    padding-top: 10px;
+#GPS_button {
+    width: 2.6rem;
+    padding: 0 0 0 0;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-right-style: none;
+    border-radius: 4px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
-.cat {
-    padding-top: 20px;
-    /* justify-content: center; */
-    /* display: inline-block; */
+#GPS_addon {
+    border: 1px solid #ced4da;
+    border: 0px;
+    border-right: 0;
+    border: none;
+    font-size: 1.4rem;
+    padding-left: 14px;
+    padding-right: 9px;
+    color: blue;
 }

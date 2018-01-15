@@ -3,29 +3,26 @@
     <a class="nav-link" routerLink="">Home <span class="sr-only">(current)</span></a>
   </div>
   
-  <!-- <img src="https://i.pinimg.com/236x/9d/ab/e9/9dabe9c9d2e63a10c0bb8329133f6847--animation.jpg" class="img-thumbnail img-responsive"> -->
-  
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse">
 
-    <form *ngIf="categoriesService.getNavbar()" class="form-inline mx-auto" (ngSubmit)="onSubmit()">
+    <form *ngIf="this.categoriesService.getNavbar()" class="form-inline ml-auto" (ngSubmit)="onSubmit()">
       <label class="sr-only">Search</label>
       <div class="input-group mb-2 mr-sm-2 mb-sm-0">
         <div class="input-group-addon"><i class="fa fa-search"></i></div>
-        <input type="text" name="activity" id="activity" [(ngModel)]="activity"
+        <input type="text" name="activity" id="activity" class="form-control" [(ngModel)]="activity"
                 placeholder="Τι αναζητάτε;" required> 
                 <!-- autofocus -->
       </div>
-      <label class="sr-only">Location</label>
+      <label class="sr-only">Location</label> 
       <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-          <button class= "loc" (click)="CurrPos()"><div class="input-group-addon"><i class="fa fa-map-marker"></i></div></button>
-          <div class="form-group">
-            <input type="text" name="location" id="location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
-            #search [formControl]="searchControl" placeholder="Σε ποια περιοχή;" required>
-          </div>
+          <button matTooltip="Press me to open map!" (click)="openMap()" id="GPS_button" type="button"><div id="GPS_addon" class="input-group-addon" style="width: 2.6rem"><i class="fa fa-map-marker"></i></div></button>
+          <input (click)="write()" type="text" name="tempLocation" id="tempLocation" class="form-control"
+                  placeholder="Σε ποια περιοχή;" required
+                  autocorrect="off" autocapitalize="off" spellcheck="off" #searchNav [formControl]="searchControlNav">
       </div>
       <div>
         <button type="submit" class="btn btn-outline-info">Submit</button>
@@ -47,12 +44,3 @@
   </div>
   
 </nav>
-
-<!-- <div class="container col-md-offset-2">
-  
-  <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-  </agm-map>
-</div> -->
-
-

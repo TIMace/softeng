@@ -1,6 +1,4 @@
-img {
-    max-width: 60px;
-}
+/* Navbar */
 
 .navbar {
     padding: .0rem .0rem;
@@ -10,36 +8,53 @@ img {
     font-size: 3vh;
 }
 
-.form-control {
+.navbar-collapse {
+    z-index: 2;
+    background-color: #f8f9fa;
+}
+
+a {
+    color:#000;
+    text-decoration:none;
+}
+
+/* Form */
+
+input {
     padding: .0rem .3rem;
     border: 0px solid #ced4da;
 }
 
-.input-group-addon {
-    width: 1.5rem;
-    /* padding: .375rem .2rem; */
-    padding: 0px 0px;
-    font-size: 0.85rem;
-    border: 0px solid #ced4da;
-    background-color: #FFF;
+#GPS_button {
+    width: 2.6rem;
+    padding: 0 0 0 0;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-right-style: none;
+    border-radius: 4px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#GPS_addon {
+    border: 1px solid #ced4da;
+    border-right: 0;
+    border: none;
+    display: flex;
+    padding-left: 14px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: 1.25rem;
+    color: blue;
 }
 
 .btn {
-    padding: 0rem .3rem;
+    padding: .2rem .5rem;
 }
+
+/* MAP */
 
 agm-map {
-    height: 200px;
-    width: 200px;
-}
-
-.loc {
-    padding: 0px 0px;
-    /* background-color: white;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-    border: none; */
-}
-
-.navbar-collapse {
-    z-index: 1000;
+    height: 500px;
 }

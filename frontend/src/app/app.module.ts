@@ -10,6 +10,8 @@ import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { RegisterParentComponent } from './register-parent/register-parent.component';
 import { RegisterProviderComponent } from './register-provider/register-provider.component';
+import { SearchComponent } from './search/search.component';
+import { MapComponent } from './map/map.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,13 +20,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { 
   MatSliderModule,
   MatSidenavModule, 
-  MatRadioModule
+  MatRadioModule,
+  MatDialogModule,
+  MatTooltipModule,
  } from '@angular/material';
 
+//  MAP
 import { AgmCoreModule } from '@agm/core';
-import { SearchComponent } from './search/search.component';
-import { CategoriesService } from './categories.service';
 
+// Services
+import { CategoriesService } from './categories.service';
+import { MapService } from './map.service';
 
 @NgModule({
   declarations: [
@@ -37,6 +43,7 @@ import { CategoriesService } from './categories.service';
     RegisterParentComponent,
     RegisterProviderComponent,
     SearchComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -47,12 +54,15 @@ import { CategoriesService } from './categories.service';
     MatSliderModule,
     MatSidenavModule,
     MatRadioModule,
+    MatDialogModule,
+    MatTooltipModule,
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyC-2M4YYjFXikW0RagBCfh6yxSgrTpplqw",
       libraries: ["places"]
     })
   ],
-  providers: [CategoriesService],
+  entryComponents: [MapComponent],
+  providers: [CategoriesService, MapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

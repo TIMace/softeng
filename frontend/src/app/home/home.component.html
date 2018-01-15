@@ -1,15 +1,16 @@
 <div class="container-fluid color-light">
   <div class="row">
-    <div class="container form">
-      <form class="form-horizontal" (ngSubmit)="onSubmit()">
+    <div class="container">
+      <form class="form-horizontal" (keydown.enter)="$event.preventDefault()">
         <div class="row">
           <div class="col-md-2 col-lg-3"></div>
             <div class="col-md-8 col-lg-6">
                 <div class="form-group">
                   <div class="input-group">
-                      <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-search"></i></div>
-                      <input type="text" name="activity" class="form-control" id="activity"
-                              placeholder="Τι αναζητάτε;" required autofocus>
+                      <div class="input-group-addon"><i class="fa fa-search"></i></div>
+                      <input type="text" name="activity" id="activity" class="form-control" [(ngModel)]="activity"
+                              placeholder="Τι αναζητάτε;" required>
+                              <!-- autofocus -->
                   </div>
                 </div>
             </div>
@@ -20,9 +21,10 @@
             <div class="col-md-8 col-lg-6">
                 <div class="form-group">
                   <div class="input-group">
-                      <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-map-marker"></i></div>
-                      <input type="text" name="location" class="form-control" id="location"
-                              placeholder="Σε ποια περιοχή;" required>
+                      <button matTooltip="Press me to open map!" (click)="openMap()" id="GPS_button" type="button"><div id="GPS_addon" class="input-group-addon"><i class="fa fa-map-marker"></i></div></button>
+                      <input (click)="write()" type="text" name="location" class="form-control" id="location"
+                              placeholder="Σε ποια περιοχή;" required
+                              autocorrect="off" autocapitalize="off" spellcheck="off" #search [formControl]="searchControl">
                   </div>
                 </div>
             </div>
@@ -31,26 +33,23 @@
         <div class="row">
           <div class="col-md-3 col-lg-4"></div> 
           <div class="col-md-3 col-lg-2">
-            <button type="submit" class="btn">Αναζήτηση</button>
+            <button (click)="onSubmit()" type="button" class="btn">Αναζήτηση</button>
           </div>
           <div class="col-md-3 col-lg-2">
-            <button type="submit" class="btn">Όλες οι κατηγορίες</button>
+            <button (click)="show_categories = !show_categories" class="btn">Όλες οι κατηγορίες</button>
           </div>
         </div>
       </form>
     </div>
-    <div class="container categories align-items-stretch">
-      <div class="cat">
-        <div class="btn-group" data-toggle="buttons"
-          *ngFor="let category of categories" 
-          (click)="onSelect(category)">
-          <label class="btn btn-outline-info">
-            <input type="checkbox"> {{category.name}}
-          </label>
-        </div>
-      </div>  
+
+    <div *ngIf="show_categories" class="container categories align-items-stretch">
+      <div class="btn-group" data-toggle="buttons"
+        *ngFor="let category of categories" 
+        (click)="onSelect(category)">
+        <label class="btn btn-outline-info">
+          <input type="checkbox"> {{category.name}}
+        </label>
+      </div>
     </div>
   </div>
 </div>
-
-

@@ -1,3 +1,5 @@
+/* Categories List */
+
 .categories .btn {
     padding: 1.5rem 1rem;
     margin-right: 5px;
@@ -11,9 +13,7 @@
     box-shadow: 0 0 0 0rem;
 }
 
-agm-map {
-    height: 300px;
-}
+/* Single event */
 
 #single {
     height: 100%;
@@ -23,6 +23,29 @@ agm-map {
     height: 80%;
     width: 100%;
 }
+
+/* Filters */
+
+ul {
+    list-style-type:none;
+    margin:0 0 2em 0;
+    padding:0;
+}
+ul li {
+    display:inline;
+    margin-right: 0px;
+}
+ul li a {
+    font-size: 1.5em;
+}
+
+/* MAP */
+
+agm-map {
+    height: 300px;
+}
+
+/* MatSideNav - Page Style */
 
 .example-container {
     position: absolute;

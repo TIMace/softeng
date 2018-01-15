@@ -19,6 +19,8 @@ export class CategoriesService {
     return this.selectedCategories;
   }
 
+  // NavBar Simple / Extended
+
   navbar_extended = 0;
 
   getNavbar(): number {

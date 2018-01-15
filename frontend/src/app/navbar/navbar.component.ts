@@ -1,10 +1,21 @@
 import { Component, OnInit, NgZone, ElementRef, ViewChild } from '@angular/core';
+
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { Category } from '../category';
+
+// MAP
+import { AgmMap } from '@agm/core/directives/map';
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
-import { Router } from '@angular/router';
+
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { MapComponent } from '../map/map.component';
+
+// Services
 import { CategoriesService } from '../categories.service';
-import { Category } from '../category';
+import { MapService } from '../map.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,80 +23,87 @@ import { Category } from '../category';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  public latitude: number;
-  public longitude: number;
-  public searchControl: FormControl;
-  public zoom: number;
-
-  @ViewChild("search")
-  public searchElementRef: ElementRef;
 
   constructor(
     private router: Router,
     private categoriesService: CategoriesService,
+    private mapService: MapService,
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private dialog: MatDialog
   ) {}
+  
+  //--------------------- Form ---------------------//
+
+  //------------ Activity ------------//
 
   categories: Category[];
   getCategories(): void {
     this.categoriesService.getCategories().subscribe(categories => this.categories = categories);
   }
 
-  navbar_extended: number;
-
-  ngOnInit() {
-    this.CurrPos();
-
-    this.navbar_extended = this.categoriesService.getNavbar();
-
-    this.getCategories();
-  }
-
   activity: string;
+
   onSubmit() {
     for (let i = 0; i < this.categories.length; i++ )
       if ( ( this.activity != null) && ( this.categories[i].name == this.activity ) )
-    this.categoriesService.selectedCategories.push(this.categories[i]);
-    
-    this.categoriesService.navbar_extended = 1;
+        this.categoriesService.selectedCategories.push(this.categories[i]);
     this.router.navigate(['/search']);
   }
 
-  CurrPos() {
-    //set google maps defaults
-    this.zoom = 4;
-    this.latitude = 39.8282;
-    this.longitude = -98.5795;
+  //-------------- MAP --------------//
 
-    //create search FormControl
-    this.searchControl = new FormControl();
+  mapDialogRef: MatDialogRef<MapComponent>;
 
-    //set current position
-    this.setCurrentPosition();
+  @ViewChild("searchNav")
+  public searchNavElementRef: ElementRef;
 
-    //load Places Autocomplete
-    // this.mapsAPILoader.load().then(() => {
-    //   let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-    //     types: ["address"]
-    //   });
-    //   autocomplete.addListener("place_changed", () => {
-    //     this.ngZone.run(() => {
-    //       //get the place result
-    //       let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+  @ViewChild(AgmMap) private map: any;
 
-    //       //verify result
-    //       if (place.geometry === undefined || place.geometry === null) {
-    //         return;
-    //       }
+  public latitude: number;
+  public longitude: number;
+  public zoom: number;
+  public searchControlNav: FormControl;
 
-    //       //set latitude, longitude and zoom
-    //       this.latitude = place.geometry.location.lat();
-    //       this.longitude = place.geometry.location.lng();
-    //       this.zoom = 12;
-    //     });
-    //   });
-    // });
+  openMap() {
+    this.mapService.setLatitude(this.latitude);
+    this.mapService.setLongitude(this.longitude);
+    this.mapDialogRef = this.dialog.open(MapComponent, {
+      height: "80%",
+      width: "80%",
+    });
+  }
+
+  write() {
+
+      //create search FormControl
+      this.searchControlNav = new FormControl();
+      
+      //set current position
+      this.setCurrentPosition();
+
+      //load Places Autocomplete
+      this.mapsAPILoader.load().then(() => {
+        let autocomplete = new google.maps.places.Autocomplete(this.searchNavElementRef.nativeElement, {
+          types: ["address"]
+        });
+        autocomplete.addListener("place_changed", () => {
+          this.ngZone.run(() => {
+            //get the place result
+            let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+            //verify result
+            if (place.geometry === undefined || place.geometry === null) {
+              return;
+            }
+
+            //set latitude, longitude and zoom
+            this.latitude = place.geometry.location.lat();
+            this.longitude = place.geometry.location.lng();
+            this.zoom = 12;
+          });
+        });
+      });
   }
 
   private setCurrentPosition() {
@@ -96,6 +114,17 @@ export class NavbarComponent implements OnInit {
         this.zoom = 12;
       });
     }
+  }
+
+  ngOnInit() {
+
+    this.getCategories();
+
+    //create search FormControl
+    this.searchControlNav = new FormControl();
+
+    this.setCurrentPosition();
+
   }
 
 }

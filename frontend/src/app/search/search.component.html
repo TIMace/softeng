@@ -28,61 +28,28 @@
           </li>
         </ul>
       </mat-sidenav>
-    
+
       <mat-sidenav-content>
-            <!--  -->
-            <div class="container-fluid categories align-items-stretch">
-              <div *ngIf="show_filters">
+        <div class="container-fluid categories align-items-stretch">
+          <div class="row">
+            <div *ngIf="show_filters">
                 <button mat-button class="example-radio-group" (click)="show_filters=!show_filters; sidenav.toggle()">Φίλτρα</button>
               </div>
-              <div class="btn-group" data-toggle="buttons"
-                *ngFor="let category of categories" 
-                (click)="onSelect(category)">
-                <label class="btn btn-outline-info" id={{category.id}} [class.active]="category.id === checked">
-                  <input type="checkbox"> {{category.name}}
-                </label>
-              </div> 
-            </div>
-            
-            <div class="categories_show">
-              <div class="card" *ngFor="let category of selectedCategories">
-                <div class="row">
-                  <div class="col-lg-2 col-md-3 col-5 text-center">
-                    <img class="card-img-top" src="{{category.img}}" alt="Card image cap">
-                    <div>
-                      Πόντοι: {{category.id}}
-                    </div>
-                  </div>
-                  <div class="col-lg-7 col-md-6 col-7">
-                    <h5 class="card-title text-center">{{category.name}}</h5>
-                    <div class="row">
-                      <div class="col-md">
-                        {{category.location}}
-                      </div>
-                      <div class="col-md">
-                        {{category.date}}
-                      </div>
-                    </div>
-                    <div class="border border-secondary">
-                        <p class="card-text">
-                          Περιγραφή: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                        </p>
-                    </div>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                  </div>
-                  <div class="col-lg-3 col-md-3 col">
-                    <agm-map id="single" [latitude]="category.lat" [longitude]="category.lng" [scrollwheel]="true" [zoom]="13">
-                        <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
-                    </agm-map>
-                  </div>
-                </div>
-              </div>
-            </div>
-        
-      
+              <button mat-button class="example-radio-group" (click)="show_map = !show_map">Εμφάνιση Αποτελεσμάτων σε χάρτη</button>
+          </div>
+          
+          <!-- Categories -->
+          <div class="btn-group" data-toggle="buttons"
+            *ngFor="let category of categories" 
+            (click)="onSelect(category)">
+            <label class="btn btn-outline-info" id={{category.id}} [class.active]="category.id === checked">
+              <input type="checkbox"> {{category.name}}
+            </label>
+          </div> 
+        </div>
 
-        <div class="container-fluid">
+        <!-- MAP -->
+        <div *ngIf="show_map" class="container-fluid">
           <div class="form-group">
           </div>
           <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="zoom">
@@ -94,8 +61,43 @@
             </agm-marker>
           </agm-map>
         </div>
-
-        <!--  -->
+        
+        <!-- Events -->
+        <div class="categories_show">
+          <div class="card" *ngFor="let category of selectedCategories">
+            <div class="row">
+              <div class="col-lg-2 col-md-3 col-5 text-center">
+                <img class="card-img-top" src="{{category.img}}" alt="Card image cap">
+                <div>
+                  Πόντοι: {{category.id}}
+                </div>
+              </div>
+              <div class="col-lg-7 col-md-6 col-7">
+                <h5 class="card-title text-center">{{category.name}}</h5>
+                <div class="row">
+                  <div class="col-md">
+                    {{category.location}}
+                  </div>
+                  <div class="col-md">
+                    {{category.date}}
+                  </div>
+                </div>
+                <div class="border border-secondary">
+                    <p class="card-text">
+                      Περιγραφή: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                    </p>
+                </div>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+              </div>
+              <div class="col-lg-3 col-md-3 col">
+                <agm-map id="single" [latitude]="category.lat" [longitude]="category.lng" [scrollwheel]="true" [zoom]="13">
+                    <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
+                </agm-map>
+              </div>
+            </div>
+          </div>
+        </div>
       </mat-sidenav-content>
     </mat-sidenav-container>
   </div>
