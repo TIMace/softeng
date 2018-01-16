@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private categoriesService: CategoriesService,
+    public categoriesService: CategoriesService,
     private mapService: MapService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,

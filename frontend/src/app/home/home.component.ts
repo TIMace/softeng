@@ -146,6 +146,7 @@ export class HomeComponent implements OnInit {
   }
 
   //--------------------- Button Categories ---------------------//
+  show_categories: boolean;
   selectedCategories: Category[];
 
   onSelect(category: Category): void {

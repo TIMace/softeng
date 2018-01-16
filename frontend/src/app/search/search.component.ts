@@ -76,7 +76,7 @@ export class SearchComponent implements OnInit {
   
   // -------------------- Filters -------------------- //
 
-  show_filters = 1;
+  show_filters: boolean;
 
   cost = 50;
   selectCost(Cost: number): void {
@@ -86,10 +86,12 @@ export class SearchComponent implements OnInit {
 
   distance: number = 2;
 
+  age: number;
+
 
   // -------------------- MAP -------------------- //
   
-  show_map: number;
+  show_map: boolean;
 
   public latitude: number;
   public longitude: number;
@@ -103,7 +105,9 @@ export class SearchComponent implements OnInit {
     
     this.findChecked();
 
-    this.show_map = 0;
+    this.show_filters = false;
+
+    this.show_map = false;
 
     //set google maps defaults
     this.latitude = 37.979499;

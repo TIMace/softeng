@@ -32,10 +32,10 @@
       <mat-sidenav-content>
         <div class="container-fluid categories align-items-stretch">
           <div class="row">
-            <div *ngIf="show_filters">
-                <button mat-button class="example-radio-group" (click)="show_filters=!show_filters; sidenav.toggle()">Φίλτρα</button>
-              </div>
-              <button mat-button class="example-radio-group" (click)="show_map = !show_map">Εμφάνιση Αποτελεσμάτων σε χάρτη</button>
+            <div *ngIf="!show_filters">
+              <button mat-button class="example-radio-group" (click)="show_filters=!show_filters; sidenav.toggle()">Φίλτρα</button>
+            </div>
+            <button mat-button class="example-radio-group" (click)="show_map = !show_map">Εμφάνιση Αποτελεσμάτων σε χάρτη</button>
           </div>
           
           <!-- Categories -->
