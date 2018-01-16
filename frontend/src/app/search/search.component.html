@@ -1,7 +1,7 @@
-<div class="container-fluid color-light">
+<div class="container-fluid color-light" id="search_container">
   <div class="mat-app-background basic-container">
     <mat-sidenav-container class="example-container">
-      <mat-sidenav #sidenav mode="side" class="col-lg-2 col-md-2 text-center">
+      <mat-sidenav #sidenav mode="side" class="col-lg-2 col-md-3 text-center">
         <p><button mat-button class="example-radio-group" (click)="show_filters=!show_filters; sidenav.toggle()">Κλείσιμο</button></p>
         <ul>
           <li class="nav-item">
@@ -52,7 +52,7 @@
         <div *ngIf="show_map" class="container-fluid">
           <div class="form-group">
           </div>
-          <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="zoom">
+          <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom" fullscreenControl="true">
             <agm-marker *ngFor = "let m of selectedCategories; let i = index" 
             [latitude]="m.lat" [longitude]="m.lng" [label]="m.id.toString()">
             <agm-info-window>
@@ -63,37 +63,39 @@
         </div>
         
         <!-- Events -->
-        <div class="categories_show">
-          <div class="card" *ngFor="let category of selectedCategories">
-            <div class="row">
-              <div class="col-lg-2 col-md-3 col-5 text-center">
-                <img class="card-img-top" src="{{category.img}}" alt="Card image cap">
-                <div>
-                  Πόντοι: {{category.id}}
-                </div>
-              </div>
-              <div class="col-lg-7 col-md-6 col-7">
-                <h5 class="card-title text-center">{{category.name}}</h5>
-                <div class="row">
-                  <div class="col-md">
-                    {{category.location}}
-                  </div>
-                  <div class="col-md">
-                    {{category.date}}
+        <div class="container-fluid">
+          <div class="categories_show">
+            <div class="card" *ngFor="let category of selectedCategories">
+              <div class="row">
+                <div class="col-lg-2 col-md-3 col-5 text-center" id="img-card">
+                  <img class="card-img-top" src="{{category.img}}" alt="Card image cap">
+                  <div>
+                    Πόντοι: {{category.id}}
                   </div>
                 </div>
-                <div class="border border-secondary">
-                    <p class="card-text">
-                      Περιγραφή: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    </p>
+                <div class="col-lg-7 col-md-5 col-7">
+                  <h5 class="card-title text-center">{{category.name}}</h5>
+                  <div class="row">
+                    <div class="col-md">
+                      {{category.location}}
+                    </div>
+                    <div class="col-md">
+                      {{category.date}}
+                    </div>
+                  </div>
+                  <div class="border border-secondary">
+                      <p class="card-text">
+                        Περιγραφή: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                      </p>
+                  </div>
+                  <a href="#" class="card-link">Card link</a>
+                  <a href="#" class="card-link">Another link</a>
                 </div>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
-              </div>
-              <div class="col-lg-3 col-md-3 col">
-                <agm-map id="single" [latitude]="category.lat" [longitude]="category.lng" [scrollwheel]="true" [zoom]="13">
-                    <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
-                </agm-map>
+                <div class="col-lg-3 col-md-4 col">
+                  <agm-map id="single" [latitude]="category.lat" [longitude]="category.lng" [scrollwheel]="true" [zoom]="13">
+                      <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
+                  </agm-map>
+                </div>
               </div>
             </div>
           </div>

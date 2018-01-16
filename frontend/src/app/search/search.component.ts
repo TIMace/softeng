@@ -2,9 +2,12 @@ import { Component, OnInit, NgZone, ElementRef, ViewChild } from '@angular/core'
 import { Category } from '../category';
 import { FILTERS } from '../mock-filters';
 import { Filter } from '../filter';
-import { FormControl } from '@angular/forms';
+
+// MAP
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
+
+// Services
 import { CategoriesService } from '../categories.service';
 
 @Component({
@@ -13,41 +16,18 @@ import { CategoriesService } from '../categories.service';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  
-  show_filters = 1;
-  show_map = 0;
 
-  public latitude: number;
-  public longitude: number;
-  public searchControl: FormControl;
-  public zoom: number;
+  constructor(
+    private categoriesService: CategoriesService,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
+  ) {}
 
-  @ViewChild("search")
-  public searchElementRef: ElementRef;
+  // ------------------- Categories ------------------- //
 
   categories: Category[];
-
   selectedCategories: Category[];
 
-  onSelect(category: Category): void {
-    const index: number = this.selectedCategories.indexOf(category);
-    if (index !== -1) {
-      this.selectedCategories.splice(index, 1);
-    }
-    else {
-      this.selectedCategories.push(category);
-    }
-    console.log(JSON.stringify(this.selectedCategories));
-  }
-
-  cost = 50;
-  selectCost(Cost: number): void {
-    this.cost = Cost;
-    console.log(this.cost);
-  }
-
-  distance: number = 2;
-  
   getCategories(): void {
     this.categoriesService.getCategories().subscribe(categories => this.categories = categories);
   }
@@ -57,14 +37,6 @@ export class SearchComponent implements OnInit {
     console.log(JSON.stringify(this.selectedCategories));
   }
 
-  constructor(
-    private categoriesService: CategoriesService,
-    private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
-  ) {}
-
-  checked: number;
-
   findChecked(): void {
     for ( let i = 0; i < this.categories.length; i++ )
       if ( ( this.selectedCategories.length > 0 ) && ( this.categories[i].name === this.selectedCategories[0].name ) ){
@@ -73,65 +45,69 @@ export class SearchComponent implements OnInit {
       }
   }
 
-  // findChecked(category: Category): number {
-  //   const index: number = this.selectedCategories.indexOf(category);
-  //   if ( index !== -1 )
-  //     return 1;
-  //   else
-  //     return 0;
-  // }
+  onSelect(category: Category): void {
+    const index: number = this.selectedCategories.indexOf(category);
+    if (index !== -1) {
+      // reset map's center
+      if ( this.selectedCategories.length == 1 ){
+        this.latitude = category.lat;
+        this.longitude = category.lng;
+      } else {
+        this.latitude = ( ( this.latitude * this.selectedCategories.length ) - category.lat ) / (this.selectedCategories.length - 1 );
+        this.longitude = ( ( this.longitude * this.selectedCategories.length ) - category.lng ) / (this.selectedCategories.length - 1 );
+      }
+
+      this.selectedCategories.splice(index, 1);
+    }
+    else {
+      // reset map's center
+      if ( this.selectedCategories.length == 1 ){
+        this.latitude = category.lat;
+        this.longitude = category.lng;
+      } else {
+        this.latitude = ( ( this.latitude * this.selectedCategories.length ) + category.lat ) / (this.selectedCategories.length + 1 );
+        this.longitude = ( ( this.longitude * this.selectedCategories.length ) + category.lng ) / (this.selectedCategories.length + 1 );
+      }
+
+      this.selectedCategories.push(category);
+    }
+    console.log(JSON.stringify(this.selectedCategories));
+  }
   
-  ngOnInit() {
+  // -------------------- Filters -------------------- //
 
-    this.getSelectedCategories();
+  show_filters = 1;
 
-    this.getCategories();
-
-    this.findChecked();
-
-    //set google maps defaults
-    this.zoom = 4;
-    this.latitude = 39.8282;
-    this.longitude = -98.5795;
-
-    //create search FormControl
-    this.searchControl = new FormControl();
-
-    //set current position
-    this.setCurrentPosition();
-
-    //load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {
-      // let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-      //   types: ["address"]
-      // });
-      // autocomplete.addListener("place_changed", () => {
-      //   this.ngZone.run(() => {
-      //     //get the place result
-      //     let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-      //     //verify result
-      //     if (place.geometry === undefined || place.geometry === null) {
-      //       return;
-      //     }
-
-      //     //set latitude, longitude and zoom
-      //     this.latitude = place.geometry.location.lat();
-      //     this.longitude = place.geometry.location.lng();
-      //     this.zoom = 12;
-      //   });
-      // });
-    });
+  cost = 50;
+  selectCost(Cost: number): void {
+    this.cost = Cost;
+    console.log(this.cost);
   }
 
-  private setCurrentPosition() {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-        this.zoom = 12;
-      });
-    }
+  distance: number = 2;
+
+
+  // -------------------- MAP -------------------- //
+  
+  show_map: number;
+
+  public latitude: number;
+  public longitude: number;
+  public zoom = 14;
+
+  checked: number;
+  
+  ngOnInit() {
+    this.getCategories();
+    this.getSelectedCategories();
+    
+    this.findChecked();
+
+    this.show_map = 0;
+
+    //set google maps defaults
+    this.latitude = 37.979499;
+    this.longitude = 23.783076;
   }
 
 }

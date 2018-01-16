@@ -24,4 +24,9 @@ export class MapComponent implements OnInit {
     this.zoom = 12;
   }
 
+  markerDragEnd(event) {
+    this.mapService.setLatitude(event.coords.lat);
+    this.mapService.setLongitude(event.coords.lng);
+  }
+
 }

@@ -1,3 +1,7 @@
 <agm-map fullscreenControl="true" [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="zoom">
-  <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+  <agm-marker [markerDraggable]="true" (dragEnd)="markerDragEnd($event)" [latitude]="latitude" [longitude]="longitude">
+      <agm-info-window [disableAutoPan]="true">
+      You are <strong>here</strong>
+      </agm-info-window>
+  </agm-marker>
 </agm-map>

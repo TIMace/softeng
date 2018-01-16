@@ -75,6 +75,32 @@ export class HomeComponent implements OnInit {
       height: "80%",
       width: "80%",
     });
+    this.mapDialogRef.afterClosed().subscribe(result => {
+      console.log(`Map closed!`); // Pizza!
+      this.latitude = this.mapService.getLatitude();
+      this.longitude = this.mapService.getLongitude();
+      var geocoder = new google.maps.Geocoder;
+      this.geocodeLatLng(geocoder);
+    });
+
+    
+  }
+
+  location: string;
+  geocodeLatLng(geocoder) {
+    var latlng = {lat: this.mapService.getLatitude(), lng: this.mapService.getLongitude()};
+    geocoder.geocode({'location': latlng}, function(results, status) {
+      if (status === 'OK') {
+        if (results[0]) {
+          // console.log(results[0].formatted_address);
+          (<HTMLInputElement>document.getElementById("location")).value = results[0].formatted_address;
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+    });
   }
 
   write() {

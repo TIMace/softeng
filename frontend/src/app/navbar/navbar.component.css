@@ -8,11 +8,6 @@
     font-size: 3vh;
 }
 
-.navbar-collapse {
-    z-index: 2;
-    background-color: #f8f9fa;
-}
-
 a {
     color:#000;
     text-decoration:none;
@@ -45,8 +40,8 @@ input {
     padding-right: 10px;
     padding-top: 4px;
     padding-bottom: 4px;
-    font-size: 1.25rem;
-    color: blue;
+    font-size: 1.3rem;
+    color: red;
 }
 
 .btn {

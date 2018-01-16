@@ -2,6 +2,15 @@
     text-align: center;
 }
 
+.container-fluid {
+    background: url(../../bgdimg1.jpg) center no-repeat;
+    background-size: cover;
+    position: fixed;
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    min-width: 100%;
+}
 /* Categories */
 
 .categories {
@@ -15,6 +24,8 @@
 
 .categories .btn-outline-info.focus {
     box-shadow: 0 0 0 0rem;
+    background-color: #FFF;
+    color: #17a2b8;
 }
 
 .categories .btn-outline-info:not([disabled]):not(.disabled).active {
@@ -47,5 +58,5 @@
     font-size: 1.4rem;
     padding-left: 14px;
     padding-right: 9px;
-    color: blue;
+    color: red;
 }
