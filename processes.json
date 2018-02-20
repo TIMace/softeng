@@ -1,0 +1,36 @@
+{
+    "apps": [
+        {
+            "name"              : "Backend Web Service",
+            "script"            : "index.js",
+            "cwd"               : "./backend",
+            "exec_mode"         : "cluster",
+            "instanses"         : 1,
+            "watch"             : false,
+            "watch_options"     : { "followSymlinks": false },
+            "exec_interpreter"  : "node",
+            "args"              : ["--nouse-idle-notification", "--env=production"],
+            "merge_logs"        : true,
+            "env"               : { "NODE_ENV" : "production" },
+            "error_file"        : "logs/backend-err.log",
+            "out_file"          : "logs/backend-out.log",
+            "log_file"          : "logs/combined.log",
+            "pid_file"          : "logs/backend.pid"
+        },
+        {
+            "name"              : "Angular 4 Frontend",
+            "script"            : "node_modules/@angular/cli/bin/ng",
+            "cwd"               : "./frontend",
+            "watch"             : false,
+            "ignore_watch"      : ["node_modules", "logs"],
+            "watch_options"     : { "followSymlinks": false },
+            "args"              : ["serve", "--prod"],
+            "merge_logs"        : true,
+            "env"               : { "NODE_ENV" : "production" },
+            "error_file"        : "logs/frontend-err.log",
+            "out_file"          : "logs/frontend-out.log",
+            "log_file"          : "logs/combined.log",
+            "pid_file"          : "logs/frontend.pid"
+        }
+    ]
+}
