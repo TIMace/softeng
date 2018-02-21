@@ -12,6 +12,7 @@ import { RegisterParentComponent } from './register-parent/register-parent.compo
 import { RegisterProviderComponent } from './register-provider/register-provider.component';
 import { SearchComponent } from './search/search.component';
 import { MapComponent } from './map/map.component';
+import { ActivityComponent } from './activity/activity.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +33,7 @@ import { AgmCoreModule } from '@agm/core';
 import { CategoriesService } from './categories.service';
 import { MapService } from './map.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +45,8 @@ import { MapService } from './map.service';
     RegisterParentComponent,
     RegisterProviderComponent,
     SearchComponent,
-    MapComponent
+    MapComponent,
+    ActivityComponent
   ],
   imports: [
     BrowserModule,

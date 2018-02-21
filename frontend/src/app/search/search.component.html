@@ -88,8 +88,7 @@
                         Περιγραφή: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                       </p>
                   </div>
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
+                  <a href="#" routerLink="/activity/{{category.id}}" class="card-link">Λεπτομέρειες</a>
                 </div>
                 <div class="col-lg-3 col-md-4 col">
                   <agm-map id="single" [latitude]="category.lat" [longitude]="category.lng" [scrollwheel]="true" [zoom]="13">

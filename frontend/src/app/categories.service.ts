@@ -19,6 +19,10 @@ export class CategoriesService {
     return this.selectedCategories;
   }
 
+  getCategory(id: number): Observable<Category> {
+    return of(CATEGORIES.find(category => category.id === id));
+  }
+
   // NavBar Simple / Extended
 
   navbar_extended = 0;

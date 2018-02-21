@@ -7,6 +7,8 @@ export class Category {
     lat: number;
     lng: number;
     description: string;
+    age_min: number;
+    age_max: number;
 }
 
 // export class Category {

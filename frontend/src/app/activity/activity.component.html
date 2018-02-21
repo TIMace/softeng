@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col text-center">
+      <button routerLink="/search" type="button" class="btn rtrn"><div class="input-group-addon"><i class="fa fa-chevron-left"></i>Επιστροφή στην Αναζήτηση</div></button>
+    </div>
+    <div class="col-sm text-center">
+        <u>{{category.name}}</u>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-6 text-center">
+      <img class="image" src="{{category.img}}">
+      <div class="details">
+        <agm-map [latitude]="category.lat" [longitude]="category.lng" [scrollwheel]="true" [zoom]="13">
+            <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
+        </agm-map>
+      </div>
+      <button (click)="onSubmit()" type="button" class="btn buy">Αγορά εισητηρίου</button>
+      <div>
+        Πόντοι: {{category.id}}
+      </div>
+    </div>
+    <div class="col">
+      <div class="details">
+        {{category.location}}
+      </div>
+      <div class="details">
+        <u>Ημερομηνία:</u> {{category.date}}
+      </div>
+      <div class="details">
+        <u>Κατηγορίες:</u>
+      </div>
+      <div class="details">
+        <u>Ηλικίες:</u> {{category.age_min}} - {{category.age_max}}
+      </div>
+      <u>Περιγραφή:</u>
+      <div class="border border-secondary">
+        <span class="description">
+          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala 
+          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
+            lala lala lala lala lala lala lala lala lala lala lala lala lala lala 
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
