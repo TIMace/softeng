@@ -14,19 +14,26 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 export class AdminPanelComponent implements OnInit {
 
   username:string = '';
-  temp:string = 'parent';
+  providerUsername:string = '';
+  radio:string = 'parent';
 
   constructor(private httpClient:HttpClient) { }
-  // constructor(private _http: Http) { }
   onNameKeyUp(event:any) {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.username = event.target.value;
-      console.log(this.temp);
-    
+      // console.log(this.radio);
+  }
+
+  onNameKeyUpProvider(event:any) {
+    // console.log(event.target.value);
+    this.providerUsername = event.target.value;
+      // console.log(this.radio);    
   }
 
 
- // const params = new HttpParams()
+
+
+ // const userDetails = new HttpParams()
     // .set('username', 'Malakantreas')
     // .set('password', 'Malakas')
     // .set('email', 'phivos93@yahoo.gr')
@@ -58,13 +65,70 @@ export class AdminPanelComponent implements OnInit {
     )
   }
   
-
-  lockUser() {
-
+  //decision depends on radio button
+  lock(){
+    if (this.radio == 'parent'){this.lockUser(this.username)}
+    else{this.lockProvider(this.username)}
   }
 
-  lockProvider() {
+  //decision depends on radio button
+  unlock(){
+    if (this.radio == 'parent'){this.unlockUser(this.username)}
+    else{this.unlockProvider(this.username)}
+  }
 
+
+  lockUser(username:string) {
+    var userLock = new HttpParams()
+    .set(/*unset active attribute of user with username*/);
+    this.httpClient.put('http://snf-806935.vm.okeanos.grnet.gr:8888/user',
+      userLock.toString(),
+      {
+        headers: new HttpHeaders()
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+      }
+    )
+  }
+
+  lockProvider(username:string) {
+    var providerLock = new HttpParams()
+    .set(/*unset active attribute of provider with username*/);
+    this.httpClient.put('http://snf-806935.vm.okeanos.grnet.gr:8888/provider',
+      providerLock.toString(),
+      {
+        headers: new HttpHeaders()
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+      }
+    )
+  }
+
+  unlockUser(username:string) {
+    var userUnLock = new HttpParams()
+    .set(/*set active attribute of user with username*/);
+    this.httpClient.put('http://snf-806935.vm.okeanos.grnet.gr:8888/user',
+      userUnLock.toString(),
+      {
+        headers: new HttpHeaders()
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+      }
+    )
+  }
+
+  unlockProvider(username:string) {
+    var providerUnLock = new HttpParams()
+    .set(/*set active attribute of provider with username*/);
+    this.httpClient.put('http://snf-806935.vm.okeanos.grnet.gr:8888/provider',
+      providerUnLock.toString(),
+      {
+        headers: new HttpHeaders()
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+      }
+    )
+  }
+
+  activateProvider(providerUsername:string) {
+    this.radio = 'Provider';
+    this.unlock();
   }
 
   ngOnInit() {
