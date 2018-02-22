@@ -1,64 +1,66 @@
-<div class="container">
-  <form class="form-horizontal" [formGroup]="formLogin" (ngSubmit)="doLogin()">
-      <div class="row">
-          <div class="col-md-3"></div>
-          <div class="col-md-6">
-              <h2>Σύνδεση</h2>
-              <hr>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-md-3"></div>
-          <div class="col-md-6">
-              <div class="form-group has-danger">
-                  <label class="sr-only" for="email">E-Mail Address</label>
-                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                      <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
-                      <input type="text" name="email" class="form-control" id="email" formControlName="email"
-                              placeholder="you@example.com" required autofocus>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-md-3"></div>
-          <div class="col-md-6">
-              <div class="form-group">
-                  <label class="sr-only" for="password">Password</label>
-                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                      <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
-                      <input type="password" name="password" class="form-control" id="password" formControlName="password"
-                              placeholder="Κωδικός" required>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="row" style="padding-top: 1rem">
-          <div class="col-md-3"></div>
-          <div class="col-md-6">
-              Είσοδος ως:
-          </div>
-      </div>
-      <div class="row" style="padding-top: 0.5rem">
-          <div class="col-md-3"></div>
-          <div class="col-md-6">
-              <input type="radio" name="type" value="parent">
-              Γονέας <br>
-              <input type="radio" name="type" value="provider">
-              Πάροχος
-          </div>
-      </div>
-      <div class="row" style="padding-top: 1rem">
-              <div class="col-md-3"></div>
-              <div class="col-md-6">
-                  <button type="submit" [disabled]="formLogin.invalid" class="btn btn-primary"><i class="fa fa-sign-in"></i> Login</button>
-              </div>
-          </div>
-  
-      <div class="row" style="padding-top: 1rem">
-          <div class="col-md-3"></div>
-          <div class="col-md-6">
-              <a class="btn btn-link" routerLink="reset-password">Ξεχάσατε τον κωδικό σας;</a>
-          </div>
-      </div>
-  </form>
+<div class="container-fluid">
+    <div class="container">
+    <form class="form-horizontal" [formGroup]="formLogin" (ngSubmit)="doLogin()">
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <h2>Σύνδεση</h2>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="form-group has-danger">
+                    <label class="sr-only" for="email">E-Mail Address</label>
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
+                        <input type="text" name="email" class="form-control" id="email" formControlName="email"
+                                placeholder="you@example.com" required autofocus>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="sr-only" for="password">Password</label>
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
+                        <input type="password" name="password" class="form-control" id="password" formControlName="password"
+                                placeholder="Κωδικός" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-top: 1rem">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                Είσοδος ως:
+            </div>
+        </div>
+        <div class="row" style="padding-top: 0.5rem">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <input type="radio" name="type" value="parent">
+                Γονέας <br>
+                <input type="radio" name="type" value="provider">
+                Πάροχος
+            </div>
+        </div>
+        <div class="row" style="padding-top: 1rem">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <button type="submit" [disabled]="formLogin.invalid" class="btn btn-primary"><i class="fa fa-sign-in"></i> Login</button>
+                </div>
+            </div>
+    
+        <div class="row" style="padding-top: 1rem">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <a class="btn btn-link" routerLink="reset-password">Ξεχάσατε τον κωδικό σας;</a>
+            </div>
+        </div>
+    </form>
+</div>
