@@ -107,7 +107,7 @@ const Sequelize = require('sequelize')
     , Evnt = sequelize.define('event', {
         event_id : { type : Sequelize.BIGINT, autoIncrement : true, primaryKey : true },
         event_price : { type : Sequelize.INTEGER, validate : { min : 0 } },
-        event_name : Sequelize.STRING,
+        event_name : { type : Sequelize.STRING, allowNull : false },
         event_description : Sequelize.TEXT,
         event_date : { type : Sequelize.DATE, allowNull : false },
         event_provider_id : { type : Sequelize.BIGINT, references : { model : Provider, key : 'provider_id', deferrable : Sequelize.Deferrable.INITIALLY_IMMEDIATE } },

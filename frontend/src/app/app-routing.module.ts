@@ -8,6 +8,8 @@ import { SearchComponent } from './search/search.component';
 import { ActivityComponent } from './activity/activity.component';
 import { PanelComponent } from './panel/panel.component';
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 const routes: Routes = [
   {
@@ -41,6 +43,15 @@ const routes: Routes = [
   {
     path: 'panel_parent/personal_info',
     component: PersonalInfoComponent
+  },
+  {
+    path: 'admin',
+    component: AdminLoginComponent
+  }
+  ,
+  {
+    path: 'admin-panel',
+    component: AdminPanelComponent
   }
 ];
 
