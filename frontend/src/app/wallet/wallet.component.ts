@@ -8,7 +8,7 @@ import { FormGroup, FormsModule, ReactiveFormsModule, FormBuilder, Validators, F
 })
 export class WalletComponent implements OnInit {
   
-  payment : number;
+  payment : any;
   paymentBool = false;
   formRegister: FormGroup;
 
@@ -18,13 +18,13 @@ export class WalletComponent implements OnInit {
 
   ngOnInit() {
     this.formRegister = this.formBuilder.group({
-      cardNumber: ['xxxx-xxxx-xxxx-xxxx', Validators.required],
+      cardNumber: ['', Validators.required],
       password: ['', Validators.required],
       amount: ['50€', Validators.required]
       });
   }
   onPayment() {
-    this.payment = 0;
+    this.payment = '';
     this.paymentBool = true;
   }
 
