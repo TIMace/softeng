@@ -3,3 +3,19 @@ header {
     background-color: #f8f9fa;
     font-size: 1.5rem;
 }
+
+/* Page Layout */
+
+.container-fluid {
+    margin-top: 1rem;
+}
+
+/* Content */
+
+.form-control {
+    font-size: 85%;
+}
+
+.field-label-responsive{
+    text-align: right;
+}
