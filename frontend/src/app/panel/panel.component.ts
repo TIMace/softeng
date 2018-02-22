@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-panel-parent',
-  templateUrl: './panel-parent.component.html',
-  styleUrls: ['./panel-parent.component.css']
+  selector: 'app-panel',
+  templateUrl: './panel.component.html',
+  styleUrls: ['./panel.component.css']
 })
-
-export class PanelParentComponent implements OnInit {
+export class PanelComponent implements OnInit {
 
   constructor() { }
-
+  
   show: number;
   show_more: boolean;
 
