@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import {HttpClient} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
+import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http'; 
 
 @Injectable()
 export class UserDetailsService {
   userType : String;
   userDetails : userDetailsObj;
-  constructor() { 
+  constructor(
+    private httpClient:HttpClient
+  ) { 
     this.userType = "Anonymous"
   }
 
@@ -30,6 +36,20 @@ export class UserDetailsService {
     }
     this.userDetails.loginSuccess = false;
     return this.getDetails();
+  }
+
+  // login(uname,passwd,utype){
+  //   if (["Anonymous","Parent","Provider"].includes(utype)){
+
+  //   }
+  // }
+
+  registerParent(detailsObj){
+
+  }
+
+  registerProvider(){
+
   }
 
   getDetails(){
