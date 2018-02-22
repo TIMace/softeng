@@ -1,5 +1,6 @@
 import { Component, OnInit, NgZone, ElementRef, ViewChild } from '@angular/core';
 import { Category } from '../category';
+import { Event } from '../event';
 import { FILTERS } from '../mock-filters';
 import { Filter } from '../filter';
 
@@ -8,6 +9,7 @@ import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
 
 // Services
+import { EventService } from '../event.service';
 import { CategoriesService } from '../categories.service';
 
 @Component({
@@ -18,7 +20,8 @@ import { CategoriesService } from '../categories.service';
 export class SearchComponent implements OnInit {
 
   constructor(
-    private categoriesService: CategoriesService,
+    private eventService: EventService,
+    private categoryService: CategoriesService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone
   ) {}
@@ -28,13 +31,16 @@ export class SearchComponent implements OnInit {
   categories: Category[];
   selectedCategories: Category[];
 
+  events: Event[];
+  selectedEvents: Event[];
+
   getCategories(): void {
-    this.categoriesService.getCategories().subscribe(categories => this.categories = categories);
+    this.categoryService.getCategories().subscribe(categories => this.categories = categories);
   }
 
   getSelectedCategories(): void {
-    this.selectedCategories = this.categoriesService.getSelectedCategories();
-    console.log(JSON.stringify(this.selectedCategories));
+    this.selectedCategories = this.categoryService.getSelectedCategories();
+    console.log(JSON.stringify(this.selectedEvents));
   }
 
   findChecked(): void {
@@ -49,29 +55,38 @@ export class SearchComponent implements OnInit {
     const index: number = this.selectedCategories.indexOf(category);
     if (index !== -1) {
       // reset map's center
-      if ( this.selectedCategories.length == 1 ){
-        this.latitude = category.lat;
-        this.longitude = category.lng;
-      } else {
-        this.latitude = ( ( this.latitude * this.selectedCategories.length ) - category.lat ) / (this.selectedCategories.length - 1 );
-        this.longitude = ( ( this.longitude * this.selectedCategories.length ) - category.lng ) / (this.selectedCategories.length - 1 );
-      }
+      // if ( this.selectedCategory.length == 1 ){
+      //   this.latitude = category.lat;
+      //   this.longitude = category.lng;
+      // } else {
+      //   this.latitude = ( ( this.latitude * this.selectedCategories.length ) - category.lat ) / (this.selectedCategories.length - 1 );
+      //   this.longitude = ( ( this.longitude * this.selectedCategories.length ) - category.lng ) / (this.selectedCategories.length - 1 );
+      // }
 
       this.selectedCategories.splice(index, 1);
+      this.categoryService.removeCategory(index);
+
     }
     else {
       // reset map's center
-      if ( this.selectedCategories.length == 1 ){
-        this.latitude = category.lat;
-        this.longitude = category.lng;
-      } else {
-        this.latitude = ( ( this.latitude * this.selectedCategories.length ) + category.lat ) / (this.selectedCategories.length + 1 );
-        this.longitude = ( ( this.longitude * this.selectedCategories.length ) + category.lng ) / (this.selectedCategories.length + 1 );
-      }
+      // if ( this.selectedCategories.length == 1 ){
+      //   this.latitude = event.lat;
+      //   this.longitude = event.lng;
+      // } else {
+      //   this.latitude = ( ( this.latitude * this.selectedEvents.length ) + event.lat ) / (this.selectedEvents.length + 1 );
+      //   this.longitude = ( ( this.longitude * this.selectedEvents.length ) + event.lng ) / (this.selectedEvents.length + 1 );
+      // }
 
       this.selectedCategories.push(category);
+      this.categoryService.selectedCategories.push(category);
     }
-    console.log(JSON.stringify(this.selectedCategories));
+    console.log(JSON.stringify(this.selectedEvents));
+  }
+
+  // --------------------- Events --------------------- //
+
+  getEvents(): void {
+    this.eventService.getEvents().subscribe(events => this.events = events);
   }
   
   // -------------------- Filters -------------------- //
@@ -102,6 +117,8 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     this.getCategories();
     this.getSelectedCategories();
+    
+    this.getEvents();
     
     this.findChecked();
 

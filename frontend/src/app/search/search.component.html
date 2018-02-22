@@ -65,22 +65,22 @@
         <!-- Events -->
         <div class="container-fluid">
           <div class="categories_show">
-            <div class="card" *ngFor="let category of selectedCategories">
+            <div class="card" *ngFor="let event of events">
               <div class="row">
                 <div class="col-lg-2 col-md-3 col-5 text-center" id="img-card">
-                  <img class="card-img-top" src="{{category.img}}" alt="Card image cap">
+                  <img class="card-img-top" src="{{event.img}}" alt="Card image cap">
                   <div>
-                    Πόντοι: {{category.id}}
+                    Πόντοι: {{event.id}}
                   </div>
                 </div>
                 <div class="col-lg-7 col-md-5 col-7">
-                  <h5 class="card-title text-center">{{category.name}}</h5>
+                  <h5 class="card-title text-center">{{event.name}}</h5>
                   <div class="row">
                     <div class="col-md">
-                      {{category.location}}
+                      {{event.location}}
                     </div>
                     <div class="col-md">
-                      {{category.date}}
+                      {{event.date}}
                     </div>
                   </div>
                   <div class="border border-secondary">
@@ -88,11 +88,11 @@
                         Περιγραφή: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                       </p>
                   </div>
-                  <a href="#" routerLink="/activity/{{category.id}}" class="card-link">Λεπτομέρειες</a>
+                  <a href="#" routerLink="/activity/{{event.id}}" class="card-link">Λεπτομέρειες</a>
                 </div>
                 <div class="col-lg-3 col-md-4 col">
-                  <agm-map id="single" [latitude]="category.lat" [longitude]="category.lng" [scrollwheel]="true" [zoom]="13">
-                      <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
+                  <agm-map id="single" [latitude]="event.lat" [longitude]="event.lng" [scrollwheel]="true" [zoom]="13">
+                      <agm-marker [latitude]="event.lat" [longitude]="event.lng"></agm-marker>
                   </agm-map>
                 </div>
               </div>

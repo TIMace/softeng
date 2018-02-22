@@ -38,13 +38,18 @@ export class HomeComponent implements OnInit {
   //--------------------- Form ---------------------//
 
   //------------ Activity ------------//
+
   categories: Category[];
   getCategories(): void {
     this.categoriesService.getCategories().subscribe(categories => this.categories = categories);
   }
 
   activity: string;
+
   onSubmit(){
+    
+    console.log(this.activity);
+    
     for (let i = 0; i < this.categories.length; i++ )
       if ( ( this.activity != null) && ( this.categories[i].name == this.activity ) )
         this.categoriesService.selectedCategories.push(this.categories[i]);
@@ -75,6 +80,7 @@ export class HomeComponent implements OnInit {
       height: "80%",
       width: "80%",
     });
+
     this.mapDialogRef.afterClosed().subscribe(result => {
       console.log(`Map closed!`); // Pizza!
       this.latitude = this.mapService.getLatitude();
@@ -82,8 +88,6 @@ export class HomeComponent implements OnInit {
       var geocoder = new google.maps.Geocoder;
       this.geocodeLatLng(geocoder);
     });
-
-    
   }
 
   location: string;
@@ -93,6 +97,8 @@ export class HomeComponent implements OnInit {
       if (status === 'OK') {
         if (results[0]) {
           // console.log(results[0].formatted_address);
+          // this.location = results[0].formatted_address;
+          // console.log(this.location);
           (<HTMLInputElement>document.getElementById("location")).value = results[0].formatted_address;
         } else {
           window.alert('No results found');
@@ -129,6 +135,10 @@ export class HomeComponent implements OnInit {
           //set latitude, longitude and zoom
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
+
+          this.mapService.setLatitude(this.latitude);
+          this.mapService.setLongitude(this.longitude);
+
           this.zoom = 12;
         });
       });

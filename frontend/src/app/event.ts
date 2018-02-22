@@ -1,5 +1,19 @@
 export class Event {
     id: number;
     name: string;
-    price: string;
+    location: string;
+    date: string;
+    img: string;
+    lat: number;
+    lng: number;
+    description: string;
+    age_min: number;
+    age_max: number;
 }
+
+// export class Category {
+//     id: number;
+//     name: string;
+//     description: string;
+// }
+

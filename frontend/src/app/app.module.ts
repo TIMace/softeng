@@ -24,6 +24,8 @@ import {
   MatRadioModule,
   MatDialogModule,
   MatTooltipModule,
+  MatIconModule,
+  MatButtonModule,
  } from '@angular/material';
 
 //  MAP
@@ -32,6 +34,11 @@ import { AgmCoreModule } from '@agm/core';
 // Services
 import { CategoriesService } from './categories.service';
 import { MapService } from './map.service';
+import { EventService } from './event.service';
+import { PanelParentComponent } from './panel-parent/panel-parent.component';
+import { PersonalInfoComponent } from './personal-info/personal-info.component';
+import { EventsPresentComponent } from './events-present/events-present.component';
+import { EventsPastComponent } from './events-past/events-past.component';
 
 
 @NgModule({
@@ -46,7 +53,11 @@ import { MapService } from './map.service';
     RegisterProviderComponent,
     SearchComponent,
     MapComponent,
-    ActivityComponent
+    ActivityComponent,
+    PanelParentComponent,
+    PersonalInfoComponent,
+    EventsPresentComponent,
+    EventsPastComponent
   ],
   imports: [
     BrowserModule,
@@ -59,13 +70,15 @@ import { MapService } from './map.service';
     MatRadioModule,
     MatDialogModule,
     MatTooltipModule,
+    MatIconModule,
+    MatButtonModule,
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyC-2M4YYjFXikW0RagBCfh6yxSgrTpplqw",
       libraries: ["places"]
-    })
+    }),
   ],
   entryComponents: [MapComponent],
-  providers: [CategoriesService, MapService],
+  providers: [CategoriesService, MapService, EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

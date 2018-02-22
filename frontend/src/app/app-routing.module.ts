@@ -6,6 +6,8 @@ import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SearchComponent } from './search/search.component';
 import { ActivityComponent } from './activity/activity.component';
+import { PanelParentComponent } from './panel-parent/panel-parent.component';
+import { PersonalInfoComponent } from './personal-info/personal-info.component';
 
 const routes: Routes = [
   {
@@ -31,6 +33,14 @@ const routes: Routes = [
   {
     path: 'activity/:id',
     component: ActivityComponent
+  },
+  {
+    path: 'panel_parent',
+    component: PanelParentComponent
+  },
+  {
+    path: 'panel_parent/personal_info',
+    component: PersonalInfoComponent
   }
 ];
 

@@ -1,0 +1,53 @@
+header {
+    background-color: #f8f9fa;
+    font-size: 2rem;
+}
+
+ul {
+    list-style-type:none;
+    margin:0 0 2em 0;
+    padding:0;
+}
+ul li {
+    display:inline;
+    margin-right: 0px;
+}
+ul li a {
+    font-size: 1em;
+}
+
+/* MatSideNav - Page Style */
+
+#search_container {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.example-container {
+    /* background: url(../../bgdimg1.jpg) no-repeat;
+    background-size: cover; */
+
+    position: fixed;
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+    min-width: 100%;
+}
+
+
+.example-radio-group {
+    /* border: none; */
+    /* background-color: #efefef; */
+    /* margin: 20px;
+    padding: 5px; */
+    /* border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px; */
+    font-size: medium;
+}
+
+.example-radio-group:focus { outline: none; }
+
+.list-group-item {
+    border: none;
+}
