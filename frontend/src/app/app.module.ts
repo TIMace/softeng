@@ -12,9 +12,13 @@ import { RegisterParentComponent } from './register-parent/register-parent.compo
 import { RegisterProviderComponent } from './register-provider/register-provider.component';
 import { SearchComponent } from './search/search.component';
 import { MapComponent } from './map/map.component';
+import { ActivityComponent } from './activity/activity.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 // Material
 import { 
@@ -23,6 +27,8 @@ import {
   MatRadioModule,
   MatDialogModule,
   MatTooltipModule,
+  MatIconModule,
+  MatButtonModule,
  } from '@angular/material';
 
 //  MAP
@@ -31,6 +37,13 @@ import { AgmCoreModule } from '@agm/core';
 // Services
 import { CategoriesService } from './categories.service';
 import { MapService } from './map.service';
+import { EventService } from './event.service';
+import { PanelParentComponent } from './panel-parent/panel-parent.component';
+import { PersonalInfoComponent } from './personal-info/personal-info.component';
+import { EventsPresentComponent } from './events-present/events-present.component';
+import { EventsPastComponent } from './events-past/events-past.component';
+import { UserDetailsService } from './user-details.service';
+
 
 @NgModule({
   declarations: [
@@ -43,7 +56,14 @@ import { MapService } from './map.service';
     RegisterParentComponent,
     RegisterProviderComponent,
     SearchComponent,
-    MapComponent
+    MapComponent,
+    ActivityComponent,
+    PanelParentComponent,
+    PersonalInfoComponent,
+    EventsPresentComponent,
+    EventsPastComponent,
+    AdminLoginComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -56,13 +76,16 @@ import { MapService } from './map.service';
     MatRadioModule,
     MatDialogModule,
     MatTooltipModule,
+    MatIconModule,
+    MatButtonModule,
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyC-2M4YYjFXikW0RagBCfh6yxSgrTpplqw",
       libraries: ["places"]
-    })
+    }),
+    HttpClientModule
   ],
   entryComponents: [MapComponent],
-  providers: [CategoriesService, MapService],
+  providers: [CategoriesService, MapService, EventService,UserDetailsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

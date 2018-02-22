@@ -19,6 +19,14 @@ export class CategoriesService {
     return this.selectedCategories;
   }
 
+  getCategory(id: number): Observable<Category> {
+    return of(CATEGORIES.find(category => category.id === id));
+  }
+
+  removeCategory(index: number): void {
+    this.selectedCategories.splice(index, 1);
+  }
+
   // NavBar Simple / Extended
 
   navbar_extended = 0;

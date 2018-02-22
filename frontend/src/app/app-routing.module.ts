@@ -5,6 +5,11 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { SearchComponent } from './search/search.component';
+import { ActivityComponent } from './activity/activity.component';
+import { PanelParentComponent } from './panel-parent/panel-parent.component';
+import { PersonalInfoComponent } from './personal-info/personal-info.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 const routes: Routes = [
   {
@@ -26,6 +31,27 @@ const routes: Routes = [
   {
     path: 'search',
     component: SearchComponent
+  },
+  {
+    path: 'activity/:id',
+    component: ActivityComponent
+  },
+  {
+    path: 'panel_parent',
+    component: PanelParentComponent
+  },
+  {
+    path: 'panel_parent/personal_info',
+    component: PersonalInfoComponent
+  },
+  {
+    path: 'admin',
+    component: AdminLoginComponent
+  }
+  ,
+  {
+    path: 'admin-panel',
+    component: AdminPanelComponent
   }
 ];
 

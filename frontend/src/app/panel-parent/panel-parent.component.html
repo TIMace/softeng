@@ -1,0 +1,49 @@
+<header class="text-center">Λογαριασμός Χρήστη</header>
+<div class="container-fluid color-light" id="search_container">
+  <div class="mat-app-background basic-container">
+    <mat-sidenav-container class="example-container">
+      <mat-sidenav #sidenav mode="side" opened="true" class="col-lg-2 col-md-3 text-center">
+        <!-- <p><button mat-button class="example-radio-group" (click)="show_more=!show_more; sidenav.toggle()">Κλείσιμο</button></p> -->
+        <div class="text-right">
+          <button mat-icon-button color="secondary" class="example-radio-group" (click)="show_more=!show_more; sidenav.toggle()">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <button type="button" class="list-group-item list-group-item-action" (click)="selected_personal_info()">Προσωπικά στοιχεία</button>
+          </li>
+          <li class="list-group-item">
+            <button type="button" class="list-group-item list-group-item-action" (click)="selected_present_events()">Τρέχουσες δραστηριότητες</button>
+          </li>
+          <li class="list-group-item">
+            <button type="button" class="list-group-item list-group-item-action" (click)="selected_past_events()">Παλιές δραστηριότητες</button>
+          </li>
+        </ul>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+        <div class="container-fluid align-items-stretch">
+          <div class="row">
+            <div *ngIf="!show_more">
+              <!-- <button mat-button class="example-radio-group" (click)="show_more=!show_more; sidenav.toggle()">Περισσότερα</button> -->
+              <button mat-icon-button color="secondary" class="example-radio-group" (click)="show_more=!show_more; sidenav.toggle()">
+                <mat-icon>chevron_left</mat-icon>Περισσότερα
+              </button>
+            </div>
+            
+          </div>
+          
+          <app-personal-info *ngIf="show === 1"></app-personal-info>
+          <app-events-present *ngIf="show === 2"></app-events-present>
+          <app-events-past *ngIf="show === 3"></app-events-past>
+
+        </div>
+      
+        
+
+
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+</div>
