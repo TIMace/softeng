@@ -1,0 +1,29 @@
+.title {
+    font-size: 300%
+}
+
+.container {
+    text-align: center;
+}
+
+.divider{
+    width:5px;
+    height:auto;
+    display:inline-block;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    margin-right: 5px;
+    margin-top: 5px
+}
+
+.btn-outline-info.focus {
+    box-shadow: 0 0 0 0rem;
+    background-color: #FFF;
+    color: #17a2b8;
+}
+
+.btn-outline-info:not([disabled]):not(.disabled).active {
+    box-shadow: 0 0 0 0rem;
+}

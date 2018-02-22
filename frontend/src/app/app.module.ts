@@ -13,9 +13,12 @@ import { RegisterProviderComponent } from './register-provider/register-provider
 import { SearchComponent } from './search/search.component';
 import { MapComponent } from './map/map.component';
 import { ActivityComponent } from './activity/activity.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 // Material
 import { 
@@ -58,7 +61,9 @@ import { UserDetailsService } from './user-details.service';
     PanelParentComponent,
     PersonalInfoComponent,
     EventsPresentComponent,
-    EventsPastComponent
+    EventsPastComponent,
+    AdminLoginComponent,
+    AdminPanelComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +82,7 @@ import { UserDetailsService } from './user-details.service';
       apiKey: "AIzaSyC-2M4YYjFXikW0RagBCfh6yxSgrTpplqw",
       libraries: ["places"]
     }),
+    HttpClientModule
   ],
   entryComponents: [MapComponent],
   providers: [CategoriesService, MapService, EventService,UserDetailsService],
