@@ -175,7 +175,7 @@ app.post('/provider', (req, res) => {
  * Event
  */
 // GET ALL EVENTS
-app.get('/event/', (req, res) => {
+app.get('/event', (req, res) => {
     Evnt
         .findAll().then((evnts) => {
             res.json(evnts)
@@ -188,7 +188,7 @@ app.get('/event/', (req, res) => {
 // GET EVENT WITH id
 app.get('/event/:id', (req, res) => {
     Evnt
-        .findOne( { where : { event_id : req.params.event } }  ).then((evnt) => {
+        .findOne( { where : { event_id : parseInt(req.params.id) } }  ).then((evnt) => {
             res.json(evnt)
         })
         .catch((err) => {
