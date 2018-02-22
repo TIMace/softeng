@@ -39,6 +39,7 @@ import { PanelParentComponent } from './panel-parent/panel-parent.component';
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { EventsPresentComponent } from './events-present/events-present.component';
 import { EventsPastComponent } from './events-past/events-past.component';
+import { UserDetailsService } from './user-details.service';
 
 
 @NgModule({
@@ -78,7 +79,7 @@ import { EventsPastComponent } from './events-past/events-past.component';
     }),
   ],
   entryComponents: [MapComponent],
-  providers: [CategoriesService, MapService, EventService],
+  providers: [CategoriesService, MapService, EventService,UserDetailsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
