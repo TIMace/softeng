@@ -2,7 +2,7 @@
 <div class="container-fluid color-light" id="search_container">
   <div class="mat-app-background basic-container">
     <mat-sidenav-container class="example-container">
-      <mat-sidenav #sidenav mode="side" opened="true" class="col-lg-2 col-md-3 text-center">
+      <mat-sidenav #sidenav mode="side" opened="true" class="col-lg-2 col-md-3 text-center example-sidenav">
         <!-- <p><button mat-button class="example-radio-group" (click)="show_more=!show_more; sidenav.toggle()">Κλείσιμο</button></p> -->
         <div class="text-right">
           <button mat-icon-button color="secondary" class="example-radio-group" (click)="show_more=!show_more; sidenav.toggle()">
@@ -23,9 +23,9 @@
       </mat-sidenav>
 
       <mat-sidenav-content>
-        <div class="container-fluid align-items-stretch">
+        <div class="container-fluid" id="content">
           <div class="row">
-            <div *ngIf="!show_more">
+            <div *ngIf="show_more">
               <!-- <button mat-button class="example-radio-group" (click)="show_more=!show_more; sidenav.toggle()">Περισσότερα</button> -->
               <button mat-icon-button color="secondary" class="example-radio-group" (click)="show_more=!show_more; sidenav.toggle()">
                 <mat-icon>chevron_left</mat-icon>Περισσότερα
@@ -39,10 +39,6 @@
           <app-events-past *ngIf="show === 3"></app-events-past>
 
         </div>
-      
-        
-
-
       </mat-sidenav-content>
     </mat-sidenav-container>
   </div>

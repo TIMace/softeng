@@ -1,9 +1,15 @@
 /* Page Layout */
 
 .container-fluid {
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
-div {
-    margin-top: 1rem;
+/* Content */
+
+.form-control {
+    font-size: 85%;
+}
+
+.field-label-responsive{
+    text-align: right;
 }

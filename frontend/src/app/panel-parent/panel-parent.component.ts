@@ -27,7 +27,7 @@ export class PanelParentComponent implements OnInit {
 
   ngOnInit() {
     this.show = 1;
-    this.show_more = true;
+    this.show_more = false;
   }
 
 }
