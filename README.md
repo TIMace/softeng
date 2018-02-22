@@ -39,3 +39,8 @@ Web εφαρμογή, η οποία αποτελεί το κομμάτι της 
 
 # <a name="snd_deliv"></a>Αρχεία για το Δεύτερο Παραδοτέο:
 [2nd.md](business/2nd.md)
+
+
+# Notes to self:
+- Build optimized output in 'dist' directory.
+`ng build --prod --build-optimizer`
