@@ -16,33 +16,33 @@ export class UserDetailsService {
     this.userType = "Anonymous"
   }
 
-  // login(uname,passwd,utype){
-  //   if (["Anonymous","Parent","Provider"].includes(utype)){
-  //     this.userType = utype;
-  //     this.userDetails.username = uname
-  //     this.userDetails.password = passwd;
-  //     this.userDetails.email = "somemail@gmail.com";
-  //     this.userDetails.firstName = "Bala";
-  //     this.userDetails.lastName = "Faras";
-  //     this.userDetails.compName = "Lulz";
-  //     this.userDetails.address = "someaddress";
-  //     this.userDetails.phoneNum = "21028384984930";
-  //     this.userDetails.ssn = "15161616";
-  //     this.userDetails.bankAccount = "1234567890";
-  //     this.userDetails.credits = 5000;
-  //     this.userDetails.loginSuccess = true
-
-  //     return this.getDetails();
-  //   }
-  //   this.userDetails.loginSuccess = false;
-  //   return this.getDetails();
-  // }
-
   login(uname,passwd,utype){
     if (["Anonymous","Parent","Provider"].includes(utype)){
+      this.userType = utype;
+      this.userDetails.username = uname
+      this.userDetails.password = passwd;
+      this.userDetails.email = "somemail@gmail.com";
+      this.userDetails.firstName = "Bala";
+      this.userDetails.lastName = "Faras";
+      this.userDetails.compName = "Lulz";
+      this.userDetails.address = "someaddress";
+      this.userDetails.phoneNum = "21028384984930";
+      this.userDetails.ssn = "15161616";
+      this.userDetails.bankAccount = "1234567890";
+      this.userDetails.credits = 5000;
+      this.userDetails.loginSuccess = true
 
+      return this.getDetails();
     }
+    this.userDetails.loginSuccess = false;
+    return this.getDetails();
   }
+
+  // login(uname,passwd,utype){
+  //   if (["Anonymous","Parent","Provider"].includes(utype)){
+
+  //   }
+  // }
 
   registerParent(detailsObj){
 
