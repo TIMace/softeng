@@ -62,7 +62,8 @@ import { UserDetailsService } from './user-details.service';
     EventsPresentComponent,
     EventsPastComponent,
     AdminLoginComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    PanelComponent
   ],
   imports: [
     BrowserModule,

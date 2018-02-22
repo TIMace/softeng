@@ -41,10 +41,6 @@ const routes: Routes = [
     component: PanelComponent
   },
   {
-    path: 'panel_parent/personal_info',
-    component: PersonalInfoComponent
-  },
-  {
     path: 'admin',
     component: AdminLoginComponent
   }
