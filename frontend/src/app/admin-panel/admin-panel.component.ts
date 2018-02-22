@@ -69,6 +69,7 @@ export class AdminPanelComponent implements OnInit {
   lock(){
     if (this.radio == 'parent'){this.lockUser(this.username)}
     else{this.lockProvider(this.username)}
+
   }
 
   //decision depends on radio button
@@ -88,6 +89,18 @@ export class AdminPanelComponent implements OnInit {
         .set('Content-Type', 'application/x-www-form-urlencoded')
       }
     )
+    .subscribe(
+      (data:any) => {
+        alert("User Locked Succesfully");
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+      }
+    )
   }
 
   lockProvider(username:string) {
@@ -98,6 +111,18 @@ export class AdminPanelComponent implements OnInit {
       {
         headers: new HttpHeaders()
         .set('Content-Type', 'application/x-www-form-urlencoded')
+      }
+    )
+    .subscribe(
+      (data:any) => {
+        alert("Provider Locked Succesfully");
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
       }
     )
   }
@@ -112,6 +137,18 @@ export class AdminPanelComponent implements OnInit {
         .set('Content-Type', 'application/x-www-form-urlencoded')
       }
     )
+    .subscribe(
+      (data:any) => {
+        alert("User Unlocked Succesfully");
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+      }
+    )
   }
 
   unlockProvider(username:string) {
@@ -122,6 +159,18 @@ export class AdminPanelComponent implements OnInit {
       {
         headers: new HttpHeaders()
         .set('Content-Type', 'application/x-www-form-urlencoded')
+      }
+    )
+    .subscribe(
+      (data:any) => {
+        alert("Provider Unlocked Succesfully");
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
       }
     )
   }
