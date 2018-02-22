@@ -19,6 +19,8 @@ import { PanelComponent } from './panel/panel.component';
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { EventsPresentComponent } from './events-present/events-present.component';
 import { EventsPastComponent } from './events-past/events-past.component';
+import { CreateActivityComponent } from './create-activity/create-activity.component';
+
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -63,7 +65,8 @@ import { UserDetailsService } from './user-details.service';
     EventsPastComponent,
     AdminLoginComponent,
     AdminPanelComponent,
-    PanelComponent
+    PanelComponent,
+    CreateActivityComponent
   ],
   imports: [
     BrowserModule,

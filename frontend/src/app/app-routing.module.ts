@@ -10,6 +10,8 @@ import { PanelComponent } from './panel/panel.component';
 import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { CreateActivityComponent } from './create-activity/create-activity.component';
+
 
 const routes: Routes = [
   {
@@ -43,11 +45,14 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminLoginComponent
-  }
-  ,
+  },
   {
     path: 'admin-panel',
     component: AdminPanelComponent
+  },
+  {
+    path: 'create-activity',
+    component: CreateActivityComponent
   }
 ];
 
