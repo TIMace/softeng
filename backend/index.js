@@ -22,6 +22,11 @@ const express = require('express')
 // Support extended URL encoded bodies
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded( { extended : true } ))
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 
 /**
@@ -35,7 +40,7 @@ app.use(bodyParser.urlencoded( { extended : true } ))
  *      - POST (Create user giving required parameters)
  *      - PUT (Update user giving required parameters)
  *
- * - Provider
+ * - PROVIDER
  *      - GET (Get all data for respective provider. Use for login)
  *      - POST (Create provider giving required parameters)
  *      - PUT (Update provider giving required parameters)
@@ -90,7 +95,7 @@ app.post('/user', (req, res) => {
  */
 
 app.get('/provider/:username/:password', (req, res) => {
-    Provider.findOne( { where : { username : req.params.username, user_password : req.params.password } } ).then((provider) => {
+    Provider.findOne( { where : { provider_username : req.params.username, provider_password : req.params.password } } ).then((provider) => {
         res.json(provider)
     })
 })
@@ -109,7 +114,7 @@ app.post('/provider', (req, res) => {
 
     Provider
         .findOrCreate( {
-            where : { username : uname, provider_password : passwd },
+            where : { provider_username : uname, provider_password : passwd },
             defaults : { provider_email : email, provider_first_name : fname, provider_last_name : lname, provider_comp_name : cname,
                 provider_address : addr, provider_phone_num : phnum, provider_ssn : ssn, provider_bank_account : baccount } } )
         .spread((provider, created) => {

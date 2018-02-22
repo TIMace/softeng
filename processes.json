@@ -24,7 +24,7 @@
             "watch"             : false,
             "ignore_watch"      : ["node_modules", "logs"],
             "watch_options"     : { "followSymlinks": false },
-            "args"              : ["serve", "--prod"],
+            "args"              : ["serve", "--prod", "--host 0.0.0.0", "--disable-host-check"],
             "merge_logs"        : true,
             "env"               : { "NODE_ENV" : "production" },
             "error_file"        : "logs/frontend-err.log",
