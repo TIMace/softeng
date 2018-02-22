@@ -43,93 +43,142 @@ export class AdminPanelComponent implements OnInit {
     // .set('phone_num', '6936999999');
 
 
-  createUser(userDetails) {
-    this.httpClient.post('http://snf-806935.vm.okeanos.grnet.gr:8888/user',
-      userDetails.toString(),
-      {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-      }
-    )    
-    .subscribe(
-      (data:any) => {
-        alert("New User Created Succesfully");
-      },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          console.log("Client-side error occured.");
-        } else {
-          console.log("Server-side error occured.");
-        }
-      }
-    )
-  }
+  // createUser(userDetails) {
+  //   this.httpClient.post('http://snf-806935.vm.okeanos.grnet.gr:8888/user',
+  //     userDetails.toString(),
+  //     {
+  //       headers: new HttpHeaders()
+  //         .set('Content-Type', 'application/x-www-form-urlencoded')
+  //     }
+  //   )    
+  //   .subscribe(
+  //     (data:any) => {
+  //       alert("New User Created Succesfully");
+  //     },
+  //     (err: HttpErrorResponse) => {
+  //       if (err.error instanceof Error) {
+  //         console.log("Client-side error occured.");
+  //       } else {
+  //         console.log("Server-side error occured.");
+  //       }
+  //     }
+  //   )
+  // }
   
   //decision depends on radio button
-  lock(){
-    if (this.radio == 'parent'){this.lockUser(this.username)}
-    else{this.lockProvider(this.username)}
-  }
+  // lock(){
+  //   if (this.radio == 'parent'){this.lockUser(this.username)}
+  //   else{this.lockProvider(this.username)}
 
-  //decision depends on radio button
-  unlock(){
-    if (this.radio == 'parent'){this.unlockUser(this.username)}
-    else{this.unlockProvider(this.username)}
-  }
+  // }
+
+  // //decision depends on radio button
+  // unlock(){
+  //   if (this.radio == 'parent'){this.unlockUser(this.username)}
+  //   else{this.unlockProvider(this.username)}
+  // }
 
 
-  lockUser(username:string) {
-    var userLock = new HttpParams()
-    .set(/*unset active attribute of user with username*/);
-    this.httpClient.put('http://snf-806935.vm.okeanos.grnet.gr:8888/user',
-      userLock.toString(),
-      {
-        headers: new HttpHeaders()
-        .set('Content-Type', 'application/x-www-form-urlencoded')
-      }
-    )
-  }
+  // lockUser(username:string) {
+  //   var userLock = new HttpParams()
+  //   .set(/*unset active attribute of user with username*/);
+  //   this.httpClient.put('http://snf-806935.vm.okeanos.grnet.gr:8888/user',
+  //     userLock.toString(),
+  //     {
+  //       headers: new HttpHeaders()
+  //       .set('Content-Type', 'application/x-www-form-urlencoded')
+  //     }
+  //   )
+  //   .subscribe(
+  //     (data:any) => {
+  //       alert("User Locked Succesfully");
+  //     },
+  //     (err: HttpErrorResponse) => {
+  //       if (err.error instanceof Error) {
+  //         console.log("Client-side error occured.");
+  //       } else {
+  //         console.log("Server-side error occured.");
+  //       }
+  //     }
+  //   )
+  // }
 
-  lockProvider(username:string) {
-    var providerLock = new HttpParams()
-    .set(/*unset active attribute of provider with username*/);
-    this.httpClient.put('http://snf-806935.vm.okeanos.grnet.gr:8888/provider',
-      providerLock.toString(),
-      {
-        headers: new HttpHeaders()
-        .set('Content-Type', 'application/x-www-form-urlencoded')
-      }
-    )
-  }
+  // lockProvider(username:string) {
+  //   var providerLock = new HttpParams()
+  //   .set(/*unset active attribute of provider with username*/);
+  //   this.httpClient.put('http://snf-806935.vm.okeanos.grnet.gr:8888/provider',
+  //     providerLock.toString(),
+  //     {
+  //       headers: new HttpHeaders()
+  //       .set('Content-Type', 'application/x-www-form-urlencoded')
+  //     }
+  //   )
+  //   .subscribe(
+  //     (data:any) => {
+  //       alert("Provider Locked Succesfully");
+  //     },
+  //     (err: HttpErrorResponse) => {
+  //       if (err.error instanceof Error) {
+  //         console.log("Client-side error occured.");
+  //       } else {
+  //         console.log("Server-side error occured.");
+  //       }
+  //     }
+  //   )
+  // }
 
-  unlockUser(username:string) {
-    var userUnLock = new HttpParams()
-    .set(/*set active attribute of user with username*/);
-    this.httpClient.put('http://snf-806935.vm.okeanos.grnet.gr:8888/user',
-      userUnLock.toString(),
-      {
-        headers: new HttpHeaders()
-        .set('Content-Type', 'application/x-www-form-urlencoded')
-      }
-    )
-  }
+  // unlockUser(username:string) {
+  //   var userUnLock = new HttpParams()
+  //   .set(/*set active attribute of user with username*/);
+  //   this.httpClient.put('http://snf-806935.vm.okeanos.grnet.gr:8888/user',
+  //     userUnLock.toString(),
+  //     {
+  //       headers: new HttpHeaders()
+  //       .set('Content-Type', 'application/x-www-form-urlencoded')
+  //     }
+  //   )
+  //   .subscribe(
+  //     (data:any) => {
+  //       alert("User Unlocked Succesfully");
+  //     },
+  //     (err: HttpErrorResponse) => {
+  //       if (err.error instanceof Error) {
+  //         console.log("Client-side error occured.");
+  //       } else {
+  //         console.log("Server-side error occured.");
+  //       }
+  //     }
+  //   )
+  // }
 
-  unlockProvider(username:string) {
-    var providerUnLock = new HttpParams()
-    .set(/*set active attribute of provider with username*/);
-    this.httpClient.put('http://snf-806935.vm.okeanos.grnet.gr:8888/provider',
-      providerUnLock.toString(),
-      {
-        headers: new HttpHeaders()
-        .set('Content-Type', 'application/x-www-form-urlencoded')
-      }
-    )
-  }
+  // unlockProvider(username:string) {
+  //   var providerUnLock = new HttpParams()
+  //   .set(/*set active attribute of provider with username*/);
+  //   this.httpClient.put('http://snf-806935.vm.okeanos.grnet.gr:8888/provider',
+  //     providerUnLock.toString(),
+  //     {
+  //       headers: new HttpHeaders()
+  //       .set('Content-Type', 'application/x-www-form-urlencoded')
+  //     }
+  //   )
+  //   .subscribe(
+  //     (data:any) => {
+  //       alert("Provider Unlocked Succesfully");
+  //     },
+  //     (err: HttpErrorResponse) => {
+  //       if (err.error instanceof Error) {
+  //         console.log("Client-side error occured.");
+  //       } else {
+  //         console.log("Server-side error occured.");
+  //       }
+  //     }
+  //   )
+  // }
 
-  activateProvider(providerUsername:string) {
-    this.radio = 'Provider';
-    this.unlock();
-  }
+  // activateProvider(providerUsername:string) {
+  //   this.radio = 'Provider';
+  //   this.unlock();
+  // }
 
   ngOnInit() {
   }
