@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Event } from '../event';
+
+// Services
+import { EventService } from '../event.service';
 
 @Component({
   selector: 'app-events-present',
@@ -7,9 +11,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventsPresentComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private eventService: EventService
+  ) { }
 
   ngOnInit() {
+    this.getEvents();
+  }
+
+  current_events: Event[];
+
+  getEvents(): void {
+    this.eventService.getEvents("", "", "", "").subscribe(events => this.current_events = events);
   }
 
 }
