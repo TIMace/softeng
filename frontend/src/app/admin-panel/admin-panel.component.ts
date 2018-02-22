@@ -43,40 +43,40 @@ export class AdminPanelComponent implements OnInit {
     // .set('phone_num', '6936999999');
 
 
-  createUser(userDetails) {
-    this.httpClient.post('http://snf-806935.vm.okeanos.grnet.gr:8888/user',
-      userDetails.toString(),
-      {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded')
-      }
-    )    
-    .subscribe(
-      (data:any) => {
-        alert("New User Created Succesfully");
-      },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          console.log("Client-side error occured.");
-        } else {
-          console.log("Server-side error occured.");
-        }
-      }
-    )
-  }
+  // createUser(userDetails) {
+  //   this.httpClient.post('http://snf-806935.vm.okeanos.grnet.gr:8888/user',
+  //     userDetails.toString(),
+  //     {
+  //       headers: new HttpHeaders()
+  //         .set('Content-Type', 'application/x-www-form-urlencoded')
+  //     }
+  //   )    
+  //   .subscribe(
+  //     (data:any) => {
+  //       alert("New User Created Succesfully");
+  //     },
+  //     (err: HttpErrorResponse) => {
+  //       if (err.error instanceof Error) {
+  //         console.log("Client-side error occured.");
+  //       } else {
+  //         console.log("Server-side error occured.");
+  //       }
+  //     }
+  //   )
+  // }
   
   //decision depends on radio button
-  lock(){
-    if (this.radio == 'parent'){this.lockUser(this.username)}
-    else{this.lockProvider(this.username)}
+  // lock(){
+  //   if (this.radio == 'parent'){this.lockUser(this.username)}
+  //   else{this.lockProvider(this.username)}
 
-  }
+  // }
 
-  //decision depends on radio button
-  unlock(){
-    if (this.radio == 'parent'){this.unlockUser(this.username)}
-    else{this.unlockProvider(this.username)}
-  }
+  // //decision depends on radio button
+  // unlock(){
+  //   if (this.radio == 'parent'){this.unlockUser(this.username)}
+  //   else{this.unlockProvider(this.username)}
+  // }
 
 
   // lockUser(username:string) {
@@ -175,10 +175,10 @@ export class AdminPanelComponent implements OnInit {
   //   )
   // }
 
-  activateProvider(providerUsername:string) {
-    this.radio = 'Provider';
-    this.unlock();
-  }
+  // activateProvider(providerUsername:string) {
+  //   this.radio = 'Provider';
+  //   this.unlock();
+  // }
 
   ngOnInit() {
   }
