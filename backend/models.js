@@ -1,20 +1,60 @@
 'use strict';
 
 const Sequelize = require('sequelize')
-    , sequelize = new Sequelize('database', 'username', 'password', {
-        host: 'localhost',
+    , config = require('./config').config
+    , Op = Sequelize.Op
+    , operatorsAliases = {
+        $eq: Op.eq,
+        $ne: Op.ne,
+        $gte: Op.gte,
+        $gt: Op.gt,
+        $lte: Op.lte,
+        $lt: Op.lt,
+        $not: Op.not,
+        $in: Op.in,
+        $notIn: Op.notIn,
+        $is: Op.is,
+        $like: Op.like,
+        $notLike: Op.notLike,
+        $iLike: Op.iLike,
+        $notILike: Op.notILike,
+        $regexp: Op.regexp,
+        $notRegexp: Op.notRegexp,
+        $iRegexp: Op.iRegexp,
+        $notIRegexp: Op.notIRegexp,
+        $between: Op.between,
+        $notBetween: Op.notBetween,
+        $overlap: Op.overlap,
+        $contains: Op.contains,
+        $contained: Op.contained,
+        $adjacent: Op.adjacent,
+        $strictLeft: Op.strictLeft,
+        $strictRight: Op.strictRight,
+        $noExtendRight: Op.noExtendRight,
+        $noExtendLeft: Op.noExtendLeft,
+        $and: Op.and,
+        $or: Op.or,
+        $any: Op.any,
+        $all: Op.all,
+        $values: Op.values,
+        $col: Op.col
+    }
+    , sequelize = new Sequelize(config.database, config.db_user, config.db_pass, {
+        host: config.db_host,
         dialect: 'postgres',
-  
+
         pool: {
             max: 10,
-            min: 0,
+            min: 1,
             acquire: 30000,
             idle: 10000
         },
 
         define : {
             timestamps : true
-        }
+        },
+
+        operatorsAliases
     })
 
     , User = sequelize.define('user', {
@@ -26,7 +66,10 @@ const Sequelize = require('sequelize')
         user_first_name : { type : Sequelize.STRING, allowNull : false },
         user_last_name : { type : Sequelize.STRING, allowNull : false },
         user_address : { type : Sequelize.STRING, allowNull : false },
-        user_phone_num : { type : Sequelize.STRING, allowNull : false },
+        user_phone_num : {
+            type : Sequelize.STRING, allowNull : false,
+            validate : { isPhoneNum : function(value) { value.match(/\d{10}/g) !== null } }
+        },
         user_credits : { type : Sequelize.INTEGER, validate : { min : 0 } },
         user_active : { type : Sequelize.BOOLEAN, allowNull : false, defaultValue : true }
     })
@@ -41,9 +84,22 @@ const Sequelize = require('sequelize')
         provider_last_name : { type : Sequelize.STRING, allowNull : false },
         provider_comp_name : { type : Sequelize.STRING, allowNull : false },
         provider_address : Sequelize.STRING,
-        provider_phone_num : { type : Sequelize.STRING, allowNull : false },
-        provider_ssn : { type : Sequelize.STRING, allowNull : false, unique : true }, // Should use a custom validator
-        provider_bank_account : { type : Sequelize.STRING, allowNull : false }, // Should use a custom validator
+        provider_phone_num : {
+            type : Sequelize.STRING, allowNull : false,
+            validate : { isPhoneNum : function(value) { value.match(/\d{10}/g) !== null } }
+        },
+        provider_ssn : {
+            type : Sequelize.STRING, allowNull : false, unique : true,
+            validate : { isSSN : function(value) { value.match(/\d{9}/g) !== null } }
+        },
+        provider_bank_account : {
+            type : Sequelize.STRING, allowNull : false,
+            validate : {
+                isIBAN : function(value) { value.match(/\d{25}/g) !== null && value.startsWith('GR') },
+                isUppercase : true,
+                len : [27, 27]
+            }
+        },
         provider_credits : { type : Sequelize.INTEGER, validate : { min : 0 } },
         provider_active : { type : Sequelize.BOOLEAN, allowNull : false, defaultValue : false }
     })
