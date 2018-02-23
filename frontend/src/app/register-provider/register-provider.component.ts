@@ -7,29 +7,51 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
   styleUrls: ['./register-provider.component.css']
 })
 export class RegisterProviderComponent implements OnInit {
-  formRegister: FormGroup;
+  formRegisterProvider: FormGroup;
 
   constructor(private formBuilder: FormBuilder) { }
 
-  doRegister(){
-    console.log(event);
-    console.log(this.formRegister.value);
+  doRegisterProvider(){
+    console.log(this.formRegisterProvider.value);
   }
 
   ngOnInit() {
-    this.formRegister = this.formBuilder.group({
-      name: ['Λεωνίδας', Validators.required],
-      lastname: ['Παπαντωνίου', Validators.required],
-      location: ['', Validators.required],
-      phone: ['', Validators.required],
-      company: ['', Validators.required],
-      afm: ['', Validators.required],
-      account: ['', Validators.required],
-      username: ['Leo', Validators.required],
-      email: ['', [Validators.required, Validators.email]], //Validators.pattern('[a-z0-9.@]*')
-      password: ['', Validators.required],
-      confirm_password: ['', Validators.required],
-    });
+    this.formRegisterProvider = this.formBuilder.group({
+      name: this.name,
+      lastname: this.lastname,
+      location: this.location,
+      phone: this.phone,
+      company: this.company,
+      afm: this.afm,
+      account: this.account,
+      username: this.username,
+      email: this.email,
+      password: this.password,
+      confirm_password: this.confirm_password,
+    }, { validator: this.matchingPasswords('password', 'confirm_password')} );
   }
+
+  matchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
+    return (group: FormGroup) => {
+      let passwordInput = group.controls[passwordKey];
+      let passwordConfirmationInput = group.controls[passwordConfirmationKey];
+      if (passwordInput.value !== passwordConfirmationInput.value) {
+        return passwordConfirmationInput.setErrors({notEquivalent: true})
+      }
+    }
+  }
+
+  name = new FormControl("Λεωνίδας", Validators.required);
+  lastname = new FormControl("Παπαντωνίου", Validators.required);
+  location = new FormControl("", Validators.required);
+  phone = new FormControl("", Validators.required);
+  company = new FormControl("", Validators.required);
+  afm = new FormControl("", Validators.required);
+  account = new FormControl("", Validators.required);
+  username = new FormControl("LeoPapa", Validators.required);
+  email = new FormControl("", [Validators.required, Validators.email]);
+  password = new FormControl("", Validators.required);
+  confirm_password = new FormControl("", Validators.required);
+
 
 }

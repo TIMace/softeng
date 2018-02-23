@@ -10,22 +10,42 @@
       <h5 class="card-title text-center">{{event.name}}</h5>
       <div class="row">
         <div class="col-md">
-          {{event.location}}
+          Τοποθεσία: {{event.location}}
         </div>
         <div class="col-md">
-          {{event.date}}
+          Ημερομηνία: {{event.date}}
         </div>
       </div>
-      <div class="border border-secondary">
+      <!-- <div class="border border-secondary">
           <p class="card-text">
             Περιγραφή: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
           </p>
+        </div> -->
+      <div class="row">
+        <div class="col-md">
+          <p class="card-text">
+            Πάροχος: {{event.provider_id}}
+          </p>
+        </div>
+        <div class="col-md">
+          <p class="card-text">
+            Ηλικίες: {{event.age_min}}-{{event.age_max}}
+          </p>
+        </div>
       </div>
-      <a href="#" routerLink="/activity/{{event.id}}" class="card-link">Λεπτομέρειες</a>
+      <div>
+        <p class="card-text">
+          Κατηγορίες:
+        </p>
+      </div>
+      <div>
+        <a href="#" routerLink="/activity/{{event.id}}">Λεπτομέρειες Δραστηριότητας</a>
+      </div>
     </div>
+    <!-- MAP -->
     <div class="col-lg-3 col-md-4 col">
       <agm-map id="single" [latitude]="event.lat" [longitude]="event.lng" [scrollwheel]="true" [zoom]="13">
-          <agm-marker [latitude]="event.lat" [longitude]="event.lng"></agm-marker>
+        <agm-marker [latitude]="event.lat" [longitude]="event.lng"></agm-marker>
       </agm-map>
     </div>
   </div>

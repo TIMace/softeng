@@ -1,14 +1,18 @@
 export class Event {
     id: number;
+    // price: number;
     name: string;
-    location: string;
+    description: string;
     date: string;
-    img: string;
+    provider_id: number;
+    // available_tickets: number;
     lat: number;
     lng: number;
-    description: string;
     age_min: number;
     age_max: number;
+    location: string; //map_data ths vashs
+    // is_paid: boolean;
+    img: string;
 }
 
 // export class Category {

@@ -16,6 +16,7 @@ import { MapComponent } from '../map/map.component';
 // Services
 import { CategoriesService } from '../categories.service';
 import { MapService } from '../map.service';
+import { UserDetailsService } from '../user-details.service';
 
 @Component({
   selector: 'app-navbar',
@@ -26,6 +27,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private router: Router,
+    public userDetailsService: UserDetailsService,
     public categoriesService: CategoriesService,
     private mapService: MapService,
     private mapsAPILoader: MapsAPILoader,
@@ -139,6 +141,12 @@ export class NavbarComponent implements OnInit {
         this.zoom = 12;
       });
     }
+  }
+
+  //--------------------- Exit ---------------------//
+  
+  exit() {
+    this.userDetailsService.logout();
   }
 
   ngOnInit() {

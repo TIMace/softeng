@@ -95,4 +95,10 @@ agm-map {
     /* border-bottom-left-radius: 20px; */
 }
 
-.example-radio-group:focus { outline: none; }
+.example-radio-group:focus { 
+    outline: none;
+ }
+/*Events List*/
+.card {
+    margin-top: 40px;
+}

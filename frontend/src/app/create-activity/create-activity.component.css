@@ -1,0 +1,54 @@
+.container-fluid {
+    margin-top: 1rem;
+}
+
+/* Image */
+.image {
+    max-width:100%;
+    max-height:100%;
+    margin-top: .5rem;
+}
+
+/* MAP */
+agm-map {
+    height: 200px;
+
+}
+
+/* Buy button */
+.buy {
+    padding: .5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    background: #17a2b8;
+}
+
+/* Return button */
+.rtrn {
+    border: none;
+    background-color: #f8f9fa;
+    padding: 5px;
+}
+
+.input-group-addon {
+    padding: 0 0 0 0;
+    background-color: transparent;
+    border: transparent;
+}
+
+.fa {
+    margin-right: .5rem;
+}
+
+/* Details */
+
+.details {
+    margin-top: .5rem;
+}
+
+
+.btn {
+    margin-top: 0.75rem;
+    height: 5rem;
+    width: 90%;
+}
