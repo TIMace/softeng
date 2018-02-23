@@ -4,6 +4,10 @@ import { Event } from '../event';
 // Services
 import { EventService } from '../event.service';
 
+// MAP
+import { MapsAPILoader } from '@agm/core';
+import { } from 'googlemaps';
+
 @Component({
   selector: 'app-events-past',
   templateUrl: './events-past.component.html',
@@ -12,7 +16,8 @@ import { EventService } from '../event.service';
 export class EventsPastComponent implements OnInit {
 
   constructor(
-    private eventService: EventService
+    private eventService: EventService,
+    private mapsAPILoader: MapsAPILoader
   ) { }
 
   ngOnInit() {
