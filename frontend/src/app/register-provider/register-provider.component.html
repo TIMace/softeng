@@ -1,214 +1,214 @@
 <div class="modal fade" id="register-provider" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Εγγραφή Παρόχου</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-          </div>
-          <div class="modal-body">
-              <form class="form-horizontal" [formGroup]="formRegister" (ngSubmit)="doRegister()">
-                  <div class="row">
-                      <div class="col-md-3 field-label-responsive">
-                          <label for="name">Όνομα</label>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                  <input type="text" id="name" class="form-control" formControlName="name" 
-                                      placeholder="Γιάννης" required autofocus>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-md-3">
-                          <div class="form-control-feedback">
-                                  <span class="text-danger align-middle">
-                                  <!-- Put name validation error messages here -->
-                                  <div *ngIf="formRegister.get('name').hasError('required')">
-                                      Oops, please provide a name!
-                                      </div>
-                                  </span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 field-label-responsive">
-                          <label for="lastname">Επίθετο</label>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                  <input type="text" id="lastname" class="form-control" formControlName="lastname" 
-                                      placeholder="Παπαδόπουλος" required autofocus>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-md-3">
-                          <div class="form-control-feedback">
-                                  <span class="text-danger align-middle">
-                                  <!-- Put name validation error messages here -->
-                                  <div *ngIf="formRegister.get('lastname').hasError('required')">
-                                      Oops, please provide a name!
-                                      </div>
-                                  </span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 field-label-responsive">
-                          <label for="location">Διεύθυνση Κατοικίας</label>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                  <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-map-marker"></i></div>
-                                  <input type="text" id="location" class="form-control" formControlName="location" required autofocus>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 field-label-responsive">
-                          <label for="phone">Τηλέφωνο επικοινωνίας</label>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                  <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-phone"></i></div>
-                                  <input type="text" id="phone" class="form-control" formControlName="phone" required autofocus>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 field-label-responsive">
-                          <label for="company">Επωνυμία Επιχείρησης</label>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                  <input type="text" id="company" class="form-control" formControlName="company" required autofocus>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 field-label-responsive">
-                          <label for="afm">ΑΦΜ</label>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                  <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-id-card"></i></div>
-                                  <input type="text" id="afm" class="form-control" formControlName="afm" required autofocus>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 field-label-responsive">
-                          <label for="account">Αριθμός Λογαριασμού</label>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                  <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-credit-card"></i></div>
-                                  <input type="text" id="account" class="form-control" formControlName="account" required autofocus>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 field-label-responsive">
-                          <label for="username">Username</label>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                  <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
-                                  <input type="text" id="username" class="form-control" formControlName="username" 
-                                          placeholder="JohnPapa" required>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-md-3">
-                          <div class="form-control-feedback">
-                                  <span class="text-danger align-middle">
-                                      <!-- Put name validation error messages here -->
-                                      <div *ngIf="formRegister.get('username').hasError('required')">
-                                          Απαραίτητο πεδίο!
-                                      </div>
-                                  </span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 field-label-responsive">
-                          <label for="email">E-Mail Address</label>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                  <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
-                                  <input type="text" id="email" class="form-control" formControlName="email"
-                                          placeholder="you@example.com" required autofocus>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-md-3">
-                          <div class="form-control-feedback">
-                                  <span class="text-danger align-middle">
-                                      <!-- Put e-mail validation error messages here -->
-                                      <div *ngIf="(!formRegister.controls['email'].valid)&&(formRegister.get('email').touched)">
-                                          Oops, wrong pattern buddy!
-                                      </div>                        
-                                  </span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 field-label-responsive">
-                          <label for="password">Password</label>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group has-danger">
-                              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                  <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
-                                  <input type="password" id="password" class="form-control" formControlName="password"
-                                          placeholder="Password" required>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-md-3">
-                          <div class="form-control-feedback">
-                                  <span class="text-danger align-middle">
-                                      <!-- <i class="fa fa-close"> Example Error Message</i> -->
-                                  </span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 field-label-responsive">
-                          <label for="password">Confirm Password</label>
-                      </div>
-                      <div class="col-md-6">
-                          <div class="form-group">
-                              <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                                  <div class="input-group-addon" style="width: 2.6rem">
-                                      <i class="fa fa-repeat"></i>
-                                  </div>
-                                  <input type="password" id="confirm_password" class="form-control" formControlName="confirm_password" 
-                                          placeholder="Password" required>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary" [disabled]="formRegister.invalid"><i class="fa fa-user-plus"></i> Εγγραφή</button>
-                  </div>
-              </form>
-          </div>
-      </div>
-  </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Εγγραφή Παρόχου</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" [formGroup]="formRegisterProvider" (ngSubmit)="doRegisterProvider()">
+                    <div class="row">
+                        <div class="col-md-3 field-label-responsive">
+                            <label for="name">Όνομα</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <input type="text" id="name" class="form-control" formControlName="name" 
+                                        placeholder="Γιάννης" required autofocus>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-control-feedback">
+                                    <span class="text-danger align-middle">
+                                    <!-- Put name validation error messages here -->
+                                    <div *ngIf="formRegisterProvider.get('name').hasError('required')">
+                                        Απαραίτητο πεδίο
+                                    </div>
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 field-label-responsive">
+                            <label for="lastname">Επίθετο</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <input type="text" id="lastname" class="form-control" formControlName="lastname" 
+                                        placeholder="Παπαδόπουλος" required autofocus>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-control-feedback">
+                                <span class="text-danger align-middle">
+                                <!-- Put name validation error messages here -->
+                                <div *ngIf="formRegisterProvider.get('lastname').hasError('required')">
+                                    Απαραίτητο πεδίο
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 field-label-responsive">
+                            <label for="location">Διεύθυνση Κατοικίας</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-map-marker"></i></div>
+                                    <input type="text" id="location" class="form-control" formControlName="location" required autofocus>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 field-label-responsive">
+                            <label for="phone">Τηλέφωνο επικοινωνίας</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-phone"></i></div>
+                                    <input type="text" id="phone" class="form-control" formControlName="phone" required autofocus>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 field-label-responsive">
+                            <label for="company">Επωνυμία Επιχείρησης</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <input type="text" id="company" class="form-control" formControlName="company" required autofocus>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 field-label-responsive">
+                            <label for="afm">ΑΦΜ</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-id-card"></i></div>
+                                    <input type="text" id="afm" class="form-control" formControlName="afm" required autofocus>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 field-label-responsive">
+                            <label for="account">Αριθμός Λογαριασμού</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-credit-card"></i></div>
+                                    <input type="text" id="account" class="form-control" formControlName="account" required autofocus>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 field-label-responsive">
+                            <label for="username">Username</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-user"></i></div>
+                                    <input type="text" id="username" class="form-control" formControlName="username" 
+                                            placeholder="JohnPapa" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-control-feedback">
+                                <span class="text-danger align-middle">
+                                    <!-- Put name validation error messages here -->
+                                    <div *ngIf="formRegisterProvider.get('username').hasError('required')">
+                                        Απαραίτητο πεδίο!
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 field-label-responsive">
+                            <label for="email">E-Mail Address</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-at"></i></div>
+                                    <input type="text" id="email" class="form-control" formControlName="email"
+                                            placeholder="you@example.com" required autofocus>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-control-feedback">
+                                <span class="text-danger align-middle">
+                                    <!-- Put e-mail validation error messages here -->
+                                    <div *ngIf="(!formRegisterProvider.controls['email'].valid)&&(formRegisterProvider.get('email').touched)">
+                                        Λάθος pattern
+                                    </div>                        
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 field-label-responsive">
+                            <label for="password">Password</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-danger">
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
+                                    <input type="password" id="password" class="form-control" formControlName="password"
+                                            placeholder="Password" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-control-feedback">
+                                    <span class="text-danger align-middle">
+                                        <!-- <i class="fa fa-close"> Example Error Message</i> -->
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 field-label-responsive">
+                            <label for="password">Confirm Password</label>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                    <div class="input-group-addon" style="width: 2.6rem">
+                                        <i class="fa fa-repeat"></i>
+                                    </div>
+                                    <input type="password" id="confirm_password" class="form-control" formControlName="confirm_password" 
+                                            placeholder="Password" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" [disabled]="formRegisterProvider.invalid"><i class="fa fa-user-plus"></i> Εγγραφή</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
