@@ -259,9 +259,12 @@ app.get('/category', (req, res) => {
 
 // GET ALL EVENTS IN CATEGORY
 app.get('/category/events/:cat_id', (req, res) => {
-    Evnt
-        .findOne( { where : { event_id : parseInt(req.params.id) } }  ).then((evnt) => {
-            res.json(evnt)
+    EventCategory
+        .findAll( {
+            where : { ev_cat_category_id : req.params.cat_id },
+            include : [ { model : Evnt } ]
+        } ).then((evnts) => {
+            res.json(evnts)
         })
         .catch((err) => {
             res.json( { error : err } )
@@ -273,7 +276,7 @@ app.post('/category', (req, res) => {
     const cat_name = req.body.cat_name
         , cat_descr = req.body.cat_descr
     Category
-        .create( { category_name : cat_name, category_description : cat_descr } ).then((cat) => {
+        .create( { category_name : cat_name, category_descr : cat_descr } ).then((cat) => {
             res.json(cat)
         })
         .catch((err) => {
@@ -292,10 +295,12 @@ app.all('/*', (req, res) => {
 // Extra DB setup
 sequelize.sync()
 Transaction.belongsTo(Evnt, { targetKey : 'event_id', foreignKey : 'transaction_event_id' })
-Transaction.belongsTo(Evnt, { targetKey : 'user_id', foreignKey : 'transaction_user_id' })
+// Transaction.belongsTo(Evnt, { targetKey : 'user_id', foreignKey : 'transaction_user_id' })
 Transaction.sync()
 Evnt.belongsTo(Provider, { targetKey : 'provider_id', foreignKey : 'event_provider_id' })
 Evnt.sync()
+EventCategory.belongsTo(Evnt, { targetKey : 'event_id', foreignKey : 'ev_cat_event_id' } )
+EventCategory.sync()
 
 
 
