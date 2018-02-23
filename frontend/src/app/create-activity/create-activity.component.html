@@ -1,60 +1,59 @@
 <div class="container-fluid">
   <div class="row">
-    <span class="col-3"></span>
+    <span class="col-md-3"></span>
     <div class="col text-center">
       <input class="form-control form-control-lg" type="text" placeholder="Τίτλος Δραστηριότητας">
     </div>
-    <span class="col-2"></span>
+    <span class="col-0 col-md-2"></span>
   </div>
 
 
 
   <div class="row">
-    <div class="col-3 text-center">
+    <div class="col-12 col-md-3 text-center">
       <img class="image" src="{{category.img}}">
-      <div class="details">
+      <button (click)="onSubmit()" type="button" class="btn buy">Προσθήκη Εικόνας</button>
+ fasfasdfds
+    </div>
+
+    fasfadsfsadfasff
+        <div class="col-12 col-md-6">
+          <div class="details">
+            <u>Ημερομηνία:</u> {{category.date}}
+          </div>
+          <div class="details">
+            <u>Κατηγορίες:</u>
+          </div>
+          <div class="details">
+            <u>Ηλικίες:</u> {{category.age_min}} - {{category.age_max}}
+          </div>
+          <u>Περιγραφή:</u>
+          <div class="border border-secondary">
+            <div class="description">
+              lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
+              lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
+              lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
+            </div>
+          </div>
+        </div>
+
+
+        <div class=" col-12 col-md-3">
+          <button (click)="onSubmit()" type="button" class="btn">
+            <div>
+              <i class="fa fa-check"></i>
+            </div>Δημιουργία</button>
+          <button (click)="onSubmit()" type="button" class="btn">
+            <div>
+              <i class="fa fa-times"></i>
+            </div>Ακύρωση</button>
+        </div>
+    </div>
+
+    <div class="details">
         <agm-map [latitude]="category.lat" [longitude]="category.lng" [scrollwheel]="true" [zoom]="13">
           <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
         </agm-map>
       </div>
-      <button (click)="onSubmit()" type="button" class="btn buy">Αγορά εισητηρίου</button>
-      <div>
-        Πόντοι: {{category.id}}
-      </div>
-    </div>
 
-    <div class="col">
-<div class ="row">
-
-  <div class="col-12 col-md-9">
-      <div class="details">
-        <u>Ημερομηνία:</u> {{category.date}}
-      </div>
-      <div class="details">
-        <u>Κατηγορίες:</u>
-      </div>
-      <div class="details">
-        <u>Ηλικίες:</u> {{category.age_min}} - {{category.age_max}}
-      </div>
-      <u>Περιγραφή:</u>
-      <div class="border border-secondary">
-        <span class="description">
-          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
-          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
-          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
-        </span>
-      </div>
-    </div>
-
-
-    <div class=" col-9 col-md-3">
-      <button (click)="onSubmit()" type="button" class="btn">
-        <div><i class="fa fa-check"></i></div>Δημιουργία</button>
-      <button (click)="onSubmit()" type="button" class="btn">
-        <div><i class="fa fa-times"></i></div>Ακύρωση</button>
-    </div>
-    </div>
-  </div>
-
-  </div>
-  </div>
+</div>
