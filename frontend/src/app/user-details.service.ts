@@ -47,7 +47,6 @@ export class UserDetailsService {
 
   login(uname:String,passwd:String,utype:String){
     console.log("UserService ", uname, passwd, utype);
-    this.userType = utype;
     var subject = new Subject<any>();
     if (utype === "Parent") {
         this.httpClient.get(
