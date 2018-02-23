@@ -15,38 +15,63 @@ export class UserDetailsService {
   ) { 
     this.userType = "Anonymous"
   }
-
+  
   getUserType(): String {
     return this.userType;
   }
 
-  login(uname,passwd,utype){
-    if (["Anonymous","Parent","Provider"].includes(utype)){
-      this.userType = utype;
-      this.userDetails.username = uname
-      this.userDetails.password = passwd;
-      this.userDetails.email = "somemail@gmail.com";
-      this.userDetails.firstName = "Bala";
-      this.userDetails.lastName = "Faras";
-      this.userDetails.compName = "Lulz";
-      this.userDetails.address = "someaddress";
-      this.userDetails.phoneNum = "21028384984930";
-      this.userDetails.ssn = "15161616";
-      this.userDetails.bankAccount = "1234567890";
-      this.userDetails.credits = 5000;
-      this.userDetails.loginSuccess = true
-
-      return this.getDetails();
-    }
-    this.userDetails.loginSuccess = false;
-    return this.getDetails();
-  }
-
   // login(uname,passwd,utype){
   //   if (["Anonymous","Parent","Provider"].includes(utype)){
+      // this.userType = utype;
+      // this.userDetails.username = uname
+      // this.userDetails.password = passwd;
+      // this.userDetails.email = "somemail@gmail.com";
+      // this.userDetails.firstName = "Bala";
+      // this.userDetails.lastName = "Faras";
+      // this.userDetails.compName = "Lulz";
+      // this.userDetails.address = "someaddress";
+      // this.userDetails.phoneNum = "21028384984930";
+      // this.userDetails.ssn = "15161616";
+      // this.userDetails.bankAccount = "1234567890";
+      // this.userDetails.credits = 5000;
+      // this.userDetails.loginSuccess = true
 
+  //     return this.getDetails();
   //   }
+  //   this.userDetails.loginSuccess = false;
+  //   return this.getDetails();
   // }
+
+  login(uname:String,passwd:String,utype:String){
+    if (utype === "Parent") {
+      var req = 
+        this.httpClient.get(
+          `http://snf-806935.vm.okeanos.grnet.gr:8888/user/${uname}/${passwd}`
+        ).subscribe((data:parentDetailsObj)=>
+          {if ( data == null){
+            this.userDetails.loginSuccess = false
+          }
+        else{
+          this.userType = utype;
+          this.userDetails.username = uname
+          this.userDetails.password = passwd;
+          this.userDetails.email = data.user_email;
+          this.userDetails.firstName = data.user_first_name;
+          this.userDetails.lastName = data.user_last_name;
+          this.userDetails.compName = "";
+          this.userDetails.address = data.user_address;
+          this.userDetails.phoneNum = data.user_phone_num;
+          this.userDetails.ssn = "";
+          this.userDetails.bankAccount = "";
+          this.userDetails.credits = data.user_credits;
+          this.userDetails.loginSuccess = true
+        }})
+    }
+    else if (utype === "Provider"){
+
+    }
+    return this.getDetails()
+  }
 
   registerParent(detailsObj){
 
@@ -106,4 +131,17 @@ export class userDetailsObj{
   bankAccount:String = "";
   credits:number = 0;
   loginSuccess:Boolean = false;
+}
+
+class parentDetailsObj{
+  user_id: String;
+  username: String;
+  user_password: String;
+  user_email: String;
+  user_join_date: String;
+  user_first_name: String;
+  user_last_name: String;
+  user_address: String;
+  user_phone_num: String;
+  user_credits: null;
 }
