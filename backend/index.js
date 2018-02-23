@@ -81,26 +81,25 @@ app.get('/user/:username/:password', (req, res) => {
         })
 })
 
-// app.get('/user/events/:username/:password', (req, res) => {
-//     User
-//         .findOne( { where : { username : req.params.username, user_password : req.params.password } } ).then((user) => {
-//             if (user === null)
-//                 res.json(user)
-//             else {
-//                 Transaction
-//                     .findAll( { where : { transaction_user_id : user.user_id } } ).then((transactions) => {
-//                         lazy(transactions)
-//                             .each((trans) => {
-//                                 Evnt
-//                                     .findAll()
-//                             })
-//                     })
-//             }
-//         })
-//         .catch((err) => {
-//             res.json( { error : err } )
-//         })
-// })
+app.get('/user/events/:username/:password', (req, res) => {
+    User
+        .findOne( { where : { username : req.params.username, user_password : req.params.password } } ).then((user) => {
+            if (user === null)
+                res.json(user)
+            else {
+                Transaction
+                    .findAll( {
+                        where : { transaction_user_id : user.user_id },
+                        include : [ { model : Evnt } ]
+                    } ).then((transactions) => {
+                        res.json(transactions)
+                    })
+            }
+        })
+        .catch((err) => {
+            res.json( { error : err } )
+        })
+})
 
 app.post('/user', (req, res) => {
     const uname = req.body.username
@@ -231,13 +230,17 @@ app.post('/event', (req, res) => {
 })
 
 
+// Gotta Catch 'Em All
 app.all('/*', (req, res) => {
     console.log('Leonida ena alogo')
-    res.end('ΛΕΩΝΙΔΑ ΕΝΑ ΑΛΟΓΟ')
+    res.json( { 'ΛΕΩΝΙΔΑ ΕΝΑ ΑΛΟΓΟ' : 'ΜΕ ΚΟΥΡΑΖΕΙΣ ΠΟΛΥ' } )
 })
 
 
+// Extra DB setup
 sequelize.sync()
+Transaction.belongsTo(Evnt, { targetKey : 'event_id', foreignKey : 'transaction_event_id' })
+Transaction.sync()
 
 
 // const server = https.createServer(options, app).listen(config.port, () => {
