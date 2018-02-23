@@ -24,6 +24,10 @@ export class PanelComponent implements OnInit {
     this.show = 3;
   }
 
+  selected_create_activity(){
+    this.show = 4;
+  }
+
   ngOnInit() {
     this.show = 1;
     this.show_more = false;
