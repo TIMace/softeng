@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormsModule, ReactiveFormsModule, FormBuilder, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { UserDetailsService } from '../user-details.service';
 
 
 @Component({
@@ -12,11 +13,14 @@ export class RegisterParentComponent implements OnInit {
   formRegisterParent: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public userDetailsService: UserDetailsService
   ) {}
 
   doRegisterProvider(){
     console.log(this.formRegisterParent.value);
+    this.userDetailsService.registerProvider();
+
   }
 
   ngOnInit() {

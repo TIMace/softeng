@@ -16,6 +16,10 @@ export class UserDetailsService {
     this.userType = "Anonymous"
   }
 
+  getUserType(): String {
+    return this.userType;
+  }
+
   login(uname,passwd,utype){
     if (["Anonymous","Parent","Provider"].includes(utype)){
       this.userType = utype;
