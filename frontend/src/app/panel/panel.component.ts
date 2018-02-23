@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserDetailsService, userDetailsObj } from '../user-details.service';
 
 @Component({
   selector: 'app-panel',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PanelComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public userDetailsService: UserDetailsService
+  ) { }
   
   show: number;
   show_more: boolean;
@@ -22,6 +25,10 @@ export class PanelComponent implements OnInit {
 
   selected_past_events(){
     this.show = 3;
+  }
+
+  create_event(){
+    this.show = 4;
   }
 
   ngOnInit() {
