@@ -38,8 +38,7 @@ export class UserDetailsService {
   //   return this.getDetails();
   // }
 
-  login(uname,passwd,utype){
-    var result;
+  login(uname:String,passwd:String,utype:String){
     if (utype === "Parent") {
       var req = 
         this.httpClient.get(
