@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-lg-3 col-md-4 col text-center">
-      <button routerLink="/search" type="button" class="btn rtrn"><div class="input-group-addon"><i class="fa fa-chevron-left"></i>Επιστροφή στην Αναζήτηση</div></button>
+      <button (click)="goBack()" type="button" class="btn rtrn"><div class="input-group-addon"><i class="fa fa-chevron-left"></i>Επιστροφή στην Προηγούμενη Σελίδα</div></button>
     </div>
     <div class="col-sm text-center">
         <u>{{category.name}}</u>

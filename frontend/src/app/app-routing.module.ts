@@ -12,6 +12,8 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { CreateActivityComponent } from './create-activity/create-activity.component';
 import { WalletComponent } from './wallet/wallet.component';
+import { EventsPresentComponent } from './events-present/events-present.component';
+import { EventsPastComponent } from './events-past/events-past.component';
 
 const routes: Routes = [
   {
@@ -40,7 +42,17 @@ const routes: Routes = [
   },
   {
     path: 'panel',
-    component: PanelComponent
+    component: PanelComponent,
+    children: [
+      {
+        path: '',
+        component: EventsPresentComponent
+      },
+      {
+        path: '',
+        component: EventsPastComponent
+      }
+    ]
   },
   {
     path: 'admin',
