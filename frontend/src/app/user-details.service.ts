@@ -15,7 +15,7 @@ export class UserDetailsService {
   ) { 
     this.userType = "Anonymous"
   }
-  
+
   getUserType(): String {
     return this.userType;
   }
@@ -42,18 +42,19 @@ export class UserDetailsService {
   //   return this.getDetails();
   // }
 
-  login(uname:String,passwd:String,utype:String){
+  login(uname:String,passwd:String,utype:String): userDetailsObj{
+    console.log("UserService ", uname, passwd, utype);
     if (utype === "Parent") {
       var req = 
         this.httpClient.get(
           `http://snf-806935.vm.okeanos.grnet.gr:8888/user/${uname}/${passwd}`
         ).subscribe((data:parentDetailsObj)=>
           {if ( data == null){
-            this.userDetails.loginSuccess = false
+            this.userDetails.loginSuccess = false;
           }
         else{
           this.userType = utype;
-          this.userDetails.username = uname
+          this.userDetails.username = uname;
           this.userDetails.password = passwd;
           this.userDetails.email = data.user_email;
           this.userDetails.firstName = data.user_first_name;
@@ -64,7 +65,7 @@ export class UserDetailsService {
           this.userDetails.ssn = "";
           this.userDetails.bankAccount = "";
           this.userDetails.credits = data.user_credits;
-          this.userDetails.loginSuccess = true
+          this.userDetails.loginSuccess = true;
         }})
     }
     else if (utype === "Provider"){
