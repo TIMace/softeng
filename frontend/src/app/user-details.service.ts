@@ -57,6 +57,7 @@ export class UserDetailsService {
           }
         else{
           this.userType = utype;
+          this.userDetails.id = ""+data.user_id;
           this.userDetails.username = uname;
           this.userDetails.password = passwd;
           this.userDetails.email = data.user_email;
@@ -73,7 +74,29 @@ export class UserDetailsService {
       subject.next(this.userDetails)})
     }
     else if (utype === "Provider"){
-
+      this.httpClient.get(
+        `http://snf-806935.vm.okeanos.grnet.gr:8888/provider/${uname}/${passwd}`
+      ).subscribe((data:providerDetailsObj)=>
+        {if ( data === null){
+          this.userDetails.loginSuccess = false;
+        }
+      else{
+        this.userType = utype;
+        this.userDetails.id = ""+data.provider_id;
+        this.userDetails.username = uname;
+        this.userDetails.password = passwd;
+        this.userDetails.email = data.provider_email;
+        this.userDetails.firstName = data.provider_first_name;
+        this.userDetails.lastName = data.provider_last_name;
+        this.userDetails.compName = data.provider_comp_name;
+        this.userDetails.address = data.provider_address;
+        this.userDetails.phoneNum = data.provider_phone_num;
+        this.userDetails.ssn = data.provider_ssn;
+        this.userDetails.bankAccount = data.provider_bank_account;
+        this.userDetails.credits = data.provider_credits;
+        this.userDetails.loginSuccess = true;
+      }
+    subject.next(this.userDetails)})
     }
     // return of(this.getDetails())
     return subject.asObservable()
@@ -98,6 +121,7 @@ export class UserDetailsService {
 
   logout(){
     this.userType = "Anonymous";
+    this.userDetails.id = "";
     this.userDetails.username = ""
     this.userDetails.password = "";
     this.userDetails.email = "";
@@ -125,6 +149,7 @@ export class UserDetailsService {
 }
 
 export class userDetailsObj{
+  id = ""
   username:String = "";
   password:String = "";
   email:String = "";
@@ -149,5 +174,21 @@ class parentDetailsObj{
   user_last_name: String;
   user_address: String;
   user_phone_num: String;
-  user_credits: null;
+  user_credits: number;
+}
+
+class providerDetailsObj{
+  provider_id: String;
+  provider_username: String;
+  provider_password: String;
+  provider_email: String;
+  provider_join_date: String;
+  provider_first_name: String;
+  provider_last_name: String;
+  provider_address: String;
+  provider_phone_num: String;
+  provider_credits: number;
+  provider_bank_account: String;
+  provider_ssn: String;
+  provider_comp_name: String;
 }
