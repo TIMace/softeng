@@ -195,7 +195,8 @@ app.get('/event/:id', (req, res) => {
         })
 })
 
-// GET ALL EVENTS ON category
+
+// CREATE NEW EVENT
 app.post('/event', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
@@ -209,6 +210,7 @@ app.post('/event', (req, res) => {
         , ev_min_age = req.body.ev_min_age
         , ev_max_age = req.body.ev_max_age
         , ev_mdata = req.body.ev_mdata
+        , ev_cats = req.body.ev_cats
 
     Provider
         .findOne( { where : { provider_username : uname, provider_password : passwd } } ).then((provider) => {
@@ -219,7 +221,17 @@ app.post('/event', (req, res) => {
                     .create( { event_price : ev_price, event_name : ev_name, event_description : ev_descr, event_date : ev_date,
                         event_provider_id : provider.provider_id, event_available_tickets : ev_avail_tick, event_lattitude : ev_latt,
                         event_longtitude : ev_long, event_minimum_age : ev_min_age, event_maximum_age : ev_max_age, event_map_data : ev_mdata } ).then((evnt => {
+                            // Send response. No need to wait
                             res.json(evnt)
+                            // Create category associations
+                            lazy(ev_cats)
+                                .each((ec) => {
+                                    EventCategory
+                                        .create( { ev_cat_event_id : evnt.event_id, ev_cat_category_id : ec })
+                                        .catch((err) => {
+                                            console.log( { 'EventCategory Creation Error' : err } )
+                                        })
+                                })
                     }))
             }
         })
@@ -227,6 +239,46 @@ app.post('/event', (req, res) => {
             res.json( { error : err } )
         })
 
+})
+
+
+
+/**
+ * Category
+ */
+// GET ALL CATEGORIES
+app.get('/category', (req, res) => {
+    Category
+        .findAll().then((category) => {
+            res.json(category)
+        })
+        .catch((err) => {
+            res.json( { error : err } )
+        })
+})
+
+// GET ALL EVENTS IN CATEGORY
+app.get('/category/events/:cat_id', (req, res) => {
+    Evnt
+        .findOne( { where : { event_id : parseInt(req.params.id) } }  ).then((evnt) => {
+            res.json(evnt)
+        })
+        .catch((err) => {
+            res.json( { error : err } )
+        })
+})
+
+// CREATE NEW CATEGORY
+app.post('/category', (req, res) => {
+    const cat_name = req.body.cat_name
+        , cat_descr = req.body.cat_descr
+    Category
+        .create( { category_name : cat_name, category_description : cat_descr } ).then((cat) => {
+            res.json(cat)
+        })
+        .catch((err) => {
+            res.json( { error : err } )
+        })
 })
 
 
@@ -240,7 +292,11 @@ app.all('/*', (req, res) => {
 // Extra DB setup
 sequelize.sync()
 Transaction.belongsTo(Evnt, { targetKey : 'event_id', foreignKey : 'transaction_event_id' })
+Transaction.belongsTo(Evnt, { targetKey : 'user_id', foreignKey : 'transaction_user_id' })
 Transaction.sync()
+Evnt.belongsTo(Provider, { targetKey : 'provider_id', foreignKey : 'event_provider_id' })
+Evnt.sync()
+
 
 
 // const server = https.createServer(options, app).listen(config.port, () => {
