@@ -2,11 +2,13 @@
   <div class="mat-app-background basic-container">
     <mat-sidenav-container class="example-container">
       <mat-sidenav #sidenav mode="side" class="col-lg-2 col-md-3 text-center example-sidenav">
-        <p><button mat-button class="example-radio-group" (click)="show_filters=!show_filters; sidenav.toggle()">Κλείσιμο</button></p>
+        <p>
+          <button mat-button class="example-radio-group" (click)="show_filters=!show_filters; sidenav.toggle()">Κλείσιμο</button>
+        </p>
         <ul>
           <li class="nav-item">
             <div>
-                Κόστος: {{cost}}€
+              Κόστος: {{cost}}€
             </div>
             <div>
               <mat-slider thumbLabel tickInterval="auto" min="0" max="100" step="10" [value]="cost" [(ngModel)]="cost" (drag)=selectCost(cost)></mat-slider>
@@ -20,7 +22,7 @@
           </li>
           <li class="nav-item">
             <div>
-                Απόσταση: {{distance}}km
+              Απόσταση: {{distance}}km
             </div>
             <div>
               <mat-slider thumbLabel tickInterval="auto" min="0" max="10" step="1" [value]="distance" [(ngModel)]="distance" (drag)=selectCost(cost)></mat-slider>
@@ -37,15 +39,13 @@
             </div>
             <button mat-button class="example-radio-group" (click)="show_map = !show_map">Εμφάνιση Αποτελεσμάτων σε χάρτη</button>
           </div>
-          
+
           <!-- Categories -->
-          <div class="btn-group" data-toggle="buttons"
-            *ngFor="let category of categories" 
-            (click)="onSelect(category)">
+          <div class="btn-group" data-toggle="buttons" *ngFor="let category of categories" (click)="onSelect(category)">
             <label class="btn btn-outline-info" id={{category.id}} [class.active]="category.id === checked">
               <input type="checkbox"> {{category.name}}
             </label>
-          </div> 
+          </div>
         </div>
 
         <!-- MAP -->
@@ -53,15 +53,14 @@
           <div class="form-group">
           </div>
           <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom" fullscreenControl="true">
-            <agm-marker *ngFor = "let m of selectedCategories; let i = index" 
-            [latitude]="m.lat" [longitude]="m.lng" [label]="m.id.toString()">
-            <agm-info-window>
-              <strong>{{m.name}}</strong>
-            </agm-info-window>
+            <agm-marker *ngFor="let m of selectedCategories; let i = index" [latitude]="m.lat" [longitude]="m.lng" [label]="m.id.toString()">
+              <agm-info-window>
+                <strong>{{m.name}}</strong>
+              </agm-info-window>
             </agm-marker>
           </agm-map>
         </div>
-        
+
         <!-- Events -->
         <div class="container-fluid">
           <div class="categories_show">
@@ -77,22 +76,43 @@
                   <h5 class="card-title text-center">{{event.name}}</h5>
                   <div class="row">
                     <div class="col-md">
-                      {{event.location}}
+                      Τοποθεσία: {{event.location}}
                     </div>
                     <div class="col-md">
-                      {{event.date}}
+                      Ημερομηνία: {{event.date}}
                     </div>
                   </div>
-                  <div class="border border-secondary">
+                  <!-- <div class="border border-secondary">
+                    <p class="card-text">
+                      Περιγραφή: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                    </p>
+                  </div> -->
+                  <div class="row">
+                      <div class="col-md">
+                    <p class="card-text">
+                      Πάροχος: {{event.provider_id}}
+                    </p>
+                    </div>
+                    <div class="col-md">
                       <p class="card-text">
-                        Περιγραφή: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                        Ηλικίες: {{event.age_min}}-{{event.age_max}}
                       </p>
+                    </div>
                   </div>
-                  <a href="#" routerLink="/activity/{{event.id}}" class="card-link">Λεπτομέρειες</a>
+                  
+                  <div>
+                    <p class="card-text">
+                      Κατηγορίες:
+                    </p>
+                  </div>
+                  <div>
+                    <a href="#" routerLink="/activity/{{event.id}}" >Λεπτομέρειες Δραστηριότητας</a>
+                  </div>
+                  
                 </div>
                 <div class="col-lg-3 col-md-4 col">
                   <agm-map id="single" [latitude]="event.lat" [longitude]="event.lng" [scrollwheel]="true" [zoom]="13">
-                      <agm-marker [latitude]="event.lat" [longitude]="event.lng"></agm-marker>
+                    <agm-marker [latitude]="event.lat" [longitude]="event.lng"></agm-marker>
                   </agm-map>
                 </div>
               </div>

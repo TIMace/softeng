@@ -1,0 +1,11 @@
+/*Events List*/
+.card {
+    margin-top: 40px;
+}
+
+/* MAP */
+
+agm-map {
+    height: 200px;
+}
+
