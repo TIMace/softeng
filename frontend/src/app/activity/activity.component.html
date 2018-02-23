@@ -15,9 +15,9 @@
             <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
         </agm-map>
       </div>
-      <button (click)="onSubmit()" type="button" class="btn buy">Αγορά εισητηρίου</button>
+      <button (click)="onSubmit()" type="button" class="btn buy" disabled>Αγορά εισιτηρίου</button>
       <div>
-        Πόντοι: {{category.id}}
+        Κόστος: {{category.id}} Πόντοι
       </div>
     </div>
     <div class="col">
@@ -43,6 +43,9 @@
           lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
             lala lala lala lala lala lala lala lala lala lala lala lala lala lala 
         </span>
+      </div>
+      <div class="details">
+        <u>Πάροχος:</u>
       </div>
     </div>
   </div>
