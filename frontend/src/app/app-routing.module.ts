@@ -11,7 +11,7 @@ import { PersonalInfoComponent } from './personal-info/personal-info.component';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { CreateActivityComponent } from './create-activity/create-activity.component';
-
+import { WalletComponent } from './wallet/wallet.component';
 
 const routes: Routes = [
   {
@@ -53,6 +53,10 @@ const routes: Routes = [
   {
     path: 'create-activity',
     component: CreateActivityComponent
+  },
+  {
+    path: 'wallet',
+    component: WalletComponent
   }
 ];
 

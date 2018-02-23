@@ -1,0 +1,80 @@
+<header>Εισαγωγή πόντων στο πορτοφόλι</header>
+
+<div class="container-fluid">
+    <form class="form-horizontal text-center" [formGroup]="formRegister" (ngSubmit)="doRegister()">
+      <div class="row">
+          <div class="col-md-4 field-label-responsive">
+              <label for="cardNumber">Αριθμός Κάρτας</label>
+          </div>
+          <div class="col-sm-5 col-md-4">
+              <div class="form-group">
+                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                      <input type="text" id="parent_name" class="form-control" formControlName="cardNumber" 
+                            placeholder="xxxx-xxxx-xxxx-xxxx" required>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="form-control-feedback">
+                      <span class="text-danger align-middle">
+                        <!-- Put name validation error messages here -->
+                        <div *ngIf="formRegister.get('cardNumber').hasError('required')">
+                            Oops, please provide a name!
+                          </div>
+                      </span>
+              </div>
+          </div>
+      </div>
+      
+    <div class="row">
+          <div class="col-md-4 field-label-responsive">
+              <label for="password">CVV</label>
+          </div>
+          <div class="col-sm-5 col-md-4">
+              <div class="form-group has-danger">
+                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                      <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
+                      <input type="password" id="parent_password" class="form-control" formControlName="password"
+                              placeholder="Password" required>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="form-control-feedback">
+                      <span class="text-danger align-middle">
+                          <!-- <i class="fa fa-close"> Example Error Message</i> -->
+                      </span>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-4 field-label-responsive">
+              <label for="amount">Ποσό Πληρωμής</label>
+          </div>
+          <div class="col-sm-5 col-md-4">
+              <div class="form-group">
+                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                      <input (click)="onPayment()" [(ngModel)]="payment" type="number" id="parent_lastname" class="form-control" formControlName="amount" 
+                            placeholder="πχ 50€" required>
+                  </div>
+              </div>
+          </div>
+          <div class="col-md-4">
+              <div class="form-control-feedback">
+                      <span class="text-danger align-middle">
+                        <!-- Put name validation error messages here -->
+                        <div *ngIf="formRegister.get('amount').hasError('required')">
+                            Απαραίτητο πεδίο!
+                          </div>
+                      </span>
+              </div>
+          </div>
+      </div>
+
+      <div *ngIf="paymentBool">
+          <p>Πρόκειται να εισάγετε {{payment*100}} πόντους.</p>
+      </div>
+      
+      <button type="submit" class="btn btn-primary" [disabled]="formRegister.invalid"><i class="fa fa-user-plus"></i>Αγορά Πόντων</button>
+    </form>
+  </div>

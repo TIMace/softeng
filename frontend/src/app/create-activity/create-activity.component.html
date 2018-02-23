@@ -1,17 +1,20 @@
 <div class="container-fluid">
   <div class="row">
-    <span class="col-lg-3 col-md-4 col-6"></span>
-    <div class="col-sm text-center">
-        <input class="form-control form-control-lg" type="text" placeholder="Τίτλος Δραστηριότητας">
-    </div>
     <span class="col-3"></span>
+    <div class="col text-center">
+      <input class="form-control form-control-lg" type="text" placeholder="Τίτλος Δραστηριότητας">
+    </div>
+    <span class="col-2"></span>
   </div>
+
+
+
   <div class="row">
-    <div class="col-lg-3 col-md-4 col-6 text-center">
+    <div class="col-3 text-center">
       <img class="image" src="{{category.img}}">
       <div class="details">
         <agm-map [latitude]="category.lat" [longitude]="category.lng" [scrollwheel]="true" [zoom]="13">
-            <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
+          <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
         </agm-map>
       </div>
       <button (click)="onSubmit()" type="button" class="btn buy">Αγορά εισητηρίου</button>
@@ -19,10 +22,9 @@
         Πόντοι: {{category.id}}
       </div>
     </div>
-    <div class="col">
-      <div class="details">
-        {{category.location}}
-      </div>
+
+    <div class="col-9 col-md-7">
+
       <div class="details">
         <u>Ημερομηνία:</u> {{category.date}}
       </div>
@@ -35,11 +37,20 @@
       <u>Περιγραφή:</u>
       <div class="border border-secondary">
         <span class="description">
-          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala 
-          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
-            lala lala lala lala lala lala lala lala lala lala lala lala lala lala 
+          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
+          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
+          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
         </span>
       </div>
+
+
+    </div>
+<span class="col-3 col-md"></span>
+    <div class="col-2">
+      <button (click)="onSubmit()" type="button" class="btn">
+        <i class="fa fa-check"></i>Δημιουργία</button>
+      <button (click)="onSubmit()" type="button" class="btn">
+        <i class="fa fa-times"></i>Ακύρωση</button>
     </div>
   </div>
 </div>

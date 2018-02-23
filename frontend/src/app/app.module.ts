@@ -45,6 +45,7 @@ import { CategoriesService } from './categories.service';
 import { MapService } from './map.service';
 import { EventService } from './event.service';
 import { UserDetailsService } from './user-details.service';
+import { WalletComponent } from './wallet/wallet.component';
 
 
 @NgModule({
@@ -66,7 +67,8 @@ import { UserDetailsService } from './user-details.service';
     AdminLoginComponent,
     AdminPanelComponent,
     PanelComponent,
-    CreateActivityComponent
+    CreateActivityComponent,
+    WalletComponent
   ],
   imports: [
     BrowserModule,
