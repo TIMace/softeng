@@ -32,12 +32,19 @@ export class LoginComponent implements OnInit {
     // console.log(this.userType);
     console.log(this.formLogin.value);
 
-    var answer: userDetailsObj;
-    answer = this.userDetailsService.login( this.Username, this.Password, this.UserType);
-    if ( answer.loginSuccess )
-      this.router.navigate(['']);
-    else
-      alert('Login Failed!');
+    // var answer;
+    // answer = this.userDetailsService.login( this.Username, this.Password, this.UserType);
+    // if ( answer.loginSuccess )
+    //   this.router.navigate(['']);
+    // else
+    //   alert('Login Failed!');
+    
+    this.userDetailsService.login( this.Username, this.Password, this.UserType).subscribe(
+      data=>{console.log(data);if ( data.loginSuccess ){
+      this.router.navigate(['']);}
+    else{
+      alert('Login Failed!');}}
+    )
 
 
 

@@ -5,6 +5,8 @@ import {HttpClient} from '@angular/common/http';
 import {HttpErrorResponse} from '@angular/common/http';
 import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Response, Headers, RequestOptions } from '@angular/http'; 
+import 'rxjs/add/operator/map'
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class UserDetailsService {
@@ -13,7 +15,8 @@ export class UserDetailsService {
   constructor(
     private httpClient:HttpClient
   ) { 
-    this.userType = "Anonymous"
+    this.userType = "Anonymous";
+    this.userDetails = new userDetailsObj()
   }
 
   getUserType(): String {
@@ -22,19 +25,19 @@ export class UserDetailsService {
 
   // login(uname,passwd,utype){
   //   if (["Anonymous","Parent","Provider"].includes(utype)){
-      // this.userType = utype;
-      // this.userDetails.username = uname
-      // this.userDetails.password = passwd;
-      // this.userDetails.email = "somemail@gmail.com";
-      // this.userDetails.firstName = "Bala";
-      // this.userDetails.lastName = "Faras";
-      // this.userDetails.compName = "Lulz";
-      // this.userDetails.address = "someaddress";
-      // this.userDetails.phoneNum = "21028384984930";
-      // this.userDetails.ssn = "15161616";
-      // this.userDetails.bankAccount = "1234567890";
-      // this.userDetails.credits = 5000;
-      // this.userDetails.loginSuccess = true
+  //     this.userType = utype;
+  //     this.userDetails.username = uname
+  //     this.userDetails.password = passwd;
+  //     this.userDetails.email = "somemail@gmail.com";
+  //     this.userDetails.firstName = "Bala";
+  //     this.userDetails.lastName = "Faras";
+  //     this.userDetails.compName = "Lulz";
+  //     this.userDetails.address = "someaddress";
+  //     this.userDetails.phoneNum = "21028384984930";
+  //     this.userDetails.ssn = "15161616";
+  //     this.userDetails.bankAccount = "1234567890";
+  //     this.userDetails.credits = 5000;
+  //     this.userDetails.loginSuccess = true
 
   //     return this.getDetails();
   //   }
@@ -42,14 +45,17 @@ export class UserDetailsService {
   //   return this.getDetails();
   // }
 
-  login(uname:String,passwd:String,utype:String): userDetailsObj{
+  login(uname:String,passwd:String,utype:String){
     console.log("UserService ", uname, passwd, utype);
+    this.userType = utype;
+    var subject = new Subject<any>();
+    var sub;
     if (utype === "Parent") {
-      var req = 
+        sub = 
         this.httpClient.get(
           `http://snf-806935.vm.okeanos.grnet.gr:8888/user/${uname}/${passwd}`
         ).subscribe((data:parentDetailsObj)=>
-          {if ( data == null){
+          {if ( data === null){
             this.userDetails.loginSuccess = false;
           }
         else{
@@ -66,12 +72,36 @@ export class UserDetailsService {
           this.userDetails.bankAccount = "";
           this.userDetails.credits = data.user_credits;
           this.userDetails.loginSuccess = true;
-        }})
+        }
+      subject.next(this.userDetails)})
+      //   this.httpClient.get(
+      //     `http://snf-806935.vm.okeanos.grnet.gr:8888/user/${uname}/${passwd}`
+      //   ).map((data:parentDetailsObj)=>
+      //     { var res:userDetailsObj = new userDetailsObj();
+      //       if ( data === null){
+      //         res.loginSuccess = false;
+      //     }
+      //   else{
+      //     res.username = uname;
+      //     res.password = passwd;
+      //     res.email = data.user_email;
+      //     res.firstName = data.user_first_name;
+      //     res.lastName = data.user_last_name;
+      //     res.compName = "";
+      //     res.address = data.user_address;
+      //     res.phoneNum = data.user_phone_num;
+      //     res.ssn = "";
+      //     res.bankAccount = "";
+      //     res.credits = data.user_credits;
+      //     res.loginSuccess = true;
+      //   }
+      // return res})
     }
     else if (utype === "Provider"){
 
     }
-    return this.getDetails()
+    // return of(this.getDetails())
+    return subject.asObservable()
   }
 
   registerParent(detailsObj){
