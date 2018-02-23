@@ -25,6 +25,11 @@ import { CreateActivityComponent } from './create-activity/create-activity.compo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
+
 
 // Material
 import { 
@@ -87,10 +92,13 @@ import { WalletComponent } from './wallet/wallet.component';
       apiKey: "AIzaSyC-2M4YYjFXikW0RagBCfh6yxSgrTpplqw",
       libraries: ["places"]
     }),
-    HttpClientModule
+    HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule
   ],
   entryComponents: [MapComponent],
-  providers: [CategoriesService, MapService, EventService,UserDetailsService],
+  providers: [CategoriesService, MapService, EventService,UserDetailsService, MatNativeDateModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
