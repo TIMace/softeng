@@ -49,9 +49,7 @@ export class UserDetailsService {
     console.log("UserService ", uname, passwd, utype);
     this.userType = utype;
     var subject = new Subject<any>();
-    var sub;
     if (utype === "Parent") {
-        sub = 
         this.httpClient.get(
           `http://snf-806935.vm.okeanos.grnet.gr:8888/user/${uname}/${passwd}`
         ).subscribe((data:parentDetailsObj)=>
@@ -74,28 +72,6 @@ export class UserDetailsService {
           this.userDetails.loginSuccess = true;
         }
       subject.next(this.userDetails)})
-      //   this.httpClient.get(
-      //     `http://snf-806935.vm.okeanos.grnet.gr:8888/user/${uname}/${passwd}`
-      //   ).map((data:parentDetailsObj)=>
-      //     { var res:userDetailsObj = new userDetailsObj();
-      //       if ( data === null){
-      //         res.loginSuccess = false;
-      //     }
-      //   else{
-      //     res.username = uname;
-      //     res.password = passwd;
-      //     res.email = data.user_email;
-      //     res.firstName = data.user_first_name;
-      //     res.lastName = data.user_last_name;
-      //     res.compName = "";
-      //     res.address = data.user_address;
-      //     res.phoneNum = data.user_phone_num;
-      //     res.ssn = "";
-      //     res.bankAccount = "";
-      //     res.credits = data.user_credits;
-      //     res.loginSuccess = true;
-      //   }
-      // return res})
     }
     else if (utype === "Provider"){
 
