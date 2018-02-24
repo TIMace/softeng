@@ -9,6 +9,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormControl } from '@angular/forms';
+import { CategoriesService } from '../categories.service';
 
 
 // MAP
@@ -18,7 +19,6 @@ import { } from 'googlemaps';
 import { MapComponent } from '../map/map.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { MapService } from '../map.service';
-import { CategoriesService } from '../categories.service';
 
 
 
@@ -147,6 +147,8 @@ export class CreateActivityComponent implements OnInit {
 
 
 
+
+
    createEvent(){
 
    }
@@ -156,8 +158,15 @@ export class CreateActivityComponent implements OnInit {
      
    }
 
-
+  categories;
   ngOnInit() {
+    this.categoriesService.getCategories()
+    .subscribe(
+      (data:any) => {
+        this.categories = data
+        console.log(this.categories);
+      }
+    );
     this.category = EVENTS[0];
     this.write();
 
