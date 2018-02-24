@@ -70,7 +70,7 @@ const Sequelize = require('sequelize')
             type : Sequelize.STRING, allowNull : false,
             validate : { isPhoneNum : function(value) { value.match(/\d{10}/g) !== null } }
         },
-        user_credits : { type : Sequelize.INTEGER, validate : { min : 0 }, allowNull : false },
+        user_credits : { type : Sequelize.INTEGER, validate : { min : 0 }, allowNull : false, defaultValue : 0 },
         user_active : { type : Sequelize.BOOLEAN, allowNull : false, defaultValue : true }
     })
 
@@ -100,7 +100,7 @@ const Sequelize = require('sequelize')
                 len : [27, 27]
             }
         },
-        provider_credits : { type : Sequelize.INTEGER, validate : { min : 0 }, allowNull : false },
+        provider_credits : { type : Sequelize.INTEGER, validate : { min : 0 }, allowNull : false, defaultValue : 0 },
         provider_active : { type : Sequelize.BOOLEAN, allowNull : false, defaultValue : false }
     })
 
