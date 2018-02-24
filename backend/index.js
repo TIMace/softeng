@@ -451,7 +451,7 @@ Transaction.sync()
 Evnt.belongsTo(Provider, { targetKey : 'provider_id', foreignKey : 'event_provider_id' } )
 Evnt.sync()
 EventCategory.belongsTo(Evnt, { targetKey : 'event_id', foreignKey : 'ev_cat_event_id' } )
-EventCategory.hasOne(Category, { targetKey : 'category_id', foreignKey : 'ev_cat_category_id' } )
+EventCategory.belongsTo(Category, { targetKey : 'category_id', foreignKey : 'ev_cat_category_id' } )
 EventCategory.sync()
 
 
