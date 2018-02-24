@@ -37,14 +37,15 @@ export class PersonalInfoComponent implements OnInit {
     this.formRegister = this.formBuilder.group({
       name: [this.userDetails.firstName, Validators.required],
       lastname: [this.userDetails.lastName, Validators.required],
-      location: ['', Validators.required],
-      phone: ['', Validators.required],
-      company: ['', Validators.required],
-      afm: ['', Validators.required],
-      account: ['', Validators.required],
-      username: ['Leo', Validators.required],
-      email: ['', [Validators.required, Validators.email]], //Validators.pattern('[a-z0-9.@]*')
-      password: ['', Validators.required],
+      location: [this.userDetails.address, Validators.required],
+      phone: [this.userDetails.phoneNum, Validators.required],
+      company: [this.userDetails.compName, Validators.required],
+      afm: [this.userDetails.ssn, Validators.required],
+      account: [this.userDetails.bankAccount, Validators.required],
+      username: [this.userDetails.username, Validators.required],
+      email: [this.userDetails.email, [Validators.required, Validators.email]],
+      credits: [this.userDetails.credits, [Validators.required]], //Validators.pattern('[a-z0-9.@]*')
+      password: [this.userDetails.password, Validators.required],
       new_password: ['', Validators.required],
       confirm_password: ['', Validators.required],
     });
