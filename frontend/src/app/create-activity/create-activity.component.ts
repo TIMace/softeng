@@ -158,6 +158,8 @@ export class CreateActivityComponent implements OnInit {
      
    }
 
+
+
   categories;
   ngOnInit() {
     this.categoriesService.getCategories()
@@ -171,12 +173,17 @@ export class CreateActivityComponent implements OnInit {
     this.write();
 
     // this.getEvent();
-  }
+  };
 
   // getEvent(): void {
   //   const id = +this.route.snapshot.paramMap.get('id');
   //   this.eventService.getEvent(id)
   //     .subscribe(event => this.event = event);
   // }
-
+  cat:boolean;
+  changeCheckbox(cat, i) {
+    if (cat) {
+      this.cat[i].checked = !this.cat[i].checked;
+    }
+  }
 }
