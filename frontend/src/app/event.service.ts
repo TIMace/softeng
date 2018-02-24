@@ -43,14 +43,27 @@ export class EventService {
   // TODO rename getCategory to getEvent
   // Fix all calls of getCategory στα υπόλοιπα αρχεία
 
-  getCategory(id: number): Observable<Event> {
-    // this.httpClient.get(
-    //   `${server_addr}/category/events/${id}`,
-    // )
-    // .map(response => this.server2local_event(response))
-    // .subscribe(data => {console.log("Here comes the events of a category");
-    //                     console.log(data)})
-    return of(EVENTS.find(event => event.id === id));
+  getCategory(id: number){
+    var subject = new Subject();
+    this.httpClient.get(
+      `${server_addr}/category/events/${id}`,
+    )
+    .map((response:Array<any>) => { //Get rid of what comes together
+      var res = [];
+      for(var i = 0;i<response.length;i++){
+        var temp = response[i].event;
+        res.push(temp)
+      }
+      return res;
+    })
+    .map(response => this.server2local_event(response))
+    .subscribe(data => {
+                        subject.next(data);
+                        console.log("Here comes the events of a category");
+                        console.log(data);
+                      })
+    // return of(EVENTS.find(event => event.id === id));
+    return subject.asObservable();
   }
 
   // NavBar Simple / Extended
@@ -70,7 +83,9 @@ export class EventService {
       return res;
     })
     .map(response => this.server2local_event(response))
-    .subscribe(data => {subject.next(data);console.log("here come the events of a user");console.log(data)})
+    .subscribe(data => {subject.next(data);
+      // console.log("here come the events of a user");console.log(data)
+    })
     return subject.asObservable();
   }
 
@@ -95,7 +110,9 @@ export class EventService {
     //   return res;
     // })
     .map(response => this.server2local_event(response))
-    .subscribe(data => {subject.next(data);console.log("here come the events of a provider");console.log(data)})
+    .subscribe(data => {subject.next(data);
+      /*console.log("here come the events of a provider");console.log(data)*/
+    })
     return subject.asObservable();
   }
 
@@ -119,8 +136,8 @@ export class EventService {
       res.provider_id = server_event.event_provider_id
       final_res.push(res);
     }
-    console.log("Final Res:")
-    console.log(final_res)
+    // console.log("Final Res:")
+    // console.log(final_res)
     return final_res;
   }
 
