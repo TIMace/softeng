@@ -1,10 +1,13 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-lg-3 col-md-4 col text-center">
-      <button routerLink="/search" type="button" class="btn rtrn"><div class="input-group-addon"><i class="fa fa-chevron-left"></i>Επιστροφή στην Αναζήτηση</div></button>
+      <button (click)="goBack()" type="button" class="btn rtrn">
+        <div class="input-group-addon">
+          <i class="fa fa-chevron-left"></i>Επιστροφή στην Προηγούμενη Σελίδα</div>
+      </button>
     </div>
     <div class="col-sm text-center">
-        <u>{{category.name}}</u>
+      <u>{{category.name}}</u>
     </div>
   </div>
   <div class="row">
@@ -12,7 +15,7 @@
       <img class="image" src="{{category.img}}">
       <div class="details">
         <agm-map [latitude]="category.lat" [longitude]="category.lng" [scrollwheel]="true" [zoom]="13">
-            <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
+          <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
         </agm-map>
       </div>
       <button (click)="onSubmit()" type="button" class="btn buy" disabled>Αγορά εισιτηρίου</button>
@@ -22,7 +25,7 @@
     </div>
     <div class="col">
       <div class="details">
-          <u>Τοποθεσία:</u>{{category.location}}
+        <u>Τοποθεσία:</u>{{category.location}}
       </div>
       <div class="details">
         <u>Ημερομηνία:</u> {{category.date}}
@@ -34,7 +37,10 @@
         <u>Ηλικίες:</u> {{category.age_min}} - {{category.age_max}}
       </div>
       <div class="details">
-          <u>Πάροχος:</u> 
+        <u>Πάροχος:</u>
+      </div>
+      <div class="details">
+        <u>Διαθέσιμα εισιτήρια:</u>
       </div>
       <div class="details">
           <u>Διαθέσιμα εισιτήρια:</u> 
@@ -42,9 +48,9 @@
       <u>Περιγραφή:</u>
       <div class="border border-secondary">
         <span class="description">
-          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala 
-          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
-            lala lala lala lala lala lala lala lala lala lala lala lala lala lala 
+          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
+          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
+          lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala lala
         </span>
       </div>
     </div>

@@ -4,6 +4,14 @@ header {
     font-size: 1.5rem;
 }
 
+h1 {
+    text-align: center;
+    padding-top: 20px;
+}
+h5 {
+    text-align: center;
+    padding-top: 20px;
+}
 /* Page Layout */
 
 .container-fluid {

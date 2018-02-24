@@ -3,10 +3,3 @@ export class Category {
     name: string;
     description: string;
 }
-
-// export class Category {
-//     id: number;
-//     name: string;
-//     description: string;
-// }
-

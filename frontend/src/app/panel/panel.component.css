@@ -42,7 +42,9 @@ ul li a {
     font-size: medium;
 }
 
-.example-radio-group:focus { outline: none; }
+.example-radio-group:focus { 
+    outline: none;
+}
 
 .list-group-item {
     border: none;

@@ -52,3 +52,12 @@ agm-map {
     height: 5rem;
     width: 90%;
 }
+
+.form-control {
+    margin-top: 0.75rem;
+    margin-left: 0.75rem;
+}
+
+#GPS_button {
+    margin-top: 0.75rem;
+}
