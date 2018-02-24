@@ -173,8 +173,41 @@ export class UserDetailsService {
   }
 
   addCredits(accountNum,accountPass,money){
-    this.userDetails.credits+=money*100
-    return this.getDetails()
+    // this.userDetails.credits+=money*100
+    var subject = new Subject<any>();
+    var creditDetails = new HttpParams()
+    .set('username', ""+this.userDetails.username)
+    .set('password', ""+this.userDetails.password)
+    .set('amount',""+money*100)
+
+    this.httpClient.put(
+      `${server_addr}/user/add_credits`,
+      creditDetails.toString(),
+      {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      
+      })
+      .subscribe((newUserData:parentDetailsObj) => 
+      {
+        if (newUserData==null || newUserData.hasOwnProperty("error")){
+        subject.next(false)
+        }
+        else{
+          this.userDetails = this.parent2user(newUserData)
+          subject.next(true)
+        }
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+        subject.next(false)
+      }
+    )
+    return subject.asObservable()
   }
 
   logout(){
