@@ -8,7 +8,7 @@
         <ul>
           <li class="nav-item">
             <div>
-              Κόστος: {{cost}}€
+              Κόστος πόντων: {{cost}}
             </div>
             <div>
               <mat-slider thumbLabel tickInterval="auto" min="0" max="100" step="10" [value]="cost" [(ngModel)]="cost" (drag)=selectCost(cost)></mat-slider>
@@ -35,7 +35,7 @@
         <div class="container-fluid categories align-items-stretch">
           <div class="row">
             <div *ngIf="!show_filters">
-              <button mat-button class="example-radio-group" (click)="show_filters=!show_filters; sidenav.toggle()">Φίλτρα</button>
+              <button mat-button class="example-radio-group" (click)="show_filters=!show_filters; sidenav.toggle()">Φίλτρα Αναζήτησης</button>
             </div>
             <button mat-button class="example-radio-group" (click)="show_map = !show_map">Εμφάνιση Αποτελεσμάτων σε χάρτη</button>
           </div>
