@@ -7,6 +7,7 @@ import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Response, Headers, RequestOptions } from '@angular/http'; 
 import 'rxjs/add/operator/map'
 import { Subject } from 'rxjs/Subject';
+import {server_addr} from './server_addr'
 
 @Injectable()
 export class UserDetailsService {
@@ -50,50 +51,28 @@ export class UserDetailsService {
     var subject = new Subject<any>();
     if (utype === "Parent") {
         this.httpClient.get(
-          `http://snf-806935.vm.okeanos.grnet.gr:8888/user/${uname}/${passwd}`
+          `${server_addr}/user/${uname}/${passwd}`
         ).subscribe((data:parentDetailsObj)=>
           {if ( data === null){
             this.userDetails.loginSuccess = false;
           }
         else{
           this.userType = utype;
-          this.userDetails.id = ""+data.user_id;
-          this.userDetails.username = uname;
-          this.userDetails.password = passwd;
-          this.userDetails.email = data.user_email;
-          this.userDetails.firstName = data.user_first_name;
-          this.userDetails.lastName = data.user_last_name;
-          this.userDetails.compName = "";
-          this.userDetails.address = data.user_address;
-          this.userDetails.phoneNum = data.user_phone_num;
-          this.userDetails.ssn = "";
-          this.userDetails.bankAccount = "";
-          this.userDetails.credits = data.user_credits;
+          this.userDetails = this.parent2user(data)
           this.userDetails.loginSuccess = true;
         }
       subject.next(this.userDetails)})
     }
     else if (utype === "Provider"){
       this.httpClient.get(
-        `http://snf-806935.vm.okeanos.grnet.gr:8888/provider/${uname}/${passwd}`
+        `${server_addr}/provider/${uname}/${passwd}`
       ).subscribe((data:providerDetailsObj)=>
         {if ( data === null){
           this.userDetails.loginSuccess = false;
         }
       else{
         this.userType = utype;
-        this.userDetails.id = ""+data.provider_id;
-        this.userDetails.username = uname;
-        this.userDetails.password = passwd;
-        this.userDetails.email = data.provider_email;
-        this.userDetails.firstName = data.provider_first_name;
-        this.userDetails.lastName = data.provider_last_name;
-        this.userDetails.compName = data.provider_comp_name;
-        this.userDetails.address = data.provider_address;
-        this.userDetails.phoneNum = data.provider_phone_num;
-        this.userDetails.ssn = data.provider_ssn;
-        this.userDetails.bankAccount = data.provider_bank_account;
-        this.userDetails.credits = data.provider_credits;
+        this.userDetails = this.provider2user(data)
         this.userDetails.loginSuccess = true;
       }
     subject.next(this.userDetails)})
@@ -102,8 +81,38 @@ export class UserDetailsService {
     return subject.asObservable()
   }
 
+  // παίρνει ένα object τύπου userDetailsObj
   registerParent(detailsObj){
+    var subject = new Subject<any>();
+    var userDetails = new HttpParams()
+    .set('username', ""+detailsObj.parent_username)
+    .set('password', ""+detailsObj.parent_password)
+    .set('email', ""+detailsObj.parent_email)
+    .set('fname', ""+detailsObj.parent_name)
+    .set('lname', ""+detailsObj.parent_lastname)
+    .set('address', ""+detailsObj.parent_location)
+    .set('phone_num', ""+detailsObj.parent_phone);
+    this.httpClient.post(
+      `${server_addr}/user`,
+      userDetails.toString(),
+      {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      
+      }
+    ).subscribe(
+      (data:any)=>{
+        console.log(data)
+        if (data==null){
+          subject.next(true)
+        }
+        else{
+          subject.next(false)
+        }
 
+      }
+    )
+    return subject;
   }
 
   registerProvider(){
@@ -144,6 +153,44 @@ export class UserDetailsService {
     this.userDetails.phoneNum = newDetails.phoneNum;
     this.userDetails.ssn = newDetails.ssn;
     this.userDetails.bankAccount = newDetails.bankAccount;
+  }
+
+  parent2user(parentObj:parentDetailsObj){
+    var res = new userDetailsObj();
+    res.id = ""+parentObj.user_id;
+    res.username = parentObj.username;
+    res.password = parentObj.user_password;
+    res.email = parentObj.user_email;
+    res.firstName = parentObj.user_first_name;
+    res.lastName = parentObj.user_last_name;
+    res.compName = "";
+    res.address = parentObj.user_address;
+    res.phoneNum = parentObj.user_phone_num;
+    res.ssn = "";
+    res.bankAccount = "";
+    res.credits = parentObj.user_credits;
+    res.loginSuccess = false;
+
+    return res;
+  }
+
+  provider2user(providerObj:providerDetailsObj){
+    var res = new userDetailsObj();
+    res.id = ""+providerObj.provider_id;
+    res.username = providerObj.provider_username;
+    res.password = providerObj.provider_password;
+    res.email = providerObj.provider_email;
+    res.firstName = providerObj.provider_first_name;
+    res.lastName = providerObj.provider_last_name;
+    res.compName = providerObj.provider_comp_name;
+    res.address = providerObj.provider_address;
+    res.phoneNum = providerObj.provider_phone_num;
+    res.ssn = providerObj.provider_ssn;
+    res.bankAccount = providerObj.provider_bank_account;
+    res.credits = providerObj.provider_credits;
+    res.loginSuccess = false;
+
+    return res;
   }
 
 }
