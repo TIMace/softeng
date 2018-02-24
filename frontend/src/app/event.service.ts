@@ -32,7 +32,7 @@ export class EventService {
                         subject.next(data)})
     // return of(EVENTS.find(event => event.id === id));
     // return of(EVENTS);
-    this.getProviderEvents().subscribe(data => console.log("done"));
+    // this.getProviderEvents().subscribe(data => console.log("done"));
     return subject.asObservable();
   }
 
