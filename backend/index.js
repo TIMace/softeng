@@ -112,7 +112,7 @@ app.get('/user/buy/:username/:password/:event_id', (req, res) => {
                     .findOne( { where : { event_id : req.params.event_id } } ).then((evnt) => {
                         if (evnt === null)
                             res.json(evnt)
-                        else if (user.user_credit < evnt.event_price)
+                        else if (user.user_credits < evnt.event_price)
                             res.json( { 'error' : 'Οι πόντοι του χρήστη δεν επαρκούν.' } )
                         else {
                             user.user_credits -= evnt.event_price
@@ -140,6 +140,26 @@ app.get('/user/buy/:username/:password/:event_id', (req, res) => {
 })
 
 
+// USER UPDATE (PUT) CREDITS
+app.put('/user/add_credits', (req, res) => {
+    const uname = req.body.username
+        , passwd = req.body.password
+        , amount = req.body.amount
+
+    User
+        .findOne( { where : { username : uname, user_password : passwd } } ).then((user) => {
+            if (user === null)
+                res.json(user)
+            else {
+                user.user_credits += amount
+                user.save( { fields : ['user_credits'] } )
+                res.json(user)
+            }
+        })
+})
+
+
+// USER CREATE (POST)
 app.post('/user', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
@@ -161,6 +181,31 @@ app.post('/user', (req, res) => {
         })
         .catch((err) => {
             res.json( { error : err } )
+        })
+})
+
+
+// USER UPDATE (PUT) DATA
+app.put('/user', (req, res) => {
+    const uname = req.body.username
+        , passwd = req.body.password
+        , new_passwd = req.body.new_password
+        , email = req.body.email
+        , addr = req.body.address
+        , phnum = req.body.phone_num
+
+    User
+        .findOne( { where : { username : uname, user_password : passwd } } ).then((user) => {
+            if (user === null)
+                res.json(user)
+            else {
+                user.user_password = new_passwd
+                user.user_email = email
+                user.user_address = addr
+                user.user_phone_num = phnum
+                user.save( { fields : ['user_password', 'user_email', 'user_address', 'user_phone_num'] } )
+                res.json(user)
+            }
         })
 })
 
@@ -222,6 +267,35 @@ app.post('/provider', (req, res) => {
                 res.json(provider.get( {plain : true }))
             else
                 res.json(null)
+        })
+        .catch((err) => {
+            res.json( { error : err } )
+        })
+})
+
+
+app.put('/provider', (req, res) => {
+    const uname = req.body.username
+        , passwd = req.body.password
+        , new_passwd = req.body.new_password
+        , email = req.body.email
+        , addr = req.body.address
+        , phnum = req.body.phone_num
+        , baccount = req.body.baccount
+
+    Provider
+        .findOne( { where : { provider_username : uname, provider_password : passwd } } ).then((provider) => {
+            if (provider === null)
+                res.json(provider)
+            else {
+                provider.provider_password = new_passwd
+                provider.provider_email = email
+                provider.provider_address = addr
+                provider.provider_phone_num = phnum
+                provider.provider_bank_account = baccount
+                provider.save( { fields : ['provider_password', 'provider_email', 'provider_address', 'provider_phone_num', 'provider_bank_account'] } )
+                res.json(provider)
+            }
         })
         .catch((err) => {
             res.json( { error : err } )
