@@ -1,53 +1,64 @@
-<header>Εισαγωγή πόντων στο πορτοφόλι</header>
 
-<div class="container-fluid">
-    <form class="form-horizontal text-center" [formGroup]="formRegister" (ngSubmit)="doRegister()">
-      <div class="row">
-          <div class="col-md-4 field-label-responsive">
-              <label for="wallet_cardNumber">Αριθμός Κάρτας</label>
-          </div>
-          <div class="col-sm-5 col-md-4">
-              <div class="form-group">
-                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                      <input type="text" id="wallet_cardNumber" class="form-control" formControlName="cardNumber" 
-                            placeholder="xxxx-xxxx-xxxx-xxxx" required>
-                  </div>
-              </div>
-          </div>
-      </div>
-      
-    <div class="row">
-          <div class="col-md-4 field-label-responsive">
-              <label for="wallet_password">CVV</label>
-          </div>
-          <div class="col-sm-5 col-md-4">
-              <div class="form-group has-danger">
-                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                      <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
-                      <input type="password" id="wallet_password" class="form-control" formControlName="password"
-                              placeholder="Password" required>
-                  </div>
-              </div>
-          </div>
-        </div>
-      <div class="row">
-          <div class="col-md-4 field-label-responsive">
-              <label for="wallet_amount">Ποσό Πληρωμής</label>
-          </div>
-          <div class="col-sm-5 col-md-4">
-              <div class="form-group">
-                  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                      <input (focus)="onPayment()" [(ngModel)]="payment" type="number" id="wallet_amount" class="form-control" formControlName="amount" 
-                            placeholder="πχ 50€" required>
-                  </div>
-              </div>
-          </div>        
-      </div>
-
-      <div *ngIf="paymentBool">
-          <p>Πρόκειται να εισάγετε {{payment*100}} πόντους.</p>
-      </div>
-      
-      <button type="submit" class="btn btn-primary" [disabled]="formRegister.invalid"><i class="fa fa-user-plus"></i>Αγορά Πόντων</button>
-    </form>
-  </div>
+<header>
+    Διαχείριση Πορτοφολιού
+</header>
+<h1>
+    Διαθέσιμο υπόλοιπο πόντων: {{this.userDetails.credits}}
+</h1>
+<h5>
+<button (click)="toggle()" id="bt">
+    Προσθέστε πόντους στο αλογίσιο πορτοφόλι σας
+</button>
+</h5>
+<ng-container *ngIf="show">
+        <div class="container-fluid">
+        <form class="form-horizontal text-center" [formGroup]="formRegister" (ngSubmit)="doRegister()">
+            <div class="row">
+                <div class="col-md-4 field-label-responsive">
+                    <label for="wallet_cardNumber">Αριθμός Κάρτας</label>
+                </div>
+                <div class="col-sm-5 col-md-4">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <input type="text" id="wallet_cardNumber" class="form-control" formControlName="cardNumber" placeholder="xxxx-xxxx-xxxx-xxxx"
+                                required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 field-label-responsive">
+                    <label for="wallet_password">CVV</label>
+                </div>
+                <div class="col-sm-5 col-md-4">
+                    <div class="form-group has-danger">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem">
+                                <i class="fa fa-key"></i>
+                            </div>
+                            <input type="password" id="wallet_password" class="form-control" formControlName="password" placeholder="Password" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 field-label-responsive">
+                    <label for="wallet_amount">Ποσό Πληρωμής</label>
+                </div>
+                <div class="col-sm-5 col-md-4">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <input (focus)="onPayment()" [(ngModel)]="payment" type="number" id="wallet_amount" class="form-control" formControlName="amount"
+                                placeholder="πχ 50€" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="paymentBool">
+                <p>Πρόκειται να εισάγετε {{payment*100}} πόντους.</p>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="formRegister.invalid">
+                <i class="fa fa-user-plus"></i>Αγορά Πόντων</button>
+        </form>
+    </div>
+</ng-container>

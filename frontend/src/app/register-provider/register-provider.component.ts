@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UserDetailsService } from '../user-details.service';
 
 @Component({
   selector: 'app-register-provider',
@@ -9,10 +10,22 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 export class RegisterProviderComponent implements OnInit {
   formRegisterProvider: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder,
+    public userDetailsService: UserDetailsService) { }
 
   doRegisterProvider(){
     console.log(this.formRegisterProvider.value);
+    this.userDetailsService.registerProvider(this.formRegisterProvider.value)
+    .subscribe(
+      data =>{
+        if (data){
+          alert("Η εγγραφή ολοκληρώθηκε! Αναμένετε την ενεργοποίηση του λογαριασμού σας από τον διαχειριστή")
+        }
+        else{
+          alert("Η εγγραφή απέτυχε");
+        }
+      }
+    )
   }
 
   ngOnInit() {
