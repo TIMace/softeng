@@ -103,20 +103,68 @@ export class UserDetailsService {
     ).subscribe(
       (data:any)=>{
         console.log(data)
-        if (data==null){
-          subject.next(true)
-        }
-        else{
+        if (data==null || data.hasOwnProperty("error")){
           subject.next(false)
         }
+        else{
+          subject.next(true)
+        }
 
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+        subject.next(false)
       }
     )
     return subject;
   }
 
-  registerProvider(){
+  registerProvider(detailsObj){
+    var subject = new Subject<any>();
+    var userDetails = new HttpParams()
+    .set('username', ""+detailsObj.username)
+    .set('password', ""+detailsObj.password)
+    .set('email', ""+detailsObj.email)
+    .set('fname', ""+detailsObj.name)
+    .set('lname', ""+detailsObj.lastname)
+    .set('cname', ""+detailsObj.company)
+    .set('ssn', ""+detailsObj.afm)
+    .set('baccount', ""+detailsObj.account)
+    .set('address', ""+detailsObj.location)
+    .set('phone_num', ""+detailsObj.phone);
+    this.httpClient.post(
+      `${server_addr}/provider`,
+      userDetails.toString(),
+      {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      
+      }
+    ).subscribe(
+      (data:any)=>{
+        console.log(data)
+        if (data==null || data.hasOwnProperty("error")){
+          subject.next(false)
+        }
+        else{
+          subject.next(true)
+        }
 
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+        subject.next(false)
+      }
+    )
+    return subject;
   }
 
   getDetails(){
