@@ -35,4 +35,7 @@ export class ActivityComponent implements OnInit {
       .subscribe(category => this.category = category);
   }
 
+  goBack(): void {
+    this.location.back();
+  }
 }

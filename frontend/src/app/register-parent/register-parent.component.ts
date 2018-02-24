@@ -14,12 +14,23 @@ export class RegisterParentComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    public userDetailsService: UserDetailsService
+    public userDetailsService: UserDetailsService,
   ) {}
 
   doRegisterProvider(){
     console.log(this.formRegisterParent.value);
-    this.userDetailsService.registerProvider();
+    this.userDetailsService.registerParent(this.formRegisterParent.value).
+      subscribe(
+        data => {
+          if (data) {
+            alert("Η εγγραφή χρήστη ολοκληρώθηκε!")
+            // this.router.navigate(['']);
+          }
+          else{
+            alert("Η εγγραφή χρήστη απέτυχε!")
+          }
+        }
+      );
 
   }
 

@@ -19,6 +19,9 @@ export class EventService {
     return this.selectedEvents;
   }
 
+  // TODO rename getCategory to getEvent
+  // Fix all calls of getCategory στα υπόλοιπα αρχεία
+
   getCategory(id: number): Observable<Event> {
     return of(EVENTS.find(event => event.id === id));
   }

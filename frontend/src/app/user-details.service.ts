@@ -5,6 +5,9 @@ import {HttpClient} from '@angular/common/http';
 import {HttpErrorResponse} from '@angular/common/http';
 import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Response, Headers, RequestOptions } from '@angular/http'; 
+import 'rxjs/add/operator/map'
+import { Subject } from 'rxjs/Subject';
+import {server_addr} from './server_addr'
 
 @Injectable()
 export class UserDetailsService {
@@ -13,7 +16,8 @@ export class UserDetailsService {
   constructor(
     private httpClient:HttpClient
   ) { 
-    this.userType = "Anonymous"
+    this.userType = "Anonymous";
+    this.userDetails = new userDetailsObj()
   }
 
   getUserType(): String {
@@ -22,19 +26,19 @@ export class UserDetailsService {
 
   // login(uname,passwd,utype){
   //   if (["Anonymous","Parent","Provider"].includes(utype)){
-      // this.userType = utype;
-      // this.userDetails.username = uname
-      // this.userDetails.password = passwd;
-      // this.userDetails.email = "somemail@gmail.com";
-      // this.userDetails.firstName = "Bala";
-      // this.userDetails.lastName = "Faras";
-      // this.userDetails.compName = "Lulz";
-      // this.userDetails.address = "someaddress";
-      // this.userDetails.phoneNum = "21028384984930";
-      // this.userDetails.ssn = "15161616";
-      // this.userDetails.bankAccount = "1234567890";
-      // this.userDetails.credits = 5000;
-      // this.userDetails.loginSuccess = true
+  //     this.userType = utype;
+  //     this.userDetails.username = uname
+  //     this.userDetails.password = passwd;
+  //     this.userDetails.email = "somemail@gmail.com";
+  //     this.userDetails.firstName = "Bala";
+  //     this.userDetails.lastName = "Faras";
+  //     this.userDetails.compName = "Lulz";
+  //     this.userDetails.address = "someaddress";
+  //     this.userDetails.phoneNum = "21028384984930";
+  //     this.userDetails.ssn = "15161616";
+  //     this.userDetails.bankAccount = "1234567890";
+  //     this.userDetails.credits = 5000;
+  //     this.userDetails.loginSuccess = true
 
   //     return this.getDetails();
   //   }
@@ -42,44 +46,125 @@ export class UserDetailsService {
   //   return this.getDetails();
   // }
 
-  login(uname:String,passwd:String,utype:String): userDetailsObj{
+  login(uname:String,passwd:String,utype:String){
     console.log("UserService ", uname, passwd, utype);
+    var subject = new Subject<any>();
     if (utype === "Parent") {
-      var req = 
         this.httpClient.get(
-          `http://snf-806935.vm.okeanos.grnet.gr:8888/user/${uname}/${passwd}`
+          `${server_addr}/user/${uname}/${passwd}`
         ).subscribe((data:parentDetailsObj)=>
-          {if ( data == null){
+          {if ( data === null){
             this.userDetails.loginSuccess = false;
           }
         else{
           this.userType = utype;
-          this.userDetails.username = uname;
-          this.userDetails.password = passwd;
-          this.userDetails.email = data.user_email;
-          this.userDetails.firstName = data.user_first_name;
-          this.userDetails.lastName = data.user_last_name;
-          this.userDetails.compName = "";
-          this.userDetails.address = data.user_address;
-          this.userDetails.phoneNum = data.user_phone_num;
-          this.userDetails.ssn = "";
-          this.userDetails.bankAccount = "";
-          this.userDetails.credits = data.user_credits;
+          this.userDetails = this.parent2user(data)
           this.userDetails.loginSuccess = true;
-        }})
+        }
+      subject.next(this.userDetails)})
     }
     else if (utype === "Provider"){
-
+      this.httpClient.get(
+        `${server_addr}/provider/${uname}/${passwd}`
+      ).subscribe((data:providerDetailsObj)=>
+        {if ( data === null){
+          this.userDetails.loginSuccess = false;
+        }
+      else{
+        this.userType = utype;
+        this.userDetails = this.provider2user(data)
+        this.userDetails.loginSuccess = true;
+      }
+    subject.next(this.userDetails)})
     }
-    return this.getDetails()
+    // return of(this.getDetails())
+    return subject.asObservable()
   }
 
+  // παίρνει ένα object τύπου userDetailsObj
   registerParent(detailsObj){
+    var subject = new Subject<any>();
+    var userDetails = new HttpParams()
+    .set('username', ""+detailsObj.parent_username)
+    .set('password', ""+detailsObj.parent_password)
+    .set('email', ""+detailsObj.parent_email)
+    .set('fname', ""+detailsObj.parent_name)
+    .set('lname', ""+detailsObj.parent_lastname)
+    .set('address', ""+detailsObj.parent_location)
+    .set('phone_num', ""+detailsObj.parent_phone);
+    this.httpClient.post(
+      `${server_addr}/user`,
+      userDetails.toString(),
+      {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      
+      }
+    ).subscribe(
+      (data:any)=>{
+        console.log(data)
+        if (data==null || data.hasOwnProperty("error")){
+          subject.next(false)
+        }
+        else{
+          subject.next(true)
+        }
 
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+        subject.next(false)
+      }
+    )
+    return subject;
   }
 
-  registerProvider(){
+  registerProvider(detailsObj){
+    var subject = new Subject<any>();
+    var userDetails = new HttpParams()
+    .set('username', ""+detailsObj.username)
+    .set('password', ""+detailsObj.password)
+    .set('email', ""+detailsObj.email)
+    .set('fname', ""+detailsObj.name)
+    .set('lname', ""+detailsObj.lastname)
+    .set('cname', ""+detailsObj.company)
+    .set('ssn', ""+detailsObj.afm)
+    .set('baccount', ""+detailsObj.account)
+    .set('address', ""+detailsObj.location)
+    .set('phone_num', ""+detailsObj.phone);
+    this.httpClient.post(
+      `${server_addr}/provider`,
+      userDetails.toString(),
+      {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      
+      }
+    ).subscribe(
+      (data:any)=>{
+        console.log(data)
+        if (data==null || data.hasOwnProperty("error")){
+          subject.next(false)
+        }
+        else{
+          subject.next(true)
+        }
 
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+        subject.next(false)
+      }
+    )
+    return subject;
   }
 
   getDetails(){
@@ -93,6 +178,7 @@ export class UserDetailsService {
 
   logout(){
     this.userType = "Anonymous";
+    this.userDetails.id = "";
     this.userDetails.username = ""
     this.userDetails.password = "";
     this.userDetails.email = "";
@@ -117,9 +203,48 @@ export class UserDetailsService {
     this.userDetails.bankAccount = newDetails.bankAccount;
   }
 
+  parent2user(parentObj:parentDetailsObj){
+    var res = new userDetailsObj();
+    res.id = ""+parentObj.user_id;
+    res.username = parentObj.username;
+    res.password = parentObj.user_password;
+    res.email = parentObj.user_email;
+    res.firstName = parentObj.user_first_name;
+    res.lastName = parentObj.user_last_name;
+    res.compName = "";
+    res.address = parentObj.user_address;
+    res.phoneNum = parentObj.user_phone_num;
+    res.ssn = "";
+    res.bankAccount = "";
+    res.credits = parentObj.user_credits;
+    res.loginSuccess = false;
+
+    return res;
+  }
+
+  provider2user(providerObj:providerDetailsObj){
+    var res = new userDetailsObj();
+    res.id = ""+providerObj.provider_id;
+    res.username = providerObj.provider_username;
+    res.password = providerObj.provider_password;
+    res.email = providerObj.provider_email;
+    res.firstName = providerObj.provider_first_name;
+    res.lastName = providerObj.provider_last_name;
+    res.compName = providerObj.provider_comp_name;
+    res.address = providerObj.provider_address;
+    res.phoneNum = providerObj.provider_phone_num;
+    res.ssn = providerObj.provider_ssn;
+    res.bankAccount = providerObj.provider_bank_account;
+    res.credits = providerObj.provider_credits;
+    res.loginSuccess = false;
+
+    return res;
+  }
+
 }
 
 export class userDetailsObj{
+  id = ""
   username:String = "";
   password:String = "";
   email:String = "";
@@ -144,5 +269,21 @@ class parentDetailsObj{
   user_last_name: String;
   user_address: String;
   user_phone_num: String;
-  user_credits: null;
+  user_credits: number;
+}
+
+class providerDetailsObj{
+  provider_id: String;
+  provider_username: String;
+  provider_password: String;
+  provider_email: String;
+  provider_join_date: String;
+  provider_first_name: String;
+  provider_last_name: String;
+  provider_address: String;
+  provider_phone_num: String;
+  provider_credits: number;
+  provider_bank_account: String;
+  provider_ssn: String;
+  provider_comp_name: String;
 }

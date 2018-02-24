@@ -35,8 +35,6 @@ export class NavbarComponent implements OnInit {
     private dialog: MatDialog
   ) {}
   
-  //--------------------- Form ---------------------//
-
   //------------ Activity ------------//
 
   categories: Category[];
@@ -54,7 +52,7 @@ export class NavbarComponent implements OnInit {
   }
 
   //-------------- MAP --------------//
-
+  
   mapDialogRef: MatDialogRef<MapComponent>;
 
   @ViewChild("searchNav")
@@ -81,7 +79,6 @@ export class NavbarComponent implements OnInit {
       var geocoder = new google.maps.Geocoder;
       this.geocodeLatLng(geocoder);
     });
-
   }
 
   tempLocation: string;
@@ -147,6 +144,7 @@ export class NavbarComponent implements OnInit {
   
   exit() {
     this.userDetailsService.logout();
+    this.router.navigate(['']);
   }
 
   ngOnInit() {
