@@ -115,10 +115,10 @@ app.get('/user/buy/:username/:password/:event_id', (req, res) => {
                         else if (user.user_credit < evnt.event_price)
                             res.json( { 'error' : 'Οι πόντοι του χρήστη δεν επαρκούν.' } )
                         else {
-                            user.user_credit -= evnt.event_price
-                            user.save()
+                            user.user_credits -= evnt.event_price
+                            user.save( { fields : ['user_credits'] } )
                             evnt.event_available_tickets -= 1;
-                            evnt.save()
+                            evnt.save( { fields : ['event_available_tickets'] } )
                             Transaction
                                 .create( { transaction_event_id : evnt.event_id, transaction_user_id : user.user_id,
                                     transaction_points : evnt.event_price }).then((trans) => {
