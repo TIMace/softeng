@@ -7,6 +7,7 @@ import { EventService } from '../event.service';
 // MAP
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
+import { UserDetailsService } from '../user-details.service';
 
 @Component({
   selector: 'app-events-past',
@@ -17,6 +18,7 @@ export class EventsPastComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
+    public userDetailsService: UserDetailsService,
     private mapsAPILoader: MapsAPILoader
   ) { }
 

@@ -19,9 +19,9 @@
           <li class="list-group-item">
             <button type="button" class="list-group-item list-group-item-action" (click)="selected_past_events()">Παλιές δραστηριότητες</button>
           </li>
-          <!-- <li class="list-group-item">
+          <li class="list-group-item">
             <button type="button" class="list-group-item list-group-item-action" (click)="selected_create_activity()">Δημιουργία νέας δραστηριότητας</button>
-          </li> -->
+          </li>
         </ul>
       </mat-sidenav>
 
@@ -40,7 +40,7 @@
           <app-personal-info *ngIf="show == 1"></app-personal-info>
           <app-events-present *ngIf="show == 2"></app-events-present>
           <app-events-past *ngIf="show == 3"></app-events-past>
-          <!-- <app-create-activity *ngIf="show == 4"></app-create-activity> -->
+          <app-create-activity *ngIf="show == 4"></app-create-activity>
 
         </div>
       </mat-sidenav-content>

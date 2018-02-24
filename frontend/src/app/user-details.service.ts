@@ -13,7 +13,7 @@ export class UserDetailsService {
   constructor(
     private httpClient:HttpClient
   ) { 
-    this.userType = "Anonymous"
+    this.userType = "Provider"
   }
 
   getUserType(): String {
