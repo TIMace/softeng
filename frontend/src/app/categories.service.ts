@@ -19,9 +19,27 @@ export class CategoriesService {
   getCategories(): Observable<Category[]> {
     var req = this.httpClient.get(
       `${server_addr}/category`
-    ).map((response: Response) => <Category[]>(response.json()))
-    return of(CATEGORIES);
-    // return req;
+    )
+    .map(response => this.server2local_cat(response))
+    // req.subscribe((data) => {console.log("Now comes the server answer");console.log(data)});
+    // of(CATEGORIES).subscribe((data) => {console.log("Now comes the mock answer");console.log(data)});
+    // return of(CATEGORIES);
+    return req;
+  }
+
+  server2local_cat(server_cats:any): (Category[]) {
+    var num = server_cats.length
+    var res = [];
+    for(var i=0;i<num;i++){
+      var elem:Category = new Category();
+      elem.id = server_cats[i].category_id;
+      elem.name = server_cats[i].category_name;
+      elem.description = server_cats[i].category_descr
+      res.push(elem);
+    }
+    // console.log(" Here is what map gets")
+    // console.log(res)
+    return res;
   }
 
   getSelectedCategories(): Category[] {
