@@ -13,6 +13,7 @@ import {server_addr} from './server_addr'
 export class UserDetailsService {
   userType : String;
   userDetails : userDetailsObj;
+  public editMode : String; //"edit" or "create"
   constructor(
     private httpClient:HttpClient
   ) { 
