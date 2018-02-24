@@ -15,8 +15,8 @@
     <div class="col-12 col-md-3 text-center">
       <img class="image" src="{{category.img}}">
       <button (click)="onSubmit()" type="button" class="btn buy">Προσθήκη Εικόνας</button>
-      <agm-map [latitude]="category.lat" [longitude]="category.lng" [scrollwheel]="true" [zoom]="13">
-        <agm-marker [latitude]="category.lat" [longitude]="category.lng"></agm-marker>
+      <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="13">
+        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
       </agm-map>
     </div>
 
@@ -81,7 +81,11 @@
 
 <div class="form-check">
   <input type="checkbox" class="form-check-input" id="catCheck">
-  <label class="form-check-label" for="catCheck">uigiu</label>
+  <label class="form-check-label" for="catCheck">
+
+
+
+  </label>
 </div>
 
 </li>
