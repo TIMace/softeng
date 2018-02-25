@@ -1,5 +1,6 @@
 .container-fluid {
     margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* Image */
@@ -60,4 +61,14 @@ agm-map {
 
 #GPS_button {
     margin-top: 0.75rem;
+}
+
+.form-check {
+    margin-left: 1.25rem;
+}
+/* Image Upload */
+
+.card {
+    height: 12rem;
+    /* width: 15rem; */
 }

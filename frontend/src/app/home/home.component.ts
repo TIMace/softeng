@@ -48,14 +48,15 @@ export class HomeComponent implements OnInit {
 
   onSubmit(){
     
-    console.log(this.activity);
+    // console.log(this.activity);
     
-    for (let i = 0; i < this.categories.length; i++ )
-      if ( ( this.activity != null) && ( this.categories[i].name == this.activity ) )
-        this.categoriesService.selectedCategories.push(this.categories[i]);
+    // for (let i = 0; i < this.categories.length; i++ )
+    //   if ( ( this.activity != null) && ( this.categories[i].name == this.activity ) )
+    //     this.categoriesService.selectedCategories.push(this.categories[i]);
     
     this.categoriesService.navbar_extended = 1;
-
+    this.categoriesService.selectedCategories = this.selectedCategories;
+    console.log("HOME: ", this.selectedCategories);
     this.router.navigate(['/search']);
   }
 
@@ -160,9 +161,10 @@ export class HomeComponent implements OnInit {
   selectedCategories: Category[];
 
   onSelect(category: Category): void {
-    this.categoriesService.navbar_extended = 1;
-    this.categoriesService.selectedCategories.push(category);
-    this.router.navigate(['/search']);
+    // this.categoriesService.navbar_extended = 1;
+    // this.categoriesService.selectedCategories.push(category);
+    // this.router.navigate(['/search']);
+    this.selectedCategories.push(category);
   }
 
   ngOnInit() {
@@ -172,6 +174,7 @@ export class HomeComponent implements OnInit {
 
     // Requests from service
     this.getCategories();
+    this.selectedCategories = this.categoriesService.getSelectedCategories();
 
     this.write();
   }

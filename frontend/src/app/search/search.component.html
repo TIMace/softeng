@@ -2,9 +2,14 @@
   <div class="mat-app-background basic-container">
     <mat-sidenav-container class="example-container">
       <mat-sidenav #sidenav mode="side" class="col-lg-2 col-md-3 text-center example-sidenav">
-        <p>
+        <!-- <p>
           <button mat-button class="example-radio-group" (click)="show_filters=!show_filters; sidenav.toggle()">Κλείσιμο</button>
-        </p>
+        </p> -->
+        <div class="text-right">
+          <button mat-icon-button color="secondary" (click)="show_filters=!show_filters; sidenav.toggle()">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
         <ul>
           <li class="nav-item">
             <div>
@@ -28,6 +33,9 @@
               <mat-slider thumbLabel tickInterval="auto" min="0" max="10" step="1" [value]="distance" [(ngModel)]="distance" (drag)=selectCost(cost)></mat-slider>
             </div>
           </li>
+          <li>
+            <button mat-button class="example-radio-group"  (click)="filters()">Εφαρμογή Φίλτρων</button>
+          </li>
         </ul>
       </mat-sidenav>
 
@@ -41,11 +49,10 @@
           </div>
 
           <!-- Categories -->
-          <div class="btn-group" data-toggle="buttons" *ngFor="let category of categories" (click)="onSelect(category)">
-            <label class="btn btn-outline-info" id={{category.id}} [class.active]="category.id === checked">
-              <input type="checkbox"> {{category.name}}
-            </label>
-          </div>
+          <!-- <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"  [checked]="findChecked(cat)"> -->
+          <label *ngFor="let cat of categories;" class="btn btn-outline-info" for="defaultCheck1" [class.active]="findChecked(cat)" (click)="onSelect(cat)">
+            {{cat.name}}
+          </label>
         </div>
 
         <!-- MAP -->
@@ -53,9 +60,9 @@
           <div class="form-group">
           </div>
           <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom" fullscreenControl="true">
-            <agm-marker *ngFor="let m of selectedCategories; let i = index" [latitude]="m.lat" [longitude]="m.lng" [label]="m.id.toString()">
+            <agm-marker *ngFor="let ev of events;" [latitude]="ev.lat" [longitude]="ev.lng" [label]="ev.id.toString()">
               <agm-info-window>
-                <strong>{{m.name}}</strong>
+                <strong>{{ev.name}}</strong>
               </agm-info-window>
             </agm-marker>
           </agm-map>

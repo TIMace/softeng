@@ -2,6 +2,7 @@
 
 .container-fluid {
     margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* Content */
@@ -11,5 +12,5 @@
 }
 
 .field-label-responsive{
-    text-align: right;
+    text-align: center;
 }

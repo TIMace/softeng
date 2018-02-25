@@ -1,9 +1,12 @@
-<div class="card" *ngFor="let event of current_events">
+<div class="card" *ngFor="let event of arrayOfEvents">
   <div class="row">
     <div class="col-lg-2 col-md-3 col-5 text-center" id="img-card">
       <img class="card-img-top" src="{{event.img}}" alt="Card image cap">
-      <div>
-        Πόντοι: {{event.id}}
+      <div *ngIf="userDetailsService.getUserType() === 'Parent'">
+        Προβολή εισιτηρίου (PDF)
+      </div>
+      <div *ngIf="userDetailsService.getUserType() === 'Provider'">
+        Εισπραχθέν ποσό:
       </div>
     </div>
     <div class="col-lg-7 col-md-5 col-7">
@@ -32,11 +35,6 @@
             Ηλικίες: {{event.age_min}}-{{event.age_max}}
           </p>
         </div>
-      </div>
-      <div>
-        <p class="card-text">
-          Κατηγορίες:
-        </p>
       </div>
       <div>
         <a href="#" routerLink="/activity/{{event.id}}">Λεπτομέρειες Δραστηριότητας</a>
