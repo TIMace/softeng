@@ -5,21 +5,21 @@
       Τίτλος:
     </div>
     <div class="col-8 col-md-4 text-center">
-      <input class="form-control" type="text" placeholder="Τίτλος Δραστηριότητας" [(ngModel)]="ev.name">
+      <input class="form-control" type="text" placeholder="Τίτλος Δραστηριότητας" [(ngModel)]="name">
     </div>
     <span class="col-0 col-md-3"></span>
   </div>
 
   <div class="row">
     <div class="col-12 col-md-3 text-center">
-      <img class="image" src="{{ev.img}}">
+      <img class="image" src="{{img}}">
       <!-- <img class="card uploadImage" [src]="url">
       <input type='file' (change)="readUrl($event)">
       <button (click)="uploadFileToActivity()">Upload File</button> -->
     </div>
 
     <div class="col-12 col-md-6">
-      Διεύθυνση: {{ev.location}}
+      Διεύθυνση: {{location}}
       <div class="details">
         <div>
           <input matInput [matDatepicker]="picker" placeholder="Ημερομηνία" [(ngModel)]="date">
@@ -28,7 +28,7 @@
         </div>
         <div class="details">
           <u>Κατηγορίες:</u>
-          <label *ngFor="let cat of ev.categories;">
+          <label *ngFor="let cat of categories;">
             {{cat}}
           </label>
         </div>
@@ -36,14 +36,14 @@
         <div class="details">
           <u>Ηλικίες:</u>
           <div class="row">
-            <input class="col-1 form-control form-control-sm" type="text" placeholder="Από" [(ngModel)]="ev.age_min"> &nbsp;
-            <input class="col-1 form-control form-control-sm" type="text" placeholder="Μέχρι" [(ngModel)]="ev.age_max">
+            <input class="col-1 form-control form-control-sm" type="text" placeholder="Από" [(ngModel)]="age_min"> &nbsp;
+            <input class="col-1 form-control form-control-sm" type="text" placeholder="Μέχρι" [(ngModel)]="age_max">
           </div>
         </div>
         <u>Περιγραφή:</u>
         <form>
           <div class="form-group">
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="description" [(ngModel)]="ev.description"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="description" [(ngModel)]="description"></textarea>
           </div>
         </form>
         <div class="details">

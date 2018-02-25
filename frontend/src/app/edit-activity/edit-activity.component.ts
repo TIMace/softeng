@@ -32,7 +32,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 export class EditActivityComponent implements OnInit {
 
-  @Input() ev: Event;
+  ev: Event;
 
   constructor(
     private eventService: EventService,
@@ -44,21 +44,36 @@ export class EditActivityComponent implements OnInit {
     private httpClient: HttpClient
   ) { }
 
-  date: Date;
-  euros: number;
-  cents: number;
+  name = "";
+  location = "";
+  img = "";
+  date = new Date;
+  categories = [""];
+  age_min = 0;
+  age_max = 0;
+  description = "";
+  euros = 0;
+  cents = 0;
   ngOnInit() {
     this.getID();
-    this.date = new Date(this.ev.date);
-    this.euros = Math.floor(this.ev.price / 100);
-    this.cents = this.ev.price % 100;
     // console.log(this.ev);
   }
 
   getID(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.eventService.getEventById(id)
-      .subscribe(ev => this.ev = ev);
+      .subscribe(ev => {
+        this.ev = ev;
+        this.name = this.ev.name;
+        this.location = this.ev.location;
+        this.img = this.ev.img;
+        this.date = new Date(this.ev.date);
+        this.categories = this.ev.categories;
+        this.age_min = this.ev.age_min;
+        this.age_max = this.ev.age_max;
+        this.description = this.ev.description;
+        this.euros = Math.floor(this.ev.price / 100);
+        this.cents = this.ev.price % 100; });
   }
 
   updateEvent() {
