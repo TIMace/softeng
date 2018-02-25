@@ -14,8 +14,6 @@ export class PersonalInfoComponent implements OnInit {
 
   formUpdate: FormGroup;
 
-  //provider: boolean;
-
   constructor(
     private formBuilder: FormBuilder,
     public userDetailsService: UserDetailsService
@@ -41,15 +39,6 @@ export class PersonalInfoComponent implements OnInit {
 
   ngOnInit() {
 
-    //this.provider = true;
-
-    //TO DO
-    //CREATE 2 FORMES WITH IF THEN ELSE STATEMENT
-    // 1 FORM WHEN USER IS LOGGED IN 
-    // 1 FORM FOR PARENT
-    // CHANGE HTML ACCORDINGLY
-
-
     this.formUpdate = this.formBuilder.group({
       name: [this.userDetails.firstName],
       lastname: [this.userDetails.lastName],
@@ -57,7 +46,7 @@ export class PersonalInfoComponent implements OnInit {
       phone: [this.userDetails.phoneNum, Validators.required],
       company: [this.userDetails.compName],
       afm: [this.userDetails.ssn],
-      account: [this.userDetails.bankAccount],
+      account: [this.userDetails.bankAccount, Validators.required],
       username: [this.userDetails.username],
       email: [this.userDetails.email, [Validators.required, Validators.email]],
       credits: [this.userDetails.credits],
