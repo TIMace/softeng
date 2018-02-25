@@ -4,11 +4,12 @@ import { Location } from '@angular/common';
 import { Event } from '../event';
 import { EVENTS } from '../mock-events';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material';
+import {MatNativeDateModule, NativeDateAdapter} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormControl } from '@angular/forms';
 import { CategoriesService } from '../categories.service';
 import { Router } from '@angular/router';
+
 
 // MAP
 import { AgmMap } from '@agm/core/directives/map';
@@ -29,7 +30,6 @@ import {HttpClient} from '@angular/common/http';
 import {HttpErrorResponse} from '@angular/common/http';
 import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Response, Headers, RequestOptions } from '@angular/http'; 
-
 
 
 
@@ -153,7 +153,31 @@ export class CreateActivityComponent implements OnInit {
      }
    }
 
+
+  
    createEvent(){
+    var eventDetails:Event;
+    var localDate = new Date();
+    var realCheckedCategories:string[];
+    function isRealCategory(element, index, array) {
+      return element != "false"
+    }
+    realCheckedCategories = this.checkedCategories.filter(isRealCategory);
+    if(this.date <= localDate) {
+      alert("Πρέπει να επιλεγεί μελλοντική ημερομηνία διεξαγωγής")
+    }
+    else if(realCheckedCategories.length == 0) {
+      alert("Πρέπει να επιλέξετε τουλάχιστον μία κατηγορία")
+    }
+    else if(!Number.isInteger(this.ageMin) ||!Number.isInteger(this.ageMax) || this.ageMin>this.ageMax ) {
+      alert("Ελέγξτε τα πεδία των ηλικιών. Οι τιμές πρέπει να είναι ακέραιες και η μέγιστη ηλικία να μην είναι μικρότερη από την ελάχιστη")
+    }
+    else if(!Number.isInteger(this.euros) || !Number.isInteger(this.cents) || this.cents>99) {
+      alert("Ελέγξτε τα πεδία της τιμής. Οι τιμές πρέπει να είναι ακέραιες και τα Λεπτά το πολύ 99")
+    }
+
+    // this.eventService.createEvent(eventDetails);
+
 
    }
 
@@ -169,15 +193,16 @@ export class CreateActivityComponent implements OnInit {
    }
    title:string;
    date:Date;
-   ageMin:string;
-   ageMax:string;
+   ageMin:number;
+   ageMax:number;
    description:string;
-   euros:string;
-   cents:string;
+   euros:number;
+   cents:number;
+
+  
+
    temp(){
-    this.location = (<HTMLInputElement>document.getElementById("location")).value;
-    console.log(this.location);
-    console.log(this.euros);
+    console.log(this.date);
     console.log(this.cents);
   }
 
@@ -250,16 +275,9 @@ export class CreateActivityComponent implements OnInit {
     }
   }
 
+
+  
+
 }
 
-export class eventDetailsObj {
-  title:string = "";
-  //image
-  address:string = "";
-  categories:string = "";
-  ageMin:string = "";
-  ageMax:string = "";
-  descrition:string = "";
-  euros:string = "";
-  cents:string = "";
-}
+
