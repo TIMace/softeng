@@ -95,7 +95,7 @@ export class CreateActivityComponent implements OnInit {
        if (status === 'OK') {
          if (results[0]) {
            // console.log(results[0].formatted_address);
-           // this.location = results[0].formatted_address;
+           //  this.location = results[0].formatted_address;
            // console.log(this.location);
            (<HTMLInputElement>document.getElementById("location")).value = results[0].formatted_address;
          } else {
@@ -129,6 +129,7 @@ export class CreateActivityComponent implements OnInit {
              return;
            }
  
+           this.location = place.formatted_address;
            //set latitude, longitude and zoom
            this.latitude = place.geometry.location.lat();
            this.longitude = place.geometry.location.lng();
@@ -174,7 +175,8 @@ export class CreateActivityComponent implements OnInit {
    euros:string;
    cents:string;
    temp(){
-
+    this.location = (<HTMLInputElement>document.getElementById("location")).value;
+    console.log(this.location);
     console.log(this.euros);
     console.log(this.cents);
   }

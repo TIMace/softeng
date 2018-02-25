@@ -40,19 +40,21 @@ export class SearchComponent implements OnInit {
 
   getSelectedCategories(): void {
     this.selectedCategories = this.categoryService.getSelectedCategories();
-    console.log(JSON.stringify(this.selectedEvents));
+    console.log("SEARCH: ",this.selectedCategories);
   }
 
-  findChecked(): void {
-    for ( let i = 0; i < this.categories.length; i++ )
-      if ( ( this.selectedCategories.length > 0 ) && ( this.categories[i].name === this.selectedCategories[0].name ) ){
-        this.checked = this.categories[i].id;
-        console.log(this.checked);
-      }
+  findChecked(category: Category): number {
+    const index: number = this.categoryService.selectedCategories.indexOf(category);
+    if (index !== -1) {
+      return 1;
+    }
+    else {
+      return 0;
+    }
   }
 
   onSelect(category: Category): void {
-    const index: number = this.selectedCategories.indexOf(category);
+    const index: number = this.categoryService.selectedCategories.indexOf(category);
     if (index !== -1) {
       // reset map's center
       // if ( this.selectedCategory.length == 1 ){
@@ -63,8 +65,8 @@ export class SearchComponent implements OnInit {
       //   this.longitude = ( ( this.longitude * this.selectedCategories.length ) - category.lng ) / (this.selectedCategories.length - 1 );
       // }
 
-      this.selectedCategories.splice(index, 1);
-      this.categoryService.removeCategory(index);
+      // this.selectedCategories.splice(index, 1);
+      this.categoryService.selectedCategories.splice(index, 1);
 
     }
     else {
@@ -77,10 +79,10 @@ export class SearchComponent implements OnInit {
       //   this.longitude = ( ( this.longitude * this.selectedEvents.length ) + event.lng ) / (this.selectedEvents.length + 1 );
       // }
 
-      this.selectedCategories.push(category);
+      // this.selectedCategories.push(category);
       this.categoryService.selectedCategories.push(category);
     }
-    console.log(JSON.stringify(this.selectedEvents));
+    console.log(JSON.stringify(this.categoryService.selectedCategories));
   }
 
   // --------------------- Events --------------------- //
@@ -118,9 +120,7 @@ export class SearchComponent implements OnInit {
     this.getCategories();
     this.getSelectedCategories();
     
-    this.getEvents();
-    
-    this.findChecked();
+    // this.getEvents();
 
     this.show_filters = false;
 
