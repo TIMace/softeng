@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, NgZone, ElementRef, ViewChild } from '@angular/core';
-
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
 import { Event } from '../event';
 import { EVENTS } from '../mock-events';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -10,8 +8,6 @@ import {MatNativeDateModule} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormControl } from '@angular/forms';
 import { CategoriesService } from '../categories.service';
-
-
 // MAP
 import { AgmMap } from '@agm/core/directives/map';
 import { MapsAPILoader } from '@agm/core';
@@ -19,10 +15,6 @@ import { } from 'googlemaps';
 import { MapComponent } from '../map/map.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { MapService } from '../map.service';
-
-
-
-
 // Services
 import { EventService } from '../event.service';
 import { element } from 'protractor';
@@ -33,8 +25,8 @@ import { element } from 'protractor';
   styleUrls: ['./create-activity.component.css']
 })
 export class CreateActivityComponent implements OnInit {
-  @Input() category: Event;
 
+  @Input() category: Event;
 
   constructor(
     private eventService: EventService,
@@ -47,7 +39,6 @@ export class CreateActivityComponent implements OnInit {
     private dialog: MatDialog
 
   ) { }
-
 
    //-------------- MAP --------------//
 
@@ -100,7 +91,6 @@ export class CreateActivityComponent implements OnInit {
    }
  
    write() {
- 
      //create search FormControl
      this.searchControl = new FormControl();
   
@@ -145,15 +135,9 @@ export class CreateActivityComponent implements OnInit {
      }
    }
 
-
-
-
-
-
    createEvent(){
 
    }
-
 
    cancelEvent(){
      
@@ -165,11 +149,18 @@ export class CreateActivityComponent implements OnInit {
        this.checkedCategories.push("false")
      })
    }
-
+   title:string;
+   address:string;
    date:Date;
+   ageMin:string;
+   ageMax:string;
+   description:string;
+   euros:string;
+   cents:string;
    temp(){
 
-    console.log(this.checkedCategories);
+    console.log(this.euros);
+    console.log(this.cents);
   }
 
   categories;
