@@ -40,23 +40,21 @@ export class SearchComponent implements OnInit {
 
   getSelectedCategories(): void {
     this.selectedCategories = this.categoryService.getSelectedCategories();
-    console.log(this.selectedCategories);
+    console.log("SEARCH: ",this.selectedCategories);
   }
 
-  findChecked(category: Category): void {
-    const index: number = this.selectedCategories.indexOf(category);
+  findChecked(category: Category): number {
+    const index: number = this.categoryService.selectedCategories.indexOf(category);
     if (index !== -1) {
-      this.selectedCategories.splice(index, 1);
-      // this.categoryService.removeCategory(index);
+      return 1;
     }
     else {
-      this.selectedCategories.push(category);
-      // this.categoryService.selectedCategories.push(category);
+      return 0;
     }
   }
 
   onSelect(category: Category): void {
-    const index: number = this.selectedCategories.indexOf(category);
+    const index: number = this.categoryService.selectedCategories.indexOf(category);
     if (index !== -1) {
       // reset map's center
       // if ( this.selectedCategory.length == 1 ){
@@ -67,8 +65,8 @@ export class SearchComponent implements OnInit {
       //   this.longitude = ( ( this.longitude * this.selectedCategories.length ) - category.lng ) / (this.selectedCategories.length - 1 );
       // }
 
-      this.selectedCategories.splice(index, 1);
-      // this.categoryService.removeCategory(index);
+      // this.selectedCategories.splice(index, 1);
+      this.categoryService.selectedCategories.splice(index, 1);
 
     }
     else {
@@ -81,10 +79,10 @@ export class SearchComponent implements OnInit {
       //   this.longitude = ( ( this.longitude * this.selectedEvents.length ) + event.lng ) / (this.selectedEvents.length + 1 );
       // }
 
-      this.selectedCategories.push(category);
-      // this.categoryService.selectedCategories.push(category);
+      // this.selectedCategories.push(category);
+      this.categoryService.selectedCategories.push(category);
     }
-    console.log(JSON.stringify(this.selectedCategories));
+    console.log(JSON.stringify(this.categoryService.selectedCategories));
   }
 
   // --------------------- Events --------------------- //
