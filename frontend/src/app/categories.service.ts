@@ -42,7 +42,7 @@ export class CategoriesService {
     return res;
   }
 
-  onClickSelectCategory(category:Category){
+  onClickSelectCategory(category:Category) :Category[]{
     var index = this.categorySelectedIndex(category);
     if (index != -1){
       this.selectedCategories.splice(index,1)

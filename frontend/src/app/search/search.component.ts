@@ -41,84 +41,34 @@ export class SearchComponent implements OnInit {
   categories: Category[];
   selectedCategories: Category[];
 
-  events: Event[];
-  selectedEvents: Event[];
-
   getCategories(): void {
     this.categoryService.getCategories().subscribe(categories => this.categories = categories);
   }
 
   getSelectedCategories(): void {
     this.selectedCategories = this.categoryService.getSelectedCategories();
-    console.log("SEARCH: ",this.selectedCategories);
+    // console.log("SEARCH: ",this.selectedCategories);
   }
 
   findChecked(category: Category): boolean {
-    // const index: number = this.selectedCategories.indexOf(category);
-    var index=-1;
-    for (var i = 0; i < this.selectedCategories.length; i++ ){
-      if ( this.selectedCategories[i].name === category.name )
-        index = 1;
-        break;
-    }
+    var index = this.categoryService.categorySelectedIndex(category);
     if (index !== -1) {
-      console.log("FC: nai");
       return true;
     }
     else {
-      console.log("FC: oxi");
       return false;
     }
-
-
   }
 
   onSelect(category: Category): void {
-
-    var index=-1;
-    for (var i = 0; i < this.selectedCategories.length; i++ ){
-      if ( this.selectedCategories[i].name === category.name )
-        index = i;
-        break;
-    }
-    // return 0;
-    // for(var i)
-    if (index !== -1) {
-      console.log("ON: nai");
-      this.selectedCategories.splice(index, 1);
-    }
-    else {
-      console.log("ON: oxi");
-        this.selectedCategories.push(category);
-    }
-
+    this.selectedCategories = this.categoryService.onClickSelectCategory(category);
     console.log(JSON.stringify(this.selectedCategories));
-  }
-
-  checkedCategories:string[] = [];
-  checkedCategoriesInit(){
-    this.categories.forEach(element => {
-      var index: number = this.selectedCategories.indexOf(element);
-      if (index !== -1) {
-        this.checkedCategories.push("true");
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA");
-      }
-      else {
-        this.checkedCategories.push("false");
-      }
-    });
-  }
-
-  changeCheckbox(catIndex,catName) {
-    if(this.checkedCategories[catIndex] === "false") {
-      this.checkedCategories[catIndex] = catName
-    }
-    else {
-      this.checkedCategories[catIndex] = "false"
-    }
   }
   
   // --------------------- Events --------------------- //
+
+  events: Event[];
+  selectedEvents: Event[];
 
   getEvents(): void {
     this.eventService.getEvents("", "", "", "").subscribe(events => this.events = events);
@@ -150,14 +100,7 @@ export class SearchComponent implements OnInit {
   checked: number;
   
   ngOnInit() {
-    this.categoryService.getCategories()
-    .subscribe(
-      (data:any) => {
-        this.categories = data
-        this.checkedCategoriesInit();
-        console.log(this.categories);
-      }
-    );
+    this.getCategories();
     this.getSelectedCategories();
     
     // this.getEvents();
