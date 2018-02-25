@@ -149,7 +149,7 @@ app.get('/user/buy/:username/:password/:event_id', (req, res) => {
 
 
 // USER UPDATE (PUT) CREDITS
-app.put('/user/add_credits', (req, res) => {
+app.post('/user/add_credits', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
         , amount = parseInt(req.body.amount)
@@ -194,7 +194,7 @@ app.post('/user', (req, res) => {
 
 
 // USER UPDATE (PUT) DATA
-app.put('/user', (req, res) => {
+app.post('/user/update', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
         , new_passwd = req.body.new_password
@@ -282,7 +282,7 @@ app.post('/provider', (req, res) => {
 })
 
 
-app.put('/provider', (req, res) => {
+app.post('/provider/update', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
         , new_passwd = req.body.new_password
@@ -447,6 +447,7 @@ app.all('/*', (req, res) => {
     console.log('Leonida ena alogo')
     console.log(req.params)
     console.log(req.body)
+    console.log(req.)
     console.log(req.originalUrl)
     console.log('Leonida ena alogo')
     res.json( { 'ΛΕΩΝΙΔΑ ΕΝΑ ΑΛΟΓΟ' : 'ΜΕ ΚΟΥΡΑΖΕΙΣ ΠΟΛΥ' } )
