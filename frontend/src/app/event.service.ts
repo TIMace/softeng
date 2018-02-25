@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Event } from './event';
+import { Event, eventProviderInfo } from './event';
 import { EVENTS } from './mock-events';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -44,7 +44,38 @@ export class EventService {
   }
 
   getEventById(id){
-    return of(EVENTS[0]);
+    var subject = new Subject();
+    this.httpClient.get(
+      `${server_addr}/event/${id}`
+    )
+    .subscribe(
+      (triplet:any) =>
+      {
+        var eventt = triplet.event;
+        var categories = triplet.categories
+        var providerInfo = triplet.provider
+
+        eventt = this.server2local_event(eventt)
+        var catNames = []
+        for(var i=0;i<categories.length;i++){
+          catNames.push(categories[i].category_name)
+        }
+        eventt.categories = catNames;
+        var finalProviderInfo = new eventProviderInfo()
+        finalProviderInfo.email = providerInfo.provider_email;
+        finalProviderInfo.fname = providerInfo.provider_first_name;
+        finalProviderInfo.lname = providerInfo.provider_last_name;
+        finalProviderInfo.cname = providerInfo.provider_comp_name;
+        finalProviderInfo.address = providerInfo.address;
+        finalProviderInfo.phoneNum = providerInfo.provider_phone_num;
+        eventt.providerInfo = finalProviderInfo;
+        console.log("This is the single event that came")
+        console.log(eventt)
+        subject.next(eventt)
+      }
+    )
+    // return of(EVENTS[0]);
+    return subject;
   }
 
   // TODO rename getCategory to getEvent
