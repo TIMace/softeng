@@ -3,6 +3,7 @@ import { Event } from '../event';
 
 // Services
 import { EventService } from '../event.service';
+import { UserDetailsService } from '../user-details.service';
 
 // MAP
 import { MapsAPILoader } from '@agm/core';
@@ -15,19 +16,33 @@ import { } from 'googlemaps';
 })
 export class EventsPastComponent implements OnInit {
 
+  arrayOfEvents: Array<Event>;
+
   constructor(
     private eventService: EventService,
-    private mapsAPILoader: MapsAPILoader
+    private mapsAPILoader: MapsAPILoader,
+    public userDetailsService: UserDetailsService
   ) { }
 
-  ngOnInit() {
-    this.getEvents();
+  bringUserEvent() {
+    if (this.userDetailsService.getUserType() === 'Parent') {
+      this.eventService.getUserEvents().subscribe(
+        data => {
+          this.arrayOfEvents = data;
+        }
+      )
+    }
+    else if (this.userDetailsService.getUserType() === 'Provider') {
+      this.eventService.getProviderEvents().subscribe(
+        data => {
+          this.arrayOfEvents = data;
+        }
+      )
+    }
   }
 
-  past_events: Event[];
-
-  getEvents(): void {
-    this.eventService.getEvents("", "", "", "").subscribe(events => this.past_events = events);
+  ngOnInit() {
+    this.bringUserEvent();
   }
 
 }
