@@ -122,6 +122,8 @@ app.get('/user/buy/:username/:password/:event_id', (req, res) => {
                             res.json(evnt)
                         else if (user.user_credits < evnt.event_price)
                             res.json( { 'error' : 'Οι πόντοι του χρήστη δεν επαρκούν.' } )
+                        else if ((new Date(evnt.event_date)) < (new Date()))
+                            res.json( { 'error' : 'Το event έχει λήξει' } )
                         else {
                             user.user_credits -= evnt.event_price
                             user.save( { fields : ['user_credits'] } )
@@ -348,7 +350,10 @@ app.get('/event', (req, res) => {
 // GET EVENT WITH id
 app.get('/event/:id', (req, res) => {
     Evnt
-        .findOne( { where : { event_id : parseInt(req.params.id) } } ).then((evnt) => {
+        .findOne( {
+            where : { event_id : parseInt(req.params.id) },
+            include : [ { model : Provider } ]
+        } ).then((evnt) => {
             if (evnt === null)
                 res.json(evnt)
             else {
@@ -358,7 +363,13 @@ app.get('/event/:id', (req, res) => {
                         include : [ { model : Category } ]
                     } ).then((ev_cat) => {
                         const categories = flatten(ev_cat)
-                        res.json( { event : evnt, categories : categories } )
+                            , provider = { provider_email : evnt.provider.provider_email,
+                                provider_first_name : evnt.provider.provider_first_name,
+                                provider_last_name : evnt.provider.provider_last_name,
+                                provider_comp_name : evnt.provider.provider_comp_name,
+                                provider_address : evnt.provider.provider_address,
+                                provider_phone_num : evnt.provider.provider_phone_num }
+                        res.json( { event : evnt, categories : categories, provider : provider } )
                     })
                     .catch((err) => {
                         res.json( { error : err } )
@@ -567,7 +578,7 @@ app.post('/admin/usr_deactivate', (req, res) => {
 app.post('/admin/pay_event', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
-        , ev_id = req.body.ev_id
+        , ev_id = parseInt(req.body.ev_id)
     if (uname === 'Leonidas' && passwd === 'Gorgo') {
         Evnt
             .findOne( {
