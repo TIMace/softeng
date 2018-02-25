@@ -36,8 +36,9 @@ ul {
     padding:0;
 }
 ul li {
-    display:inline;
+    /* display:inline; */
     margin-right: 0px;
+    margin-top: 1rem;
 }
 ul li a {
     font-size: 1.5em;
@@ -56,30 +57,9 @@ agm-map {
     padding-right: 0px;
 }
 
-.example-container {
-    /* background: url(../../bgdimg1.jpg) no-repeat;
-    background-size: cover; */
-
-    /* position: fixed; */
-    /* position: sticky;
-    height: 100%;
-    min-height: 100%;
-    width: 100%;
-    min-width: 100%; */
-    /* position: absolute;
-    top: 3rem;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    min-height: 100%;
-    width: 100%;
-    min-width: 100%; */
-}
-
 .example-sidenav {
-    position: absolute;
-    top: 0;
+    position: fixed;
+    top: 4rem;
     bottom: 0;
     left: 0;
     right: 0;
