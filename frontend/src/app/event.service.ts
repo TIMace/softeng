@@ -43,6 +43,10 @@ export class EventService {
     return this.selectedEvents;
   }
 
+  getEventById(id){
+    return of(EVENTS[0]);
+  }
+
   // TODO rename getCategory to getEvent
   // Fix all calls of getCategory στα υπόλοιπα αρχεία
 
