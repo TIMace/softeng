@@ -224,7 +224,7 @@ export class UserDetailsService {
     .set('new_password', ""+newParentDetails.new_password)
     .set('email', ""+newParentDetails.email)
     .set('address', ""+newParentDetails.address)
-    .set('phone_num1', ""+newParentDetails.phoneΝum)
+    .set('phone_num', ""+newParentDetails.phoneΝum)
     this.httpClient.post(
       `${server_addr}/user/update`,
       requestDetails.toString(),
