@@ -187,8 +187,8 @@ export class CreateActivityComponent implements OnInit {
         date: this.date.toISOString(),
         provider_id: null,
         available_tickets: 1500,
-        lat: this.latitude,
-        lng: this.longitude,
+        lat: +this.latitude,
+        lng: +this.longitude,
         age_min: +this.ageMin,
         age_max: +this.ageMax,
         location: (<HTMLInputElement>document.getElementById("location")).value, //map_data ths vashs
