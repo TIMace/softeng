@@ -1,15 +1,28 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, NgZone, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Event } from '../event';
+import { EVENTS } from '../mock-events';
 import { Location } from '@angular/common';
-import { Category } from '../category';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, NativeDateAdapter } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormControl } from '@angular/forms';
+import { CategoriesService } from '../categories.service';
+import { Router } from '@angular/router';
+
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 // Services
-import { CategoriesService } from '../categories.service';
 import { EventService } from '../event.service';
+import { element } from 'protractor';
 
-// MAP
-import { MapsAPILoader } from '@agm/core';
-import { } from 'googlemaps';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { server_addr } from '../server_addr';
+import { HttpClient } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
+import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 @Component({
   selector: 'app-edit-activity',
@@ -19,28 +32,82 @@ import { } from 'googlemaps';
 
 export class EditActivityComponent implements OnInit {
 
-  @Input() category: Category;
+  @Input() ev: Event;
 
   constructor(
     private eventService: EventService,
-    private categoriesService: CategoriesService,
     private route: ActivatedRoute,
-    private location: Location,
-    private mapsAPILoader: MapsAPILoader
+    // private location: Location,
+    private categoriesService: CategoriesService,
+    private dialog: MatDialog,
+    private router: Router,
+    private httpClient: HttpClient
   ) { }
 
+  date: Date;
+  euros: number;
+  cents: number;
   ngOnInit() {
     this.getID();
+    this.date = new Date(this.ev.date);
+    this.euros = Math.floor(this.ev.price / 100);
+    this.cents = this.ev.price % 100;
+    // console.log(this.ev);
   }
 
   getID(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.categoriesService.getCategory(id)
-      .subscribe(category => this.category = category);
+    this.eventService.getEventById(id)
+      .subscribe(ev => this.ev = ev);
   }
 
-  goBack(): void {
-    this.location.back();
+  updateEvent() {
+    var eventDetails: Event;
+    var localDate = new Date();
+    if (this.date <= localDate) {
+      alert("Πρέπει να επιλεγεί μελλοντική ημερομηνία διεξαγωγής")
+    }
+    else if (!Number.isInteger(+this.ev.age_min) || !Number.isInteger(+this.ev.age_max) || +this.ev.age_min > +this.ev.age_min) {
+      alert("Ελέγξτε τα πεδία των ηλικιών. Οι τιμές πρέπει να είναι ακέραιες και η μέγιστη ηλικία να μην είναι μικρότερη από την ελάχιστη")
+    }
+    else if (!Number.isInteger(+this.euros) || !Number.isInteger(+this.cents) || +this.cents > 99) {
+      alert("Ελέγξτε τα πεδία της τιμής. Οι τιμές πρέπει να είναι ακέραιες και τα Λεπτά το πολύ 99")
+    }
+    else {
+      eventDetails = {
+        id: this.ev.id,
+        price: +(this.euros) * 100 + this.cents,
+        name: this.ev.name,
+        description: this.ev.description,
+        date: this.date.toISOString(),
+        provider_id: null,
+        available_tickets: 1500,
+        lat: +this.ev.lat,
+        lng: +this.ev.lng,
+        age_min: +this.ev.age_min,
+        age_max: +this.ev.age_max,
+        location: this.ev.location, //map_data ths vashs
+        is_paid: null,
+        img: null,
+        categories: this.ev.categories
+      };
+      this.eventService.updateEvent(eventDetails)
+        .subscribe(
+        (answer: boolean) => {
+          if (answer) {
+            alert("Η ανανέωση της δραστηριότητας ήταν επιτυχής");
+            this.router.navigate(['/panel'])
+          }
+          else {
+            alert("Αποτυχία ανανέωσης δραστηριότητας");
+          }
+        }
+        );
+    }
+  }
+
+  cancelEvent() {
+    this.router.navigate(['/panel']);
   }
 
 }
