@@ -14,11 +14,19 @@ export class Event {
     is_paid: boolean;
     img: string;
     categories: Array<string>;
+    providerInfo:eventProviderInfo;
 }
 
+export class eventProviderInfo{
+    email:string;
+    fname:string;
+    lname:string;
+    cname:string;
+    address:string;
+    phoneNum:string;
+}
 // export class Category {
 //     id: number;
 //     name: string;
 //     description: string;
 // }
-

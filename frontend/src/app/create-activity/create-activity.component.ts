@@ -194,7 +194,8 @@ export class CreateActivityComponent implements OnInit {
         location: (<HTMLInputElement>document.getElementById("location")).value, //map_data ths vashs
         is_paid: null,
         img: null,
-        categories: realCheckedCategories
+        categories: realCheckedCategories,
+        providerInfo: null
       };
       this.eventService.createEvent(eventDetails)
       .subscribe(
