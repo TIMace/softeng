@@ -62,7 +62,7 @@ export class SearchComponent implements OnInit {
 
   onSelect(category: Category): void {
     this.selectedCategories = this.categoryService.onClickSelectCategory(category);
-    console.log(JSON.stringify(this.selectedCategories));
+    // console.log(JSON.stringify(this.selectedCategories));
   }
   
   // --------------------- Events --------------------- //
@@ -81,13 +81,17 @@ export class SearchComponent implements OnInit {
   cost = 50;
   selectCost(Cost: number): void {
     this.cost = Cost;
-    console.log(this.cost);
   }
 
   distance: number = 2;
 
   age: number;
 
+  filters() {
+    console.log("Cost ", this.cost);
+    console.log("Age ", this.age);
+    console.log("Distance ", this.distance);
+  }
 
   // -------------------- MAP -------------------- //
   
@@ -103,7 +107,7 @@ export class SearchComponent implements OnInit {
     this.getCategories();
     this.getSelectedCategories();
     
-    // this.getEvents();
+    this.getEvents();
 
     this.show_filters = false;
 
@@ -112,6 +116,7 @@ export class SearchComponent implements OnInit {
     //set google maps defaults
     this.latitude = 37.979499;
     this.longitude = 23.783076;
+
   }
 
 }
