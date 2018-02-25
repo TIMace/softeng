@@ -4,6 +4,11 @@ const express = require('express')
     // , https = require('https')
     , bodyParser = require('body-parser')
     , app = express()
+    , elasticsearch = require('elasticsearch')
+    , client = new elasticsearch.Client({
+        host: 'localhost:9200',
+        log: 'trace'
+    })
 
     , fs = require('fs')
     , lazy = require('lazy.js')
@@ -35,10 +40,10 @@ const express = require('express')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded( { extended : true } ))
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+    next()
+})
 
 
 /**
@@ -439,6 +444,10 @@ app.post('/category', (req, res) => {
 
 // Gotta Catch 'Em All
 app.all('/*', (req, res) => {
+    console.log('Leonida ena alogo')
+    console.log(req.params)
+    console.log(req.body)
+    console.log(req.originalUrl)
     console.log('Leonida ena alogo')
     res.json( { 'ΛΕΩΝΙΔΑ ΕΝΑ ΑΛΟΓΟ' : 'ΜΕ ΚΟΥΡΑΖΕΙΣ ΠΟΛΥ' } )
 })
