@@ -648,7 +648,7 @@ app.post('/admin/pay_event', (req, res) => {
     if (uname === 'Leonidas' && passwd === 'Gorgo') {
         Evnt
             .findOne( {
-                where : { event_id : ev_id },
+                where : { event_id : ev_id, event_is_paid : false },
                 include : [ { model : Provider } ]
             } ).then((evnt) => {
                 if (evnt === null)
