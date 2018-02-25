@@ -164,6 +164,8 @@ export class EventService {
       subject.next(false)
     }
     else{
+      console.log("This is what the update will look like")
+      console.log(eventObj)
       var updateDetails = new HttpParams()
       .set("username",""+this.userDetailsService.userDetails.username)
       .set("password",""+this.userDetailsService.userDetails.password)

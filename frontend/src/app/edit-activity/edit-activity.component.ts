@@ -62,7 +62,7 @@ export class EditActivityComponent implements OnInit {
   getID(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.eventService.getEventById(id)
-      .subscribe(ev => {
+      .subscribe((ev:any) => {
         this.ev = ev;
         this.name = this.ev.name;
         this.location = this.ev.location;
@@ -104,7 +104,8 @@ export class EditActivityComponent implements OnInit {
         location: this.ev.location, //map_data ths vashs
         is_paid: null,
         img: null,
-        categories: this.ev.categories
+        categories: this.ev.categories,
+        providerInfo:null
       };
       this.eventService.updateEvent(eventDetails)
         .subscribe(
