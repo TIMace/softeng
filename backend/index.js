@@ -78,7 +78,6 @@ app.get('/DBSchema', (req, res) => {
 /**
  * USER
  */
-
 app.get('/user/:username/:password', (req, res) => {
     User
         .findOne( { where : { username : req.params.username, user_password : req.params.password, user_active : true } } ).then((user) => {
@@ -108,6 +107,28 @@ app.get('/user/events/:username/:password', (req, res) => {
             res.json( { error : err } )
         })
 })
+
+
+app.get('/user/event/:username/:password/:event_id', (req, res) => {
+    User
+        .findOne( { where : { username : req.params.username, user_password : req.params.password, user_active : true } } ).then((user) => {
+            if (user === null)
+                res.json(user)
+            else {
+                Transaction
+                    .findAll( {
+                        where : { transaction_user_id : user.user_id, transaction_event_id : req.params.event_id },
+                        include : [ { model : Evnt } ]
+                    } ).then((transactions) => {
+                        res.json(transactions)
+                    })
+            }
+        })
+        .catch((err) => {
+            res.json( { error : err } )
+        })
+})
+
 
 // USER GET (BUY) NEW TICKET
 app.get('/user/buy/:username/:password/:event_id', (req, res) => {
