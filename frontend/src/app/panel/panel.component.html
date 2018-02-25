@@ -14,7 +14,7 @@
             <button type="button" class="list-group-item list-group-item-action" (click)="selected_personal_info()">Προσωπικά στοιχεία</button>
           </li>
             <li *ngIf="userDetailsService.getUserType() === 'Provider'" class="list-group-item">
-              <button type="button" class="list-group-item list-group-item-action" (click)="create_event()">Δημιουργία Δραστηριότητας</button>
+              <button type="button" class="list-group-item list-group-item-action" routerLink="/create-activity">Δημιουργία Δραστηριότητας</button>
             </li>
           <li class="list-group-item">
             <button type="button" class="list-group-item list-group-item-action" (click)="selected_present_events()">Τρέχουσες δραστηριότητες</button>
@@ -40,7 +40,7 @@
           <app-personal-info *ngIf="show === 1"></app-personal-info>
           <app-events-present *ngIf="show === 2"></app-events-present>
           <app-events-past *ngIf="show === 3"></app-events-past>
-          <app-create-activity *ngIf="show === 4"></app-create-activity>
+          <!-- <app-create-activity *ngIf="show === 4"></app-create-activity> -->
         </div>
       </mat-sidenav-content>
     </mat-sidenav-container>
