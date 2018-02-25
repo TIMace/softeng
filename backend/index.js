@@ -442,6 +442,114 @@ app.post('/category', (req, res) => {
 })
 
 
+/**
+ * ADMIN
+ */
+app.get('/admin/:username/:password', (req, res) => {
+    if (req.params.username === 'Leonidas' && req.params.password === 'Gorgo')
+        res.json(true)
+    else
+        res.json(false)
+})
+
+
+app.post('/admin/pr_activate', (req, res) => {
+    const uname = req.body.username
+        , passwd = req.body.password
+        , prid = req.body.provider_id
+    if (uname === 'Leonidas' && passwd === 'Gorgo')
+        Provider
+            .findOne( { where : { provider_id : prid } } ).then((provider) => {
+                if (provider === null)
+                    res.json(provider)
+                else {
+                    provider.provider_active = true
+                    provider.save( { fields : ['provider_active'] } )
+                    res.json(provider)
+                }
+            })
+            .catch((err) => {
+                res.json( { error : err } )
+            })
+    else
+        res.json(null)
+})
+
+
+app.post('/admin/pr_deactivate', (req, res) => {
+    const uname = req.body.username
+        , passwd = req.body.password
+        , prid = req.body.provider_id
+    if (uname === 'Leonidas' && passwd === 'Gorgo')
+        Provider
+            .findOne( { where : { provider_id : prid } } ).then((provider) => {
+                if (provider === null)
+                    res.json(provider)
+                else {
+                    provider.provider_active = false
+                    provider.save( { fields : ['provider_active'] } )
+                    res.json(provider)
+                }
+            })
+            .catch((err) => {
+                res.json( { error : err } )
+            })
+    else
+        res.json(null)
+})
+
+
+app.post('/admin/usr_activate', (req, res) => {
+    const uname = req.body.username
+        , passwd = req.body.password
+        , usrid = req.body.user_id
+    if (uname === 'Leonidas' && passwd === 'Gorgo')
+        User
+            .findOne( { where : { user_id : usrid } } ).then((user) => {
+                if (user === null)
+                    res.json(user)
+                else {
+                    user.user_active = true
+                    user.save( { fields : ['user_active'] } )
+                    res.json(user)
+                }
+            })
+            .catch((err) => {
+                res.json( { error : err } )
+            })
+    else
+        res.json(null)
+})
+
+
+app.post('/admin/usr_deactivate', (req, res) => {
+    const uname = req.body.username
+        , passwd = req.body.password
+        , usrid = req.body.user_id
+    if (uname === 'Leonidas' && passwd === 'Gorgo')
+        User
+            .findOne( { where : { user_id : usrid } } ).then((user) => {
+                if (user === null)
+                    res.json(user)
+                else {
+                    user.user_active = false
+                    user.save( { fields : ['user_active'] } )
+                    res.json(user)
+                }
+            })
+            .catch((err) => {
+                res.json( { error : err } )
+            })
+    else
+        res.json(null)
+})
+
+
+app.post('/admin/pay_event', (req, res) => {
+
+})
+
+
 // Gotta Catch 'Em All
 app.all('/*', (req, res) => {
     console.log('Leonida ena alogo')
