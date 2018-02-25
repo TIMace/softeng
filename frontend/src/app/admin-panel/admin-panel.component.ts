@@ -7,6 +7,7 @@ import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Response, Headers, RequestOptions } from '@angular/http'; 
 import { UserDetailsService } from '../user-details.service'
 
+
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
@@ -31,6 +32,8 @@ export class AdminPanelComponent implements OnInit {
       // console.log(this.radio);    
   }
 
+  // adminUsername = this.adminDetails.userDetails.username;
+  // adminPassword = this.adminDetails.userDetails.password;
   
   //decision depends on radio button
   lock(){
