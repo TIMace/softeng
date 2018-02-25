@@ -13,8 +13,13 @@
 
   <div class="row">
     <div class="col-12 col-md-3 text-center">
-      <img class="image" src="{{category.img}}">
-      <button (click)="onSubmit()" type="button" class="btn buy">Προσθήκη Εικόνας</button>
+      <!-- <img class="image" src="{{category.img}}">
+      <button (click)="onSubmit()" type="button" class="btn buy">Προσθήκη Εικόνας</button> -->
+
+      <img class="card uploadImage" [src]="url">
+      <input type='file' (change)="readUrl($event)">
+      <button (click)="uploadFileToActivity()">Upload File</button>
+
       <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="true" [zoom]="13">
         <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
       </agm-map>

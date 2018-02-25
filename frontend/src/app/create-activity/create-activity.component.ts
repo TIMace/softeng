@@ -26,6 +26,18 @@ import { MapService } from '../map.service';
 // Services
 import { EventService } from '../event.service';
 
+
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import {server_addr} from '../server_addr';
+import {HttpClient} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
+import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http'; 
+
+
+
+
 @Component({
   selector: 'app-create-activity',
   templateUrl: './create-activity.component.html',
@@ -43,7 +55,8 @@ export class CreateActivityComponent implements OnInit {
     private mapService: MapService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private httpClient:HttpClient
 
   ) { }
 
@@ -158,6 +171,7 @@ export class CreateActivityComponent implements OnInit {
      
    }
 
+
   categories;
   ngOnInit() {
     this.categoriesService.getCategories()
@@ -178,5 +192,42 @@ export class CreateActivityComponent implements OnInit {
   //   this.eventService.getEvent(id)
   //     .subscribe(event => this.event = event);
   // }
+
+  fileToUpload: File = null;
+
+  uploadFileToActivity() {
+
+    this.postFile(this.fileToUpload).subscribe( data => {
+      console.log("Success");
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  postFile(fileToUpload: File): Observable<boolean> {
+    const endpoint = 'http://localhost:8989/upload';
+    const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    return this.httpClient
+      .post(endpoint, formData, { headers: new HttpHeaders()
+        // .set('Content-Type', 'application/json')
+       })
+      .map(() => { return true; })
+      // .catch((e) => this.handleError(e));
+  }
+
+  url: String;
+  readUrl(event:any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+  
+      reader.onload = (event:any) => {
+        this.url = event.target.result;
+      }
+  
+      this.fileToUpload = event.target.files.item(0);
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
 
 }

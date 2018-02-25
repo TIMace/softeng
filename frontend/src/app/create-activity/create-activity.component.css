@@ -61,3 +61,10 @@ agm-map {
 #GPS_button {
     margin-top: 0.75rem;
 }
+
+/* Image Upload */
+
+.card {
+    height: 12rem;
+    /* width: 15rem; */
+}
