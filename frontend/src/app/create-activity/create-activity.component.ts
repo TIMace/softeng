@@ -8,6 +8,8 @@ import {MatNativeDateModule} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormControl } from '@angular/forms';
 import { CategoriesService } from '../categories.service';
+import { Router } from '@angular/router';
+
 // MAP
 import { AgmMap } from '@agm/core/directives/map';
 import { MapsAPILoader } from '@agm/core';
@@ -36,7 +38,9 @@ export class CreateActivityComponent implements OnInit {
     private mapService: MapService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router,
+
 
   ) { }
 
@@ -140,7 +144,7 @@ export class CreateActivityComponent implements OnInit {
    }
 
    cancelEvent(){
-     
+    this.router.navigate(['/create-activity']);
    }
 
    checkedCategories:string[] = [];
