@@ -15,7 +15,7 @@
         <form class="form-horizontal text-center" [formGroup]="formWallet" (ngSubmit)="addPontous()">
             <div class="row">
                 <div class="col-md-4 field-label-responsive">
-                    <label for="wallet_cardNumber">Αριθμός Κάρτας</label>
+                    <label for="wallet_cardNumber">Αριθμός Κάρτας:</label>
                 </div>
                 <div class="col-sm-5 col-md-4">
                     <div class="form-group">
@@ -28,7 +28,7 @@
             </div>
             <div class="row">
                 <div class="col-md-4 field-label-responsive">
-                    <label for="wallet_password">CVV</label>
+                    <label for="wallet_password">CVV:</label>
                 </div>
                 <div class="col-sm-5 col-md-4">
                     <div class="form-group has-danger">
@@ -36,14 +36,14 @@
                             <div class="input-group-addon" style="width: 2.6rem">
                                 <i class="fa fa-key"></i>
                             </div>
-                            <input type="password" id="wallet_password" class="form-control" formControlName="password" placeholder="Password" required>
+                            <input type="password" id="wallet_password" class="form-control" formControlName="password" placeholder="CVV" required>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">   
                 <div class="col-md-4 field-label-responsive">
-                    <label for="wallet_amount">Ποσό Πληρωμής</label>
+                    <label for="wallet_amount">Ποσό Πληρωμής:</label>
                 </div>
                 <div class="col-sm-5 col-md-4">
                     <div class="form-group">
