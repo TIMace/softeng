@@ -157,7 +157,7 @@ export class CreateActivityComponent implements OnInit {
    }
 
    cancelEvent(){
-    this.router.navigate(['/create-activity']);
+    this.router.navigate(['/panel']);
    }
 
    checkedCategories:string[] = [];
@@ -167,7 +167,6 @@ export class CreateActivityComponent implements OnInit {
      })
    }
    title:string;
-   address:string;
    date:Date;
    ageMin:string;
    ageMax:string;
@@ -249,4 +248,16 @@ export class CreateActivityComponent implements OnInit {
     }
   }
 
+}
+
+export class eventDetailsObj {
+  title:string = "";
+  //image
+  address:string = "";
+  categories:string = "";
+  ageMin:string = "";
+  ageMax:string = "";
+  descrition:string = "";
+  euros:string = "";
+  cents:string = "";
 }
