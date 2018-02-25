@@ -120,6 +120,8 @@ export class EventService {
         var temp = response[i].event;
         res.push(temp)
       }
+      console.log("ALL THE USER EVENTS")
+      console.log(res)
       return Array.from(new Set(res));
     })
     .map(response => this.server2local_event(response))
@@ -217,8 +219,8 @@ export class EventService {
       subject.next(false)
     }
     else{
-      console.log("This is the event creation object")
-      console.log(eventObj)
+      // console.log("This is the event creation object")
+      // console.log(eventObj)
       var creationDetails = new HttpParams()
       .set("username",""+this.userDetailsService.userDetails.username)
       .set("password",""+this.userDetailsService.userDetails.password)
@@ -232,10 +234,16 @@ export class EventService {
       .set("ev_min_age",""+eventObj.age_min)
       .set("ev_max_age",""+eventObj.age_max)
       .set("ev_mdata",""+eventObj.location)
-      
+
+      // console.log("This is the length of the categories array!!!!")
+      // console.log(eventObj.categories.length)
       for(var i = 0;i<eventObj.categories.length;i++){
-        creationDetails.set("ev_cats[]",""+this.categoriesService.categoryIdByName(eventObj.categories[i]))
+        // console.log( `Loopa ${i}, id ${this.categoriesService.categoryIdByName(eventObj.categories[i])}`)
+        // console.log(`ev_cats[${i+1}]`)
+        // console.log(`${this.categoriesService.categoryIdByName(eventObj.categories[i])}`)
+        creationDetails = creationDetails.set(`ev_cats[${i+1}]`,`${this.categoriesService.categoryIdByName(eventObj.categories[i])}`)
       }
+      // console.log(creationDetails)
       this.httpClient.post(
         `${server_addr}/event`,
         creationDetails.toString(),

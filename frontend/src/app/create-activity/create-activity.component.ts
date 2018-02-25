@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, NgZone, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
+import { Location, Time } from '@angular/common';
 import { Event } from '../event';
 import { EVENTS } from '../mock-events';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -156,59 +156,73 @@ export class CreateActivityComponent implements OnInit {
 
 
   createEvent() {
+    console.log("AAAAA");
     var eventDetails: Event;
     var localDate = new Date();
     var realCheckedCategories: string[];
     function isRealCategory(element, index, array) {
       return element != "false"
     }
-    realCheckedCategories = this.checkedCategories.filter(isRealCategory);
-    if (this.date <= localDate) {
-      alert("Πρέπει να επιλεγεί μελλοντική ημερομηνία διεξαγωγής")
-    }
-    else if (realCheckedCategories.length == 0) {
-      alert("Πρέπει να επιλέξετε τουλάχιστον μία κατηγορία")
-    }
-    else if (!Number.isInteger(+this.ageMin) || !Number.isInteger(+this.ageMax) || +this.ageMin > +this.ageMax) {
-      alert("Ελέγξτε τα πεδία των ηλικιών. Οι τιμές πρέπει να είναι ακέραιες και η μέγιστη ηλικία να μην είναι μικρότερη από την ελάχιστη")
-    }
-    else if (!Number.isInteger(+this.euros) || !Number.isInteger(+this.cents) || +this.cents > 99) {
-      alert("Ελέγξτε τα πεδία της τιμής. Οι τιμές πρέπει να είναι ακέραιες και τα Λεπτά το πολύ 99")
-    }
-    else if ((<HTMLInputElement>document.getElementById("location")).value == "") {
-      alert("Παρακαλώ ορίστε μία διεύθυνση")
+    if (this.time === "") {
+      alert("Επιλέξτε ημερομηνία και ώρα διεξαγωγής")
     }
     else {
-      eventDetails = {
-        id: null,
-        price: +(this.euros) * 100 + this.cents,
-        name: this.title,
-        description: this.description,
-        date: this.date.toISOString(),
-        provider_id: null,
-        available_tickets: 1500,
-        lat: +this.latitude,
-        lng: +this.longitude,
-        age_min: +this.ageMin,
-        age_max: +this.ageMax,
-        location: (<HTMLInputElement>document.getElementById("location")).value, //map_data ths vashs
-        is_paid: null,
-        img: null,
-        categories: realCheckedCategories,
-        providerInfo: null
-      };
-      this.eventService.createEvent(eventDetails)
-      .subscribe(
-        (answer: boolean) => {
-          if (answer) {
-            alert("Η δημιουργία της δραστηριότητας ήταν επιτυχής");
-            this.router.navigate(['/panel'])
-          }
-          else {
-            alert("Αποτυχία δημιουργία δραστηριότητας");
-          }
-        }
-      );
+      console.log("BBBBBBBBB");
+      var hoursToms = +this.time.substr(0, 2) * 60 * 60 * 1000;
+      var minutesToms = +this.time.substr(3, 2) * 60 * 1000;
+      var d = new Date(Date.parse(this.date.toString()) + hoursToms + minutesToms);
+      this.date = d;
+      realCheckedCategories = this.checkedCategories.filter(isRealCategory);
+      if (this.date <= localDate) {
+        alert("Πρέπει να επιλεγεί μελλοντική ημερομηνία διεξαγωγής")
+      }
+      else if (realCheckedCategories.length == 0) {
+        alert("Πρέπει να επιλέξετε τουλάχιστον μία κατηγορία")
+      }
+      else if (!Number.isInteger(+this.ageMin) || !Number.isInteger(+this.ageMax) || +this.ageMin > +this.ageMax) {
+        alert("Ελέγξτε τα πεδία των ηλικιών. Οι τιμές πρέπει να είναι ακέραιες και η μέγιστη ηλικία να μην είναι μικρότερη από την ελάχιστη")
+      }
+      else if (!Number.isInteger(+this.euros) || !Number.isInteger(+this.cents) || +this.cents > 99) {
+        alert("Ελέγξτε τα πεδία της τιμής. Οι τιμές πρέπει να είναι ακέραιες και τα Λεπτά το πολύ 99")
+      }
+      else if ((<HTMLInputElement>document.getElementById("location")).value == "") {
+        alert("Παρακαλώ ορίστε μία διεύθυνση")
+      }
+      else {
+        eventDetails = {
+          id: null,
+          price: +(this.euros) * 100 + this.cents,
+          name: this.title,
+          description: this.description,
+          date: this.date.toISOString(),
+          provider_id: null,
+          available_tickets: 1500,
+          lat: +this.latitude,
+          lng: +this.longitude,
+          age_min: +this.ageMin,
+          age_max: +this.ageMax,
+          location: (<HTMLInputElement>document.getElementById("location")).value, //map_data ths vashs
+          is_paid: null,
+          img: null,
+          categories: realCheckedCategories,
+          providerInfo: null
+        };
+        console.log("CCCCCC");
+        console.log(eventDetails);
+
+        this.eventService.createEvent(eventDetails)
+          .subscribe(
+            (answer: boolean) => {
+              if (answer) {
+                alert("Η δημιουργία της δραστηριότητας ήταν επιτυχής");
+                this.router.navigate(['/panel'])
+              }
+              else {
+                alert("Αποτυχία δημιουργία δραστηριότητας");
+              }
+            }
+          );
+      }
     }
   }
 
@@ -224,6 +238,7 @@ export class CreateActivityComponent implements OnInit {
   }
   title: string;
   date: Date;
+  time: string;
   ageMin: number;
   ageMax: number;
   description: string;
@@ -231,11 +246,10 @@ export class CreateActivityComponent implements OnInit {
   cents: number;
 
 
-
   temp() {
-    console.log(this.date);
-    console.log(this.cents);
+
   }
+
 
   categories;
   ngOnInit() {
@@ -292,7 +306,6 @@ export class CreateActivityComponent implements OnInit {
       .map(() => { return true; })
     // .catch((e) => this.handleError(e));
   }
-
   url: String;
   readUrl(event: any) {
     if (event.target.files && event.target.files[0]) {
@@ -306,10 +319,6 @@ export class CreateActivityComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
   }
-
-
-
-
 }
 
 
