@@ -225,7 +225,7 @@ export class UserDetailsService {
     .set('email', ""+newParentDetails.email)
     .set('address', ""+newParentDetails.address)
     .set('phone_num1', ""+newParentDetails.phoneΝum)
-    this.httpClient.put(
+    this.httpClient.post(
       `${server_addr}/user`,
       requestDetails.toString(),
       {
@@ -273,7 +273,7 @@ export class UserDetailsService {
     .set('address', ""+newProviderDetails.address)
     .set('phone_num1', ""+newProviderDetails.phoneΝum)
     .set('baccount', ""+newProviderDetails.bankAccount)
-    this.httpClient.put(
+    this.httpClient.post(
       `${server_addr}/provider`,
       requestDetails.toString(),
       {
