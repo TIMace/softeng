@@ -129,6 +129,88 @@ export class EventService {
     return subject.asObservable();
   }
 
+  buyEvent(id){
+    var subject = new Subject();
+    var userDetails = this.userDetailsService.getDetails()
+    this.httpClient.get(
+      `${server_addr}/user/buy/${userDetails.username}/${userDetails.password}/${id}`,
+    )
+    .subscribe(
+      (data:any)=>{
+        console.log(data)
+        if (data==null || data.hasOwnProperty("error")){
+          subject.next(false)
+        }
+        else{
+          subject.next(true)
+        }
+
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+        subject.next(false)
+      }
+    )
+    return subject;
+  }
+
+  updateEvent(eventObj:Event){
+    var subject = new Subject()
+    if (this.userDetailsService.userType != "Provider"){
+      subject.next(false)
+    }
+    else{
+      console.log("This is what the update will look like")
+      console.log(eventObj)
+      var updateDetails = new HttpParams()
+      .set("username",""+this.userDetailsService.userDetails.username)
+      .set("password",""+this.userDetailsService.userDetails.password)
+      .set("ev_price",""+eventObj.price)
+      .set("ev_id",""+eventObj.id)
+      .set("ev_name",""+eventObj.name)
+      .set("ev_descr",""+eventObj.description)
+      .set("ev_date",""+eventObj.date)
+      .set("ev_min_age",""+eventObj.age_min)
+      .set("ev_max_age",""+eventObj.age_max)
+      this.httpClient.post(
+        `${server_addr}/event/update`,
+        updateDetails.toString(),
+        {
+          headers: new HttpHeaders()
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+        
+        }
+      )
+      .subscribe(
+        (data:any)=>{
+          console.log("This is what came after event update")
+          console.log(data)
+          if (data==null || data.hasOwnProperty("error")){
+            subject.next(false)
+          }
+          else{
+            subject.next(true)
+          }
+  
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log("Client-side error occured.");
+          } else {
+            console.log("Server-side error occured.");
+          }
+          subject.next(false)
+        }
+      )
+    }
+    // return of(true)
+    return subject;
+  }
+
   createEvent(eventObj:Event){
     var subject = new Subject()
     if (this.userDetailsService.userType != "Provider"){

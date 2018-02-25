@@ -14,6 +14,7 @@ import { CreateActivityComponent } from './create-activity/create-activity.compo
 import { WalletComponent } from './wallet/wallet.component';
 import { EventsPresentComponent } from './events-present/events-present.component';
 import { EventsPastComponent } from './events-past/events-past.component';
+import { EditActivityComponent } from './edit-activity/edit-activity.component';
 
 const routes: Routes = [
   {
@@ -69,6 +70,10 @@ const routes: Routes = [
   {
     path: 'wallet',
     component: WalletComponent
+  },
+  {
+    path: 'edit-activity/:id',
+    component: EditActivityComponent
   }
 ];
 

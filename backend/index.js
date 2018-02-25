@@ -78,7 +78,6 @@ app.get('/DBSchema', (req, res) => {
 /**
  * USER
  */
-
 app.get('/user/:username/:password', (req, res) => {
     User
         .findOne( { where : { username : req.params.username, user_password : req.params.password, user_active : true } } ).then((user) => {
@@ -108,6 +107,28 @@ app.get('/user/events/:username/:password', (req, res) => {
             res.json( { error : err } )
         })
 })
+
+
+app.get('/user/event/:username/:password/:event_id', (req, res) => {
+    User
+        .findOne( { where : { username : req.params.username, user_password : req.params.password, user_active : true } } ).then((user) => {
+            if (user === null)
+                res.json(user)
+            else {
+                Transaction
+                    .findAll( {
+                        where : { transaction_user_id : user.user_id, transaction_event_id : req.params.event_id },
+                        include : [ { model : Evnt } ]
+                    } ).then((transactions) => {
+                        res.json(transactions)
+                    })
+            }
+        })
+        .catch((err) => {
+            res.json( { error : err } )
+        })
+})
+
 
 // USER GET (BUY) NEW TICKET
 app.get('/user/buy/:username/:password/:event_id', (req, res) => {
@@ -406,7 +427,7 @@ app.post('/event', (req, res) => {
         , ev_cats = req.body.ev_cats
 
     Provider
-        .findOne( { where : { provider_username : uname, provider_password : passwd } } ).then((provider) => {
+        .findOne( { where : { provider_username : uname, provider_password : passwd, provider_active : true } } ).then((provider) => {
             if (provider === null)
                 res.json(provider)
             else {
@@ -427,6 +448,44 @@ app.post('/event', (req, res) => {
                                         })
                                 })
                     }))
+            }
+        })
+        .catch((err) => {
+            res.json( { error : err } )
+        })
+
+})
+
+app.post('/event/update', (req, res) => {
+    const uname = req.body.username
+        , passwd = req.body.password
+        , ev_id = req.body.ev_id
+        , ev_price = req.body.ev_price
+        , ev_name = req.body.ev_name
+        , ev_descr = req.body.ev_descr
+        , ev_date = req.body.ev_date
+        , ev_min_age = req.body.ev_min_age
+        , ev_max_age = req.body.ev_max_age
+
+    Provider
+        .findOne( { where : { provider_username : uname, provider_password : passwd, provider_active : true } } ).then((provider) => {
+            if (provider === null)
+                res.json(provider)
+            else {
+                Evnt
+                    .findOne( { where : { event_id : ev_id } } ).then((evnt) => {
+                        evnt.event_price = ev_price
+                        evnt.event_name = ev_name
+                        evnt.event_description = ev_descr
+                        evnt.event_date = ev_date
+                        evnt.event_minimum_age = ev_min_age
+                        evnt.event_maximum_age = ev_max_age
+                        evnt.save( { fields : ['event_price', 'event_name', 'event_description', 'event_date', 'event_minimum_age', 'event_maximum_age'] } )
+                        res.json(evnt)
+                    })
+                    .catch((err) => {
+                        res.json( { error : err } )
+                    })
             }
         })
         .catch((err) => {
@@ -589,7 +648,7 @@ app.post('/admin/pay_event', (req, res) => {
     if (uname === 'Leonidas' && passwd === 'Gorgo') {
         Evnt
             .findOne( {
-                where : { event_id : ev_id },
+                where : { event_id : ev_id, event_is_paid : false },
                 include : [ { model : Provider } ]
             } ).then((evnt) => {
                 if (evnt === null)

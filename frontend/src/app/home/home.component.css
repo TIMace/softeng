@@ -32,6 +32,20 @@
     box-shadow: 0 0 0 0rem;
 }
 
+.cats {
+    background: #73a9ac;
+}
+
+.cats.focus {
+    box-shadow: 0 0 0 0rem;
+}
+
+.cats:not([disabled]):not(.disabled).active {
+    background: #177076;
+    color: white;
+}
+
+
 /* Form */
 
 .form-horizontal {
@@ -61,6 +75,9 @@
     color: red;
 }
 
+.butns-2 {
+    margin-top: 1rem;
+}
 /* .categories-show{
     background: #ADD8E6;
 } */

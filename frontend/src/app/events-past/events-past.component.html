@@ -11,9 +11,9 @@
     </div>
     <div class="col-lg-7 col-md-5 col-7">
       <!-- <h5 class="card-title text-center">{{event.name}}</h5> -->
-      <h5 *ngIf="userDetailsService.getUserType() === 'Parent'" class="card-title text-center">{{event.name}}</h5>
-      <h5 style="color: red" *ngIf="userDetailsService.getUserType() === 'Provider'" class="card-title text-center">{{event.name}} (Εκκρεμεί)</h5>
-      <h5 style="color: green" *ngIf="userDetailsService.getUserType() === 'Provider'" class="card-title text-center">{{event.name}} (Καταβλήθηκε) </h5>
+      <h5 *ngIf="userDetailsService.getUserType() === 'Parent'" class="card-title text-center">{{event.name}}</h5>      
+      <h5 style="color: red"  *ngIf="(userDetailsService.getUserType() === 'Provider') && (event.is_paid) " class="card-title text-center">{{event.name}} (Εκκρεμεί)</h5>
+      <h5 style="color: green"  *ngIf="(userDetailsService.getUserType() === 'Provider') && (!event.is_paid)" class="card-title text-center">{{event.name}} (Καταβλήθηκε) </h5>
       <div class="row">
         <div class="col-md">
           Τοποθεσία: {{event.location}}
