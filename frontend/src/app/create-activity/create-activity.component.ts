@@ -175,10 +175,29 @@ export class CreateActivityComponent implements OnInit {
     else if(!Number.isInteger(this.euros) || !Number.isInteger(this.cents) || this.cents>99) {
       alert("Ελέγξτε τα πεδία της τιμής. Οι τιμές πρέπει να είναι ακέραιες και τα Λεπτά το πολύ 99")
     }
-
-    // this.eventService.createEvent(eventDetails);
-
-
+    else if((<HTMLInputElement>document.getElementById("location")).value == "") {
+      alert("Παρακαλώ ορίστε μία διεύθυνση")
+    }
+    else{
+      eventDetails = {
+        id: null,
+        price: this.euros*100 + this.cents,
+        name: this.title,
+        description: this.description,
+        date: this.date.toISOString(),
+        provider_id: null,
+        available_tickets: 1500,
+        lat: this.latitude,
+        lng: this.longitude,
+        age_min: this.ageMin,
+        age_max: this.ageMax,
+        location: (<HTMLInputElement>document.getElementById("location")).value, //map_data ths vashs
+        is_paid: null,
+        img: null,
+        categories: realCheckedCategories
+    };
+      this.eventService.createEvent(eventDetails);
+    }
    }
 
    cancelEvent(){
