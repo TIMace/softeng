@@ -89,9 +89,17 @@ export class EventService {
     return subject.asObservable();
   }
 
-  createEvent(eventObj){
+  createEvent(eventObj:Event){
     var subject = new Subject()
-    subject.next(true)
+    if (this.userDetailsService.userType != "Provider"){
+      subject.next(false)
+    }
+    else{
+      console.log("This is the event creation object")
+      console.log(eventObj)
+      subject.next(true)
+    }
+    // subject.next(true)
     return subject.asObservable()
   }
 
