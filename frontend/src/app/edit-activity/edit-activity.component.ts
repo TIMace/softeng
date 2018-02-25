@@ -44,9 +44,12 @@ export class EditActivityComponent implements OnInit {
     private httpClient: HttpClient
   ) { }
 
+  id = 0;
   name = "";
   location = "";
   img = "";
+  lat = 0;
+  lng = 0;
   date = new Date;
   categories = [""];
   age_min = 0;
@@ -64,7 +67,12 @@ export class EditActivityComponent implements OnInit {
     this.eventService.getEventById(id)
       .subscribe((ev:any) => {
         this.ev = ev;
+        console.log("EVENT");
+        console.log(ev);
+        this.id = this.ev.id;
         this.name = this.ev.name;
+        this.lat = this.ev.lat;
+        this.lng  = this.ev.lng;
         this.location = this.ev.location;
         this.img = this.ev.img;
         this.date = new Date(this.ev.date);
@@ -74,6 +82,9 @@ export class EditActivityComponent implements OnInit {
         this.description = this.ev.description;
         this.euros = Math.floor(this.ev.price / 100);
         this.cents = this.ev.price % 100; });
+        console.log("KATHGORIES");
+        console.log(this.categories);
+        
   }
 
   updateEvent() {
@@ -90,23 +101,24 @@ export class EditActivityComponent implements OnInit {
     }
     else {
       eventDetails = {
-        id: this.ev.id,
+        id: this.id,
         price: +(this.euros) * 100 + this.cents,
-        name: this.ev.name,
-        description: this.ev.description,
+        name: this.name,
+        description: this.description,
         date: this.date.toISOString(),
         provider_id: null,
-        available_tickets: 1500,
-        lat: +this.ev.lat,
-        lng: +this.ev.lng,
-        age_min: +this.ev.age_min,
-        age_max: +this.ev.age_max,
-        location: this.ev.location, //map_data ths vashs
+        available_tickets: null,
+        lat: +this.lat,
+        lng: +this.lng,
+        age_min: +this.age_min,
+        age_max: +this.age_max,
+        location: this.location, //map_data ths vashs
         is_paid: null,
         img: null,
-        categories: this.ev.categories,
+        categories: this.categories,
         providerInfo:null
       };
+
       this.eventService.updateEvent(eventDetails)
         .subscribe(
         (answer: boolean) => {
