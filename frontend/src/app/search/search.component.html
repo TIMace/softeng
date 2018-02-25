@@ -41,11 +41,34 @@
           </div>
 
           <!-- Categories -->
-          <div class="btn-group" data-toggle="buttons" *ngFor="let category of categories" (click)="onSelect(category)">
-            <label class="btn btn-outline-info">
-              <input type="checkbox" id={{category.id}} [class.active]="findChecked(category)"> {{category.name}}
+          <!-- <div class="btn-group" data-toggle="buttons" *ngFor="let category of categories" >
+            <label class="btn btn-outline-info" >
+              <input type="checkbox" (click)="onSelect(category)" id={{category.id}} [checked]="findChecked(category)" > {{category.name}}
+            </label>
+          </div> -->
+
+          <!-- <div class="btn btn-outline-info" data-toggle="buttons"
+            *ngFor="let category of categories" 
+            (click)="onSelect(category)">
+            <label class="btn btn-outline-info" [class.active]="findChecked(category)">
+              <input type="checkbox" id={{category.id}} > {{category.name}}
+            </label>
+          </div> -->
+
+          <!-- <div class="form-check" *ngFor="let cat of categories;let i=index;">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" (change)="changeCheckbox(i, cat.name)" [checked]="cat.checked">
+            <label class="form-check-label" for="defaultCheck1">
+              {{cat.name}}
+            </label>
+          </div> -->
+
+          <div style="margin-left: 20px" class="form-check" *ngFor="let category of categories;">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" (click)="onSelect(category)" [checked]="findChecked(category)">
+            <label class="form-check-label" for="defaultCheck1">
+              {{category.name}}
             </label>
           </div>
+
         </div>
 
         <!-- MAP -->

@@ -12,6 +12,16 @@ import { } from 'googlemaps';
 import { EventService } from '../event.service';
 import { CategoriesService } from '../categories.service';
 
+
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import {server_addr} from '../server_addr';
+import {HttpClient} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
+import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http'; 
+
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -43,48 +53,71 @@ export class SearchComponent implements OnInit {
     console.log("SEARCH: ",this.selectedCategories);
   }
 
-  findChecked(category: Category): number {
-    const index: number = this.categoryService.selectedCategories.indexOf(category);
+  findChecked(category: Category): boolean {
+    // const index: number = this.selectedCategories.indexOf(category);
+    var index=-1;
+    for (var i = 0; i < this.selectedCategories.length; i++ ){
+      if ( this.selectedCategories[i].name === category.name )
+        index = 1;
+        break;
+    }
     if (index !== -1) {
-      return 1;
+      console.log("FC: nai");
+      return true;
     }
     else {
-      return 0;
+      console.log("FC: oxi");
+      return false;
     }
+
+
   }
 
   onSelect(category: Category): void {
-    const index: number = this.categoryService.selectedCategories.indexOf(category);
+
+    var index=-1;
+    for (var i = 0; i < this.selectedCategories.length; i++ ){
+      if ( this.selectedCategories[i].name === category.name )
+        index = i;
+        break;
+    }
+    // return 0;
+    // for(var i)
     if (index !== -1) {
-      // reset map's center
-      // if ( this.selectedCategory.length == 1 ){
-      //   this.latitude = category.lat;
-      //   this.longitude = category.lng;
-      // } else {
-      //   this.latitude = ( ( this.latitude * this.selectedCategories.length ) - category.lat ) / (this.selectedCategories.length - 1 );
-      //   this.longitude = ( ( this.longitude * this.selectedCategories.length ) - category.lng ) / (this.selectedCategories.length - 1 );
-      // }
-
-      // this.selectedCategories.splice(index, 1);
-      this.categoryService.selectedCategories.splice(index, 1);
-
+      console.log("ON: nai");
+      this.selectedCategories.splice(index, 1);
     }
     else {
-      // reset map's center
-      // if ( this.selectedCategories.length == 1 ){
-      //   this.latitude = event.lat;
-      //   this.longitude = event.lng;
-      // } else {
-      //   this.latitude = ( ( this.latitude * this.selectedEvents.length ) + event.lat ) / (this.selectedEvents.length + 1 );
-      //   this.longitude = ( ( this.longitude * this.selectedEvents.length ) + event.lng ) / (this.selectedEvents.length + 1 );
-      // }
-
-      // this.selectedCategories.push(category);
-      this.categoryService.selectedCategories.push(category);
+      console.log("ON: oxi");
+        this.selectedCategories.push(category);
     }
-    console.log(JSON.stringify(this.categoryService.selectedCategories));
+
+    console.log(JSON.stringify(this.selectedCategories));
   }
 
+  checkedCategories:string[] = [];
+  checkedCategoriesInit(){
+    this.categories.forEach(element => {
+      var index: number = this.selectedCategories.indexOf(element);
+      if (index !== -1) {
+        this.checkedCategories.push("true");
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAA");
+      }
+      else {
+        this.checkedCategories.push("false");
+      }
+    });
+  }
+
+  changeCheckbox(catIndex,catName) {
+    if(this.checkedCategories[catIndex] === "false") {
+      this.checkedCategories[catIndex] = catName
+    }
+    else {
+      this.checkedCategories[catIndex] = "false"
+    }
+  }
+  
   // --------------------- Events --------------------- //
 
   getEvents(): void {
@@ -117,7 +150,14 @@ export class SearchComponent implements OnInit {
   checked: number;
   
   ngOnInit() {
-    this.getCategories();
+    this.categoryService.getCategories()
+    .subscribe(
+      (data:any) => {
+        this.categories = data
+        this.checkedCategoriesInit();
+        console.log(this.categories);
+      }
+    );
     this.getSelectedCategories();
     
     // this.getEvents();
