@@ -51,11 +51,8 @@ export class CreateActivityComponent implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private dialog: MatDialog,
-<<<<<<< HEAD
     private router: Router,
-=======
     private httpClient:HttpClient
->>>>>>> b53ba18690e1e71510f51cabe6b8f87b5b6c704a
 
 
   ) { }
@@ -163,7 +160,6 @@ export class CreateActivityComponent implements OnInit {
     this.router.navigate(['/create-activity']);
    }
 
-<<<<<<< HEAD
    checkedCategories:string[] = [];
    checkedCategoriesInit () {
      this.categories.forEach(element => {
@@ -183,8 +179,6 @@ export class CreateActivityComponent implements OnInit {
     console.log(this.euros);
     console.log(this.cents);
   }
-=======
->>>>>>> b53ba18690e1e71510f51cabe6b8f87b5b6c704a
 
   categories;
   ngOnInit() {
@@ -208,7 +202,6 @@ export class CreateActivityComponent implements OnInit {
   //     .subscribe(event => this.event = event);
   // }
 
-<<<<<<< HEAD
   changeCheckbox(catIndex,catName) {
     if(this.checkedCategories[catIndex] === "false") {
       this.checkedCategories[catIndex] = catName
@@ -219,7 +212,6 @@ export class CreateActivityComponent implements OnInit {
   }
 
 
-=======
   fileToUpload: File = null;
 
   uploadFileToActivity() {
@@ -256,6 +248,5 @@ export class CreateActivityComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
   }
->>>>>>> b53ba18690e1e71510f51cabe6b8f87b5b6c704a
 
 }
