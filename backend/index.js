@@ -81,7 +81,7 @@ app.get('/DBSchema', (req, res) => {
 
 app.get('/user/:username/:password', (req, res) => {
     User
-        .findOne( { where : { username : req.params.username, user_password : req.params.password } } ).then((user) => {
+        .findOne( { where : { username : req.params.username, user_password : req.params.password, user_active : true } } ).then((user) => {
             res.json(user)
         })
         .catch((err) => {
@@ -91,7 +91,7 @@ app.get('/user/:username/:password', (req, res) => {
 
 app.get('/user/events/:username/:password', (req, res) => {
     User
-        .findOne( { where : { username : req.params.username, user_password : req.params.password } } ).then((user) => {
+        .findOne( { where : { username : req.params.username, user_password : req.params.password, user_active : true } } ).then((user) => {
             if (user === null)
                 res.json(user)
             else {
@@ -112,7 +112,7 @@ app.get('/user/events/:username/:password', (req, res) => {
 // USER GET (BUY) NEW TICKET
 app.get('/user/buy/:username/:password/:event_id', (req, res) => {
     User
-        .findOne( { where : { username : req.params.username, user_password : req.params.password } } ).then((user) => {
+        .findOne( { where : { username : req.params.username, user_password : req.params.password, user_active : true } } ).then((user) => {
             if (user === null)
                 res.json(user)
             else {
@@ -157,7 +157,7 @@ app.post('/user/add_credits', (req, res) => {
         , amount = parseInt(req.body.amount)
 
     User
-        .findOne( { where : { username : uname, user_password : passwd } } ).then((user) => {
+        .findOne( { where : { username : uname, user_password : passwd, user_active : true } } ).then((user) => {
             if (user === null)
                 res.json(user)
             else {
@@ -205,7 +205,7 @@ app.post('/user/update', (req, res) => {
         , phnum = req.body.phone_num
 
     User
-        .findOne( { where : { username : uname, user_password : passwd } } ).then((user) => {
+        .findOne( { where : { username : uname, user_password : passwd, user_active : true } } ).then((user) => {
             if (user === null)
                 res.json(user)
             else {
@@ -226,7 +226,7 @@ app.post('/user/update', (req, res) => {
 
 app.get('/provider/:username/:password', (req, res) => {
     Provider
-        .findOne( { where : { provider_username : req.params.username, provider_password : req.params.password } } ).then((provider) => {
+        .findOne( { where : { provider_username : req.params.username, provider_password : req.params.password, provider_active : true } } ).then((provider) => {
             res.json(provider)
         })
         .catch((err) => {
@@ -237,7 +237,7 @@ app.get('/provider/:username/:password', (req, res) => {
 
 app.get('/provider/events/:username/:password/', (req, res) => {
     Provider
-        .findOne( { where : { provider_username : req.params.username, provider_password : req.params.password } } ).then((provider) => {
+        .findOne( { where : { provider_username : req.params.username, provider_password : req.params.password, provider_active : true } } ).then((provider) => {
             if (provider === null)
                 res.json(provider)
             else {
@@ -258,7 +258,7 @@ app.get('/provider/events/:username/:password/', (req, res) => {
 
 app.get('/provider/credits/:username/:password/', (req, res) => {
     Provider
-        .findOne( { where : { provider_username : req.params.username, provider_password : req.params.password } } ).then((provider) => {
+        .findOne( { where : { provider_username : req.params.username, provider_password : req.params.password, provider_active : true } } ).then((provider) => {
             if (provider === null)
                 res.json(provider)
             else {
@@ -313,7 +313,7 @@ app.post('/provider/update', (req, res) => {
         , baccount = req.body.baccount
 
     Provider
-        .findOne( { where : { provider_username : uname, provider_password : passwd } } ).then((provider) => {
+        .findOne( { where : { provider_username : uname, provider_password : passwd, provider_active : true } } ).then((provider) => {
             if (provider === null)
                 res.json(provider)
             else {
@@ -539,7 +539,7 @@ app.post('/admin/pr_deactivate', (req, res) => {
 app.post('/admin/usr_activate', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
-        , username = req.body.username
+        , username = req.body.user_username
     if (uname === 'Leonidas' && passwd === 'Gorgo')
         User
             .findOne( { where : { username : username } } ).then((user) => {
@@ -562,7 +562,7 @@ app.post('/admin/usr_activate', (req, res) => {
 app.post('/admin/usr_deactivate', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
-        , username = req.body.username
+        , username = req.body.user_username
     if (uname === 'Leonidas' && passwd === 'Gorgo') {
         User
             .findOne( { where : { username : username } } ).then((user) => {
