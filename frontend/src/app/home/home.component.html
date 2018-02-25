@@ -33,10 +33,10 @@
         <div class="row">
           <div class="col-md-3 col-lg-4"></div> 
           <div class="col-md-3 col-lg-2">
-            <button (click)="onSubmit()" type="button" class="btn">Αναζήτηση</button>
+            <button (click)="onSubmit()" type="button" class="btn butns-2">Αναζήτηση</button>
           </div>
           <div class="col-md-3 col-lg-2">
-            <button (click)="show_categories = !show_categories" class="btn">Όλες οι κατηγορίες</button>
+            <button (click)="show_categories = !show_categories" class="btn butns-2">Όλες οι κατηγορίες</button>
           </div>
         </div>
       </form>
@@ -46,7 +46,7 @@
       <div class="btn-group" data-toggle="buttons"
         *ngFor="let category of categories" 
         (click)="onSelect(category)">
-        <label class="btn btn-outline-info">
+        <label class="btn cats">
           <input type="checkbox"> {{category.name}}
         </label>
       </div>
