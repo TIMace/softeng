@@ -180,7 +180,7 @@ export class UserDetailsService {
     .set('password', ""+this.userDetails.password)
     .set('amount',""+money*100)
 
-    this.httpClient.put(
+    this.httpClient.post(
       `${server_addr}/user/add_credits`,
       creditDetails.toString(),
       {
@@ -364,7 +364,7 @@ export class UserDetailsService {
     res.phoneNum = providerObj.provider_phone_num;
     res.ssn = providerObj.provider_ssn;
     res.bankAccount = providerObj.provider_bank_account;
-    res.credits = providerObj.provider_credits;
+    res.credits = +providerObj.provider_credits;
     res.loginSuccess = false;
 
     return res;

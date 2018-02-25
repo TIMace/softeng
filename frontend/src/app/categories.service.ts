@@ -12,6 +12,7 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 @Injectable()
 export class CategoriesService {
 
+  categories = []
   selectedCategories = [];
 
   constructor(private httpClient:HttpClient) { }
@@ -21,6 +22,7 @@ export class CategoriesService {
       `${server_addr}/category`
     )
     .map(response => this.server2local_cat(response))
+    req.subscribe(cats => {this.categories = cats})
     // req.subscribe((data) => {console.log("Now comes the server answer");console.log(data)});
     // of(CATEGORIES).subscribe((data) => {console.log("Now comes the mock answer");console.log(data)});
     // return of(CATEGORIES);
@@ -40,6 +42,17 @@ export class CategoriesService {
     // console.log(" Here is what map gets")
     // console.log(res)
     return res;
+  }
+
+  categoryIdByName(catName){
+    var id = -1
+    for(var i=0;i<this.categories.length;i++){
+      if (this.categories[i].name == catName){
+        id = this.categories[i].id;
+        break
+      }
+    }
+    return id;
   }
 
   onClickSelectCategory(category:Category) :Category[]{

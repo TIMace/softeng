@@ -10,6 +10,8 @@ import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Response, Headers, RequestOptions } from '@angular/http'; 
 import { Subject } from 'rxjs/Subject';
 import { UserDetailsService, userDetailsObj } from './user-details.service';
+import { Category } from './category'
+import { CategoriesService  } from './categories.service';
 
 @Injectable()
 export class EventService {
@@ -18,7 +20,8 @@ export class EventService {
 
   constructor(
     private httpClient:HttpClient,
-    public userDetailsService: UserDetailsService
+    public userDetailsService: UserDetailsService,
+    public categoriesService: CategoriesService
   ) { }
   
   getEvents(free_text: String, age: String, price: String, distance: String): Observable<Event[]> {
@@ -38,6 +41,10 @@ export class EventService {
 
   getSelectedEvents(): Event[] {
     return this.selectedEvents;
+  }
+
+  getEventById(id){
+    return of(EVENTS[0]);
   }
 
   // TODO rename getCategory to getEvent
@@ -97,7 +104,51 @@ export class EventService {
     else{
       console.log("This is the event creation object")
       console.log(eventObj)
-      subject.next(true)
+      var creationDetails = new HttpParams()
+      .set("username",""+this.userDetailsService.userDetails.username)
+      .set("password",""+this.userDetailsService.userDetails.password)
+      .set("ev_price",""+eventObj.price)
+      .set("ev_name",""+eventObj.name)
+      .set("ev_descr",""+eventObj.description)
+      .set("ev_date",""+eventObj.date)
+      .set("ev_avail_tick",""+eventObj.available_tickets)
+      .set("ev_latt",""+eventObj.lat)
+      .set("ev_long",""+eventObj.lng)
+      .set("ev_min_age",""+eventObj.age_min)
+      .set("ev_max_age",""+eventObj.age_max)
+      .set("ev_mdata",""+eventObj.location)
+      
+      for(var i = 0;i<eventObj.categories.length;i++){
+        creationDetails.set("ev_cats[]",""+this.categoriesService.categoryIdByName(eventObj.categories[i]))
+      }
+      this.httpClient.post(
+        `${server_addr}/event`,
+        creationDetails.toString(),
+        {
+          headers: new HttpHeaders()
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+        
+        } 
+      )
+      .subscribe((eventAnswer)=>
+        {
+          if (eventAnswer==null || eventAnswer.hasOwnProperty("error")){
+          subject.next(false)
+          }
+          else{
+            subject.next(true)
+          }
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log("Client-side error occured.");
+          } else {
+            console.log("Server-side error occured.");
+          }
+          subject.next(false)
+        }
+      )
+      // subject.next(true)
     }
     // subject.next(true)
     return subject.asObservable()

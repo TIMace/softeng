@@ -4,6 +4,11 @@ const express = require('express')
     // , https = require('https')
     , bodyParser = require('body-parser')
     , app = express()
+    , elasticsearch = require('elasticsearch')
+    , client = new elasticsearch.Client({
+        host: 'localhost:9200',
+        log: 'trace'
+    })
 
     , fs = require('fs')
     , lazy = require('lazy.js')
@@ -35,10 +40,10 @@ const express = require('express')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded( { extended : true } ))
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+    next()
+})
 
 
 /**
@@ -144,7 +149,7 @@ app.get('/user/buy/:username/:password/:event_id', (req, res) => {
 
 
 // USER UPDATE (PUT) CREDITS
-app.put('/user/add_credits', (req, res) => {
+app.post('/user/add_credits', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
         , amount = parseInt(req.body.amount)
@@ -189,7 +194,7 @@ app.post('/user', (req, res) => {
 
 
 // USER UPDATE (PUT) DATA
-app.put('/user', (req, res) => {
+app.post('/user/update', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
         , new_passwd = req.body.new_password
@@ -248,6 +253,25 @@ app.get('/provider/events/:username/:password/', (req, res) => {
         })
 })
 
+
+app.get('/provider/credits/:username/:password/', (req, res) => {
+    Provider
+        .findOne( { where : { provider_username : req.params.username, provider_password : req.params.password } } ).then((provider) => {
+            if (provider === null)
+                res.json(provider)
+            else {
+                provider.provider_credits = 0
+                provider.save( { fields : ['provider_credits'] } )
+                res.json(provider)
+            }
+        })
+        .catch((err) => {
+            res.json( { error : err } )
+        })
+})
+
+
+
 app.post('/provider', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
@@ -277,7 +301,7 @@ app.post('/provider', (req, res) => {
 })
 
 
-app.put('/provider', (req, res) => {
+app.post('/provider/update', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
         , new_passwd = req.body.new_password
@@ -437,8 +461,151 @@ app.post('/category', (req, res) => {
 })
 
 
+/**
+ * ADMIN
+ */
+app.get('/admin/:username/:password', (req, res) => {
+    if (req.params.username === 'Leonidas' && req.params.password === 'Gorgo')
+        res.json(true)
+    else
+        res.json(false)
+})
+
+
+app.post('/admin/pr_activate', (req, res) => {
+    const uname = req.body.username
+        , passwd = req.body.password
+        , pr_uname = req.body.provider_username
+    if (uname === 'Leonidas' && passwd === 'Gorgo')
+        Provider
+            .findOne( { where : { provider_username : pr_uname } } ).then((provider) => {
+                if (provider === null)
+                    res.json(provider)
+                else {
+                    provider.provider_active = true
+                    provider.save( { fields : ['provider_active'] } )
+                    res.json(provider)
+                }
+            })
+            .catch((err) => {
+                res.json( { error : err } )
+            })
+    else
+        res.json(null)
+})
+
+
+app.post('/admin/pr_deactivate', (req, res) => {
+    const uname = req.body.username
+        , passwd = req.body.password
+        , pr_uname = req.body.provider_username
+    if (uname === 'Leonidas' && passwd === 'Gorgo')
+        Provider
+            .findOne( { where : { provider_username : pr_uname } } ).then((provider) => {
+                if (provider === null)
+                    res.json(provider)
+                else {
+                    provider.provider_active = false
+                    provider.save( { fields : ['provider_active'] } )
+                    res.json(provider)
+                }
+            })
+            .catch((err) => {
+                res.json( { error : err } )
+            })
+    else
+        res.json(null)
+})
+
+
+app.post('/admin/usr_activate', (req, res) => {
+    const uname = req.body.username
+        , passwd = req.body.password
+        , username = req.body.username
+    if (uname === 'Leonidas' && passwd === 'Gorgo')
+        User
+            .findOne( { where : { username : username } } ).then((user) => {
+                if (user === null)
+                    res.json(user)
+                else {
+                    user.user_active = true
+                    user.save( { fields : ['user_active'] } )
+                    res.json(user)
+                }
+            })
+            .catch((err) => {
+                res.json( { error : err } )
+            })
+    else
+        res.json(null)
+})
+
+
+app.post('/admin/usr_deactivate', (req, res) => {
+    const uname = req.body.username
+        , passwd = req.body.password
+        , username = req.body.username
+    if (uname === 'Leonidas' && passwd === 'Gorgo') {
+        User
+            .findOne( { where : { username : username } } ).then((user) => {
+                if (user === null)
+                    res.json(user)
+                else {
+                    user.user_active = false
+                    user.save( { fields : ['user_active'] } )
+                    res.json(user)
+                }
+            })
+            .catch((err) => {
+                res.json( { error : err } )
+            })
+        } else
+        res.json(null)
+})
+
+
+app.post('/admin/pay_event', (req, res) => {
+    const uname = req.body.username
+        , passwd = req.body.password
+        , ev_id = req.body.ev_id
+    if (uname === 'Leonidas' && passwd === 'Gorgo') {
+        Evnt
+            .findOne( {
+                where : { event_id : ev_id },
+                include : [ { model : Provider } ]
+            } ).then((evnt) => {
+                if (evnt === null)
+                    res.json(evnt)
+                else {
+                    Transaction
+                        .sum('transaction_points', { where : { transaction_event_id : evnt.event_id } } ).then((sum) => {
+                            evnt.event_is_paid = true;
+                            evnt.provider.provider_credits += sum;
+                            evnt.save()
+                            evnt.provider.save()
+                            res.json( { 'amount_paid' : sum } )
+                        })
+                        .catch((err) => {
+                            res.json( { error : err } )
+                        })
+                }
+            })
+            .catch((err) => {
+                res.json( { error : err } )
+            })
+    } else
+        res.json(null)
+})
+
+
 // Gotta Catch 'Em All
 app.all('/*', (req, res) => {
+    console.log('Leonida ena alogo')
+    console.log(req.params)
+    console.log(req.body)
+    console.log(req.protocol)
+    console.log(req.method)
+    console.log(req.originalUrl)
     console.log('Leonida ena alogo')
     res.json( { 'ΛΕΩΝΙΔΑ ΕΝΑ ΑΛΟΓΟ' : 'ΜΕ ΚΟΥΡΑΖΕΙΣ ΠΟΛΥ' } )
 })
@@ -463,5 +630,4 @@ EventCategory.sync()
 const server = app.listen(config.port, () => {
     console.log(`Listening on ${server.address().address} : ${server.address().port}`)
 })
-
 

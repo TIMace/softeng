@@ -4,20 +4,20 @@
       <div class="form-group row">
         <label for="lgFormGroupInput" class="col-sm-3 col-form-label col-form-label-lg">Όνομα Χρήστη</label>
         <div class="col-sm-7">
-          <input type="email" class="form-control form-control-lg" id="lgFormGroupInput">
+          <input type="text" class="form-control form-control-lg" id="lgFormGroupInput" [(ngModel)]="username">
         </div>
       </div>
       <div class="form-group row">
         <label for="smFormGroupInput" class="col-sm-3 col-form-label col-form-label-sm">Συνθηματικό</label>
         <div class="col-sm-7">
-          <input type="email" class="form-control form-control-sm" id="smFormGroupInput">
+          <input type="text" class="form-control form-control-sm" id="smFormGroupInput" [(ngModel)]="password">
         </div>
       </div>
   
       <div class="row" style="padding-top: 1rem">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <button type="submit" [disabled]="formLogin.invalid" class="btn btn-primary"><i class="fa fa-sign-in"></i>Είσοδος</button>
+            <button (click)="adminLogin" type="submit" [disabled]="formLogin.invalid" class="btn btn-primary"><i class="fa fa-sign-in"></i>Είσοδος</button>
         </div>
       </div>
     </form>

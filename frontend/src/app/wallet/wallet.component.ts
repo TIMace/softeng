@@ -40,6 +40,7 @@ export class WalletComponent implements OnInit {
           console.log(data);
           if (data) {
             alert("Η συναλλαγή ήταν επιτυχής!")
+            this.userDetails = this.userDetailsService.getDetails()
             // this.router.navigate(['']);
           }
           else{

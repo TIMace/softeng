@@ -24,10 +24,16 @@ button {
     border: 1px solid #17a2b8;
     margin: 1rem;
 }
-
+ 
 #provider {
     padding: 1rem 1rem;
+    background-color: #4682B4;
 }
+
+#parent {
+    padding: 1rem 1rem;
+}
+
 
 button:hover {
     background-color: #17a2b8;
