@@ -253,6 +253,25 @@ app.get('/provider/events/:username/:password/', (req, res) => {
         })
 })
 
+
+app.get('/provider/credits/:username/:password/', (req, res) => {
+    Provider
+        .findOne( { where : { provider_username : req.params.username, provider_password : req.params.password } } ).then((provider) => {
+            if (provider === null)
+                res.json(provider)
+            else {
+                provider.provider_credits = 0
+                provider.save( { fields : ['provider_credits'] } )
+                res.json(provider)
+            }
+        })
+        .catch((err) => {
+            res.json( { error : err } )
+        })
+})
+
+
+
 app.post('/provider', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
@@ -456,10 +475,10 @@ app.get('/admin/:username/:password', (req, res) => {
 app.post('/admin/pr_activate', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
-        , prid = req.body.provider_id
+        , pr_uname = req.body.provider_username
     if (uname === 'Leonidas' && passwd === 'Gorgo')
         Provider
-            .findOne( { where : { provider_id : prid } } ).then((provider) => {
+            .findOne( { where : { provider_username : pr_uname } } ).then((provider) => {
                 if (provider === null)
                     res.json(provider)
                 else {
@@ -479,10 +498,10 @@ app.post('/admin/pr_activate', (req, res) => {
 app.post('/admin/pr_deactivate', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
-        , prid = req.body.provider_id
+        , pr_uname = req.body.provider_username
     if (uname === 'Leonidas' && passwd === 'Gorgo')
         Provider
-            .findOne( { where : { provider_id : prid } } ).then((provider) => {
+            .findOne( { where : { provider_username : pr_uname } } ).then((provider) => {
                 if (provider === null)
                     res.json(provider)
                 else {
@@ -502,10 +521,10 @@ app.post('/admin/pr_deactivate', (req, res) => {
 app.post('/admin/usr_activate', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
-        , usrid = req.body.user_id
+        , username = req.body.username
     if (uname === 'Leonidas' && passwd === 'Gorgo')
         User
-            .findOne( { where : { user_id : usrid } } ).then((user) => {
+            .findOne( { where : { username : username } } ).then((user) => {
                 if (user === null)
                     res.json(user)
                 else {
@@ -525,10 +544,10 @@ app.post('/admin/usr_activate', (req, res) => {
 app.post('/admin/usr_deactivate', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
-        , usrid = req.body.user_id
-    if (uname === 'Leonidas' && passwd === 'Gorgo')
+        , username = req.body.username
+    if (uname === 'Leonidas' && passwd === 'Gorgo') {
         User
-            .findOne( { where : { user_id : usrid } } ).then((user) => {
+            .findOne( { where : { username : username } } ).then((user) => {
                 if (user === null)
                     res.json(user)
                 else {
@@ -540,13 +559,42 @@ app.post('/admin/usr_deactivate', (req, res) => {
             .catch((err) => {
                 res.json( { error : err } )
             })
-    else
+        } else
         res.json(null)
 })
 
 
 app.post('/admin/pay_event', (req, res) => {
-
+    const uname = req.body.username
+        , passwd = req.body.password
+        , ev_id = req.body.ev_id
+    if (uname === 'Leonidas' && passwd === 'Gorgo') {
+        Evnt
+            .findOne( {
+                where : { event_id : ev_id },
+                include : [ { model : Provider } ]
+            } ).then((evnt) => {
+                if (evnt === null)
+                    res.json(evnt)
+                else {
+                    Transaction
+                        .sum('transaction_points', { where : { transaction_event_id : evnt.event_id } } ).then((sum) => {
+                            evnt.event_is_paid = true;
+                            evnt.provider.provider_credits += sum;
+                            evnt.save()
+                            evnt.provider.save()
+                            res.json( { 'amount_paid' : sum } )
+                        })
+                        .catch((err) => {
+                            res.json( { error : err } )
+                        })
+                }
+            })
+            .catch((err) => {
+                res.json( { error : err } )
+            })
+    } else
+        res.json(null)
 })
 
 
