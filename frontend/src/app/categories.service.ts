@@ -42,6 +42,28 @@ export class CategoriesService {
     return res;
   }
 
+  onClickSelectCategory(category:Category){
+    var index = this.categorySelectedIndex(category);
+    if (index != -1){
+      this.selectedCategories.splice(index,1)
+    }
+    else{
+      this.selectedCategories.push(category)
+    }
+    return this.selectedCategories;
+  }
+
+  categorySelectedIndex(category){
+    var index = -1;
+    for(var i = 0;i<this.selectedCategories.length;i++){
+      if (this.selectedCategories[i].name == category.name){
+        index = i;
+        break
+      }
+    }
+    return index;
+  }
+
   getSelectedCategories(): Category[] {
     return this.selectedCategories;
   }
