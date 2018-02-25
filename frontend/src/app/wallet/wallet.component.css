@@ -16,6 +16,7 @@ h5 {
 
 .container-fluid {
     margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* Content */
@@ -25,5 +26,5 @@ h5 {
 }
 
 .field-label-responsive{
-    text-align: right;
+    text-align: center;
 }
