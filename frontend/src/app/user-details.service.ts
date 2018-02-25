@@ -226,7 +226,7 @@ export class UserDetailsService {
     .set('address', ""+newParentDetails.address)
     .set('phone_num1', ""+newParentDetails.phoneΝum)
     this.httpClient.post(
-      `${server_addr}/user/parent`,
+      `${server_addr}/user/update`,
       requestDetails.toString(),
       {
         headers: new HttpHeaders()
