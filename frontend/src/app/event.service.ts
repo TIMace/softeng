@@ -129,6 +129,39 @@ export class EventService {
     return subject.asObservable();
   }
 
+  buyEvent(id){
+    var subject = new Subject();
+    var userDetails = this.userDetailsService.getDetails()
+    this.httpClient.get(
+      `${server_addr}/user/buy/${userDetails.username}/${userDetails.password}/${id}`,
+    )
+    .subscribe(
+      (data:any)=>{
+        console.log(data)
+        if (data==null || data.hasOwnProperty("error")){
+          subject.next(false)
+        }
+        else{
+          subject.next(true)
+        }
+
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+        subject.next(false)
+      }
+    )
+    return subject;
+  }
+
+  updateEvent(eventObj:Event){
+    return of(true)
+  }
+
   createEvent(eventObj:Event){
     var subject = new Subject()
     if (this.userDetailsService.userType != "Provider"){
