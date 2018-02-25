@@ -224,9 +224,9 @@ export class UserDetailsService {
     .set('new_password', ""+newParentDetails.new_password)
     .set('email', ""+newParentDetails.email)
     .set('address', ""+newParentDetails.address)
-    .set('phone_num1', ""+newParentDetails.phoneΝum)
-    this.httpClient.put(
-      `${server_addr}/user`,
+    .set('phone_num', ""+newParentDetails.phoneΝum)
+    this.httpClient.post(
+      `${server_addr}/user/update`,
       requestDetails.toString(),
       {
         headers: new HttpHeaders()
@@ -271,10 +271,10 @@ export class UserDetailsService {
     .set('new_password', ""+newProviderDetails.new_password)
     .set('email', ""+newProviderDetails.email)
     .set('address', ""+newProviderDetails.address)
-    .set('phone_num1', ""+newProviderDetails.phoneΝum)
+    .set('phone_num', ""+newProviderDetails.phoneΝum)
     .set('baccount', ""+newProviderDetails.bankAccount)
-    this.httpClient.put(
-      `${server_addr}/provider`,
+    this.httpClient.post(
+      `${server_addr}/provider/update`,
       requestDetails.toString(),
       {
         headers: new HttpHeaders()
