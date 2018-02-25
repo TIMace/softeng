@@ -12,7 +12,7 @@
 </h5>
 <ng-container *ngIf="show">
         <div class="container-fluid">
-        <form class="form-horizontal text-center" [formGroup]="formRegister" (ngSubmit)="doRegister()">
+        <form class="form-horizontal text-center" [formGroup]="formWallet" (ngSubmit)="addPontous()">
             <div class="row">
                 <div class="col-md-4 field-label-responsive">
                     <label for="wallet_cardNumber">Αριθμός Κάρτας</label>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row">   
                 <div class="col-md-4 field-label-responsive">
                     <label for="wallet_amount">Ποσό Πληρωμής</label>
                 </div>
@@ -57,7 +57,7 @@
             <div *ngIf="paymentBool">
                 <p>Πρόκειται να εισάγετε {{payment*100}} πόντους.</p>
             </div>
-            <button type="submit" class="btn btn-primary" [disabled]="formRegister.invalid">
+            <button type="submit" class="btn btn-primary" [disabled]="formWallet.invalid">
                 <i class="fa fa-user-plus"></i>Αγορά Πόντων</button>
         </form>
     </div>

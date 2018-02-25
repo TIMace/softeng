@@ -12,20 +12,36 @@ import { userDetailsObj } from '../user-details.service';
 })
 export class PersonalInfoComponent implements OnInit {
 
-  formRegister: FormGroup;
+  formUpdate: FormGroup;
 
-  provider: boolean;
+  //provider: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
     public userDetailsService: UserDetailsService
   ) { }
 
+  doUpdate() {
+    console.log(this.formUpdate.value);
+    this.userDetailsService.updateParentDetails(this.formUpdate.value).
+      subscribe(
+        data => {
+          if (data) {
+            alert("Η επεξεργασία στοιχείων ολοκληρώθηκε με επιτυχία!")
+            // this.router.navigate(['']);
+          }
+          else {
+            alert("Η επεξεργασία στοιχείων απέτυχε!")
+          }
+        }
+      );
+  }
+
   userDetails = this.userDetailsService.getDetails();
 
   ngOnInit() {
 
-    this.provider = true;
+    //this.provider = true;
 
     //TO DO
     //CREATE 2 FORMES WITH IF THEN ELSE STATEMENT
@@ -34,20 +50,20 @@ export class PersonalInfoComponent implements OnInit {
     // CHANGE HTML ACCORDINGLY
 
 
-    this.formRegister = this.formBuilder.group({
-      name: [this.userDetails.firstName, Validators.required],
-      lastname: [this.userDetails.lastName, Validators.required],
+    this.formUpdate = this.formBuilder.group({
+      name: [this.userDetails.firstName],
+      lastname: [this.userDetails.lastName],
       location: [this.userDetails.address, Validators.required],
       phone: [this.userDetails.phoneNum, Validators.required],
-      company: [this.userDetails.compName, Validators.required],
-      afm: [this.userDetails.ssn, Validators.required],
-      account: [this.userDetails.bankAccount, Validators.required],
-      username: [this.userDetails.username, Validators.required],
+      company: [this.userDetails.compName],
+      afm: [this.userDetails.ssn],
+      account: [this.userDetails.bankAccount],
+      username: [this.userDetails.username],
       email: [this.userDetails.email, [Validators.required, Validators.email]],
-      credits: [this.userDetails.credits, [Validators.required]], //Validators.pattern('[a-z0-9.@]*')
-      password: ['', Validators.required],
-      new_password: ['', Validators.required],
-      confirm_password: ['', Validators.required],
+      credits: [this.userDetails.credits],
+      password: [''],
+      new_password: [''],
+      confirm_password: [''],
     });
   }
 

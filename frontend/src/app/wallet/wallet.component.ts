@@ -13,7 +13,7 @@ export class WalletComponent implements OnInit {
 
   payment: any;
   paymentBool = false;
-  formRegister: FormGroup;
+  formWallet: FormGroup;
   show: boolean = false;
   buttonName: any = 'Show';
 
@@ -22,10 +22,37 @@ export class WalletComponent implements OnInit {
     public userDetailsService: UserDetailsService
   ) { }
 
+  // userType: String;
+  CardNumber: String;
+  Password: String;
+  Amount: Number;
+
+  addPontous() {
+
+    this.CardNumber = this.formWallet.get('cardNumber').value;
+    this.Password = this.formWallet.get('password').value;
+    this.Amount = this.formWallet.get('amount').value;
+
+    console.log(this.formWallet.value);
+    this.userDetailsService.addCredits(this.CardNumber, this.Password, this.Amount).
+      subscribe(
+        data => {
+          console.log(data);
+          if (data) {
+            alert("Η συναλλαγή ήταν επιτυχής!")
+            // this.router.navigate(['']);
+          }
+          else{
+            alert("Η συναλλαγή απέτυχε!")
+          }
+        }
+      );
+  }
+
   userDetails = this.userDetailsService.getDetails();
 
   ngOnInit() {
-    this.formRegister = this.formBuilder.group({
+    this.formWallet = this.formBuilder.group({
       cardNumber: ['', Validators.required],
       password: ['', Validators.required],
       amount: ['50€', Validators.required]

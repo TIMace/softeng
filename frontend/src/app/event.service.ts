@@ -89,6 +89,12 @@ export class EventService {
     return subject.asObservable();
   }
 
+  createEvent(eventObj){
+    var subject = new Subject()
+    subject.next(true)
+    return subject.asObservable()
+  }
+
   getProviderEvents(){
     var subject = new Subject<any>();
     var userDetails = this.userDetailsService.getDetails();
