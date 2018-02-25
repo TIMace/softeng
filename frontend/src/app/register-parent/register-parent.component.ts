@@ -15,9 +15,9 @@ export class RegisterParentComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public userDetailsService: UserDetailsService,
-  ) {}
+  ) { }
 
-  doRegisterProvider(){
+  doRegisterProvider() {
     console.log(this.formRegisterParent.value);
     this.userDetailsService.registerParent(this.formRegisterParent.value).
       subscribe(
@@ -26,12 +26,11 @@ export class RegisterParentComponent implements OnInit {
             alert("Η εγγραφή χρήστη ολοκληρώθηκε!")
             // this.router.navigate(['']);
           }
-          else{
+          else {
             alert("Η εγγραφή χρήστη απέτυχε!")
           }
         }
       );
-
   }
 
   ngOnInit() {
@@ -44,7 +43,7 @@ export class RegisterParentComponent implements OnInit {
       parent_email: this.parent_email,
       parent_password: this.parent_password,
       parent_confirm_password: this.parent_confirm_password,
-    } , { validator: this.matchingPasswords('parent_password', 'parent_confirm_password')} );
+    }, { validator: this.matchingPasswords('parent_password', 'parent_confirm_password') });
   }
 
   parent_name = new FormControl("Λεωνίδας", Validators.required);
@@ -61,7 +60,7 @@ export class RegisterParentComponent implements OnInit {
       let passwordInput = group.controls[passwordKey];
       let passwordConfirmationInput = group.controls[passwordConfirmationKey];
       if (passwordInput.value !== passwordConfirmationInput.value) {
-        return passwordConfirmationInput.setErrors({notEquivalent: true})
+        return passwordConfirmationInput.setErrors({ notEquivalent: true })
       }
     }
   }

@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <form class="form-horizontal text-center" [formGroup]="formRegister" (ngSubmit)="doRegister()">
+    <form class="form-horizontal text-center" [formGroup]="formUpdate" (ngSubmit)="doUpdate()">
         <div class="row">
             <div class="col-md-4 field-label-responsive">
                 <label for="name">Όνομα</label>
@@ -15,7 +15,7 @@
                 <div class="form-control-feedback">
                     <span class="text-danger align-middle">
                         <!-- Put name validation error messages here -->
-                        <div *ngIf="formRegister.get('name').hasError('required')">
+                        <div *ngIf="formUpdate.get('name').hasError('required')">
                             Oops, please provide a name!
                         </div>
                     </span>
@@ -37,7 +37,7 @@
                 <div class="form-control-feedback">
                     <span class="text-danger align-middle">
                         <!-- Put name validation error messages here -->
-                        <div *ngIf="formRegister.get('lastname').hasError('required')">
+                        <div *ngIf="formUpdate.get('lastname').hasError('required')">
                             Απαραίτητο πεδίο!
                         </div>
                     </span>
@@ -97,7 +97,7 @@
                         <div class="input-group-addon" style="width: 2.6rem">
                             <i class="fa fa-id-card"></i>
                         </div>
-                        <input type="text" id="afm" class="form-control" formControlName="afm" required>
+                        <input type="text" id="afm" class="form-control" formControlName="afm">
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                         <div class="input-group-addon" style="width: 2.6rem">
                             <i class="fa fa-credit-card"></i>
                         </div>
-                        <input type="text" id="account" class="form-control" formControlName="account" required>
+                        <input type="text" id="account" class="form-control" formControlName="account">
                     </div>
                 </div>
             </div>
@@ -135,7 +135,7 @@
                 <div class="form-control-feedback">
                     <span class="text-danger align-middle">
                         <!-- Put e-mail validation error messages here -->
-                        <div *ngIf="(!formRegister.controls['email'].valid)&&(formRegister.get('email').touched)">
+                        <div *ngIf="(!formUpdate.controls['email'].valid)&&(formUpdate.get('email').touched)">
                             Oops, wrong pattern buddy!
                         </div>
                     </span>
@@ -157,7 +157,7 @@
                 <div class="form-control-feedback">
                     <span class="text-danger align-middle">
                         <!-- Put name validation error messages here -->
-                        <div *ngIf="formRegister.get('name').hasError('required')">
+                        <div *ngIf="formUpdate.get('name').hasError('required')">
                             Oops, please provide a name!
                         </div>
                     </span>
@@ -179,7 +179,7 @@
                 <div class="form-control-feedback">
                     <span class="text-danger align-middle">
                         <!-- Put name validation error messages here -->
-                        <div *ngIf="formRegister.get('name').hasError('required')">
+                        <div *ngIf="formUpdate.get('name').hasError('required')">
                             Oops, please provide a name!
                         </div>
                     </span>
@@ -196,8 +196,7 @@
                         <div class="input-group-addon" style="width: 2.6rem">
                             <i class="fa fa-key"></i>
                         </div>
-                        <input type="new_password" id="parent_password" class="form-control" formControlName="password" placeholder="Τρέχων Κωδικός"
-                            required>
+                        <input type="new_password" id="parent_password" class="form-control" formControlName="password" placeholder="Τρέχων Κωδικός">
                     </div>
                 </div>
             </div>
@@ -219,8 +218,7 @@
                         <div class="input-group-addon" style="width: 2.6rem">
                             <i class="fa fa-key"></i>
                         </div>
-                        <input type="new_password" id="parent_new_password" class="form-control" formControlName="new_password" placeholder="Νέος Κωδικός"
-                            required>
+                        <input type="new_password" id="parent_new_password" class="form-control" formControlName="new_password" placeholder="Νέος Κωδικός">
                     </div>
                 </div>
             </div>
@@ -242,13 +240,12 @@
                         <div class="input-group-addon" style="width: 2.6rem">
                             <i class="fa fa-repeat"></i>
                         </div>
-                        <input type="password" id="parent_confirm_password" class="form-control" formControlName="confirm_password" placeholder="Επιβεβαίωση Κωδικού"
-                            required>
+                        <input type="password" id="parent_confirm_password" class="form-control" formControlName="confirm_password" placeholder="Επιβεβαίωση Κωδικού">
                     </div>
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary" [disabled]="formRegister.invalid">
+        <button type="submit" class="btn btn-primary" [disabled]="formUpdate.invalid">
             <i class="fa fa-user-plus"></i>Αποθήκευση Αλλαγών</button>
     </form>
 </div>
