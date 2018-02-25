@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Event } from './event';
+import { Event, eventProviderInfo } from './event';
 import { EVENTS } from './mock-events';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
@@ -44,7 +44,40 @@ export class EventService {
   }
 
   getEventById(id){
-    return of(EVENTS[0]);
+    var subject = new Subject();
+    this.httpClient.get(
+      `${server_addr}/event/${id}`
+    )
+    .subscribe(
+      (triplet:any) =>
+      {
+        var eventt = triplet.event;
+        var categories = triplet.categories
+        var providerInfo = triplet.provider
+
+        eventt = this.server2local_event_single(eventt)
+        var catNames = []
+        for(var i=0;i<categories.length;i++){
+          catNames.push(categories[i].category_name)
+        }
+        eventt.categories = catNames;
+        var finalProviderInfo = new eventProviderInfo()
+        finalProviderInfo.email = providerInfo.provider_email;
+        finalProviderInfo.fname = providerInfo.provider_first_name;
+        finalProviderInfo.lname = providerInfo.provider_last_name;
+        finalProviderInfo.cname = providerInfo.provider_comp_name;
+        finalProviderInfo.address = providerInfo.address;
+        finalProviderInfo.phoneNum = providerInfo.provider_phone_num;
+        eventt.providerInfo = finalProviderInfo;
+        // console.log("This is the single event that came")
+        // console.log(eventt)
+        // console.log("Getting this single event")
+        // console.log(eventt)
+        subject.next(eventt)
+      }
+    )
+    // return of(EVENTS[0]);
+    return subject;
   }
 
   // TODO rename getCategory to getEvent
@@ -204,6 +237,31 @@ export class EventService {
     // console.log("Final Res:")
     // console.log(final_res)
     return final_res;
+  }
+
+  server2local_event_single(server_event){
+    // var final_res =  [];
+    
+    // for(var i = 0;i<server_event_array.length;i++){
+      var res = new Event();
+      // var server_event = server_event_array[i]
+      res.id = +server_event.event_id;
+      res.available_tickets = +server_event.event_available_tickets;
+      res.date = server_event.event_date
+  ​​    res.description = server_event.event_description
+      res.lat = +server_event.event_lattitude
+      res.lng = +server_event.event_longtitude
+      res.location = server_event.event_map_data
+      res.age_max = +server_event.event_maximum_age
+      res.age_min = +server_event.event_minimum_age
+      res.name = server_event.event_name
+      res.price = +server_event.event_price
+      res.provider_id = +server_event.event_provider_id
+      // final_res.push(res);
+    // }
+    // console.log("Final Res:")
+    // console.log(final_res)
+    return res;
   }
 
   navbar_extended = 0;
