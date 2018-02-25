@@ -19,9 +19,14 @@ export class PersonalInfoComponent implements OnInit {
     public userDetailsService: UserDetailsService
   ) { }
 
+  onSubmit() {
+    this.doUpdate();
+  }
+
   doUpdate() {
+    console.log("MPHKAAA");
     console.log(this.formUpdate.value);
-    this.userDetailsService.updateParentDetails(this.formUpdate.value).
+    this.userDetailsService.updateProviderDetails(this.formUpdate.value).
       subscribe(
       data => {
         if (data) {
