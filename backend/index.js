@@ -447,7 +447,8 @@ app.all('/*', (req, res) => {
     console.log('Leonida ena alogo')
     console.log(req.params)
     console.log(req.body)
-    console.log(req.)
+    console.log(req.protocol)
+    console.log(req.method)
     console.log(req.originalUrl)
     console.log('Leonida ena alogo')
     res.json( { 'ΛΕΩΝΙΔΑ ΕΝΑ ΑΛΟΓΟ' : 'ΜΕ ΚΟΥΡΑΖΕΙΣ ΠΟΛΥ' } )
@@ -473,5 +474,4 @@ EventCategory.sync()
 const server = app.listen(config.port, () => {
     console.log(`Listening on ${server.address().address} : ${server.address().port}`)
 })
-
 
