@@ -363,13 +363,20 @@ app.get('/event/:id', (req, res) => {
                         include : [ { model : Category } ]
                     } ).then((ev_cat) => {
                         const categories = flatten(ev_cat)
+                            , ret_evnt = {
+                                event_id : evnt.event_id, event_price : evnt.event_price, event_name : evnt.event_name,
+                                event_description : evnt.event_description, event_date : evnt.event_date, event_provider_id : evnt.event_provider_id,
+                                event_available_tickets : evnt.event_available_tickets, event_lattitude : evnt.event_lattitude, event_longtitude : evnt.event_longtitude,
+                                event_minimum_age : evnt.event_minimum_age, event_maximum_age : evnt.event_maximum_age, event_map_data : evnt.event_map_data,
+                                event_is_paid : evnt.event_is_paid, createdAt : evnt.createdAt
+                            }
                             , provider = { provider_email : evnt.provider.provider_email,
                                 provider_first_name : evnt.provider.provider_first_name,
                                 provider_last_name : evnt.provider.provider_last_name,
                                 provider_comp_name : evnt.provider.provider_comp_name,
                                 provider_address : evnt.provider.provider_address,
                                 provider_phone_num : evnt.provider.provider_phone_num }
-                        res.json( { event : evnt, categories : categories, provider : provider } )
+                        res.json( { event : ret_evnt, categories : categories, provider : provider } )
                     })
                     .catch((err) => {
                         res.json( { error : err } )
