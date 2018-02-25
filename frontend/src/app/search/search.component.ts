@@ -40,15 +40,19 @@ export class SearchComponent implements OnInit {
 
   getSelectedCategories(): void {
     this.selectedCategories = this.categoryService.getSelectedCategories();
-    console.log(JSON.stringify(this.selectedEvents));
+    console.log(this.selectedCategories);
   }
 
-  findChecked(): void {
-    for ( let i = 0; i < this.categories.length; i++ )
-      if ( ( this.selectedCategories.length > 0 ) && ( this.categories[i].name === this.selectedCategories[0].name ) ){
-        this.checked = this.categories[i].id;
-        console.log(this.checked);
-      }
+  findChecked(category: Category): void {
+    const index: number = this.selectedCategories.indexOf(category);
+    if (index !== -1) {
+      this.selectedCategories.splice(index, 1);
+      // this.categoryService.removeCategory(index);
+    }
+    else {
+      this.selectedCategories.push(category);
+      // this.categoryService.selectedCategories.push(category);
+    }
   }
 
   onSelect(category: Category): void {
@@ -64,7 +68,7 @@ export class SearchComponent implements OnInit {
       // }
 
       this.selectedCategories.splice(index, 1);
-      this.categoryService.removeCategory(index);
+      // this.categoryService.removeCategory(index);
 
     }
     else {
@@ -78,9 +82,9 @@ export class SearchComponent implements OnInit {
       // }
 
       this.selectedCategories.push(category);
-      this.categoryService.selectedCategories.push(category);
+      // this.categoryService.selectedCategories.push(category);
     }
-    console.log(JSON.stringify(this.selectedEvents));
+    console.log(JSON.stringify(this.selectedCategories));
   }
 
   // --------------------- Events --------------------- //
@@ -118,9 +122,7 @@ export class SearchComponent implements OnInit {
     this.getCategories();
     this.getSelectedCategories();
     
-    this.getEvents();
-    
-    this.findChecked();
+    // this.getEvents();
 
     this.show_filters = false;
 

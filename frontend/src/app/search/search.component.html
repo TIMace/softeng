@@ -42,8 +42,8 @@
 
           <!-- Categories -->
           <div class="btn-group" data-toggle="buttons" *ngFor="let category of categories" (click)="onSelect(category)">
-            <label class="btn btn-outline-info" id={{category.id}} [class.active]="category.id === checked">
-              <input type="checkbox"> {{category.name}}
+            <label class="btn btn-outline-info">
+              <input type="checkbox" id={{category.id}} [class.active]="findChecked(category)"> {{category.name}}
             </label>
           </div>
         </div>

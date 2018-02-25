@@ -24,8 +24,8 @@
 
 .categories .btn-outline-info.focus {
     box-shadow: 0 0 0 0rem;
-    background-color: #FFF;
-    color: #17a2b8;
+    /* background-color: #FFF;
+    color: #17a2b8; */
 }
 
 .categories .btn-outline-info:not([disabled]):not(.disabled).active {
@@ -61,6 +61,6 @@
     color: red;
 }
 
-.categegories-show{
+/* .categories-show{
     background: #ADD8E6;
-}
+} */
