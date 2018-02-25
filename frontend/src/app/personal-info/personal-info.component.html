@@ -97,7 +97,7 @@
                         <div class="input-group-addon" style="width: 2.6rem">
                             <i class="fa fa-id-card"></i>
                         </div>
-                        <input type="text" id="afm" class="form-control" formControlName="afm" disabled>
+                        <input type="text" id="afm" class="form-control" formControlName="afm" required>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                         <div class="input-group-addon" style="width: 2.6rem">
                             <i class="fa fa-credit-card"></i>
                         </div>
-                        <input type="text" id="account" class="form-control" formControlName="account" disabled>
+                        <input type="text" id="account" class="form-control" formControlName="account" required>
                     </div>
                 </div>
             </div>
@@ -188,7 +188,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 field-label-responsive">
-                <label for="password">New Password</label>
+                <label for="password">Τρέχων Κωδικός</label>
             </div>
             <div class="col-sm-5 col-md-4">
                 <div class="form-group has-danger">
@@ -196,7 +196,7 @@
                         <div class="input-group-addon" style="width: 2.6rem">
                             <i class="fa fa-key"></i>
                         </div>
-                        <input type="new_password" id="parent_new_password" class="form-control" formControlName="new_password" placeholder="New Password"
+                        <input type="new_password" id="parent_password" class="form-control" formControlName="password" placeholder="Τρέχων Κωδικός"
                             required>
                     </div>
                 </div>
@@ -211,7 +211,30 @@
         </div>
         <div class="row">
             <div class="col-md-4 field-label-responsive">
-                <label for="password">Confirm Password</label>
+                <label for="new_password">Νέος Κωδικός</label>
+            </div>
+            <div class="col-sm-5 col-md-4">
+                <div class="form-group has-danger">
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon" style="width: 2.6rem">
+                            <i class="fa fa-key"></i>
+                        </div>
+                        <input type="new_password" id="parent_new_password" class="form-control" formControlName="new_password" placeholder="Νέος Κωδικός"
+                            required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-control-feedback">
+                    <span class="text-danger align-middle">
+                        <!-- <i class="fa fa-close"> Example Error Message</i> -->
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 field-label-responsive">
+                <label for="confirm_password">Επιβεβαίωση Κωδικού</label>
             </div>
             <div class="col-sm-5 col-md-4">
                 <div class="form-group">
@@ -219,7 +242,7 @@
                         <div class="input-group-addon" style="width: 2.6rem">
                             <i class="fa fa-repeat"></i>
                         </div>
-                        <input type="password" id="parent_confirm_password" class="form-control" formControlName="confirm_password" placeholder="Password"
+                        <input type="password" id="parent_confirm_password" class="form-control" formControlName="confirm_password" placeholder="Επιβεβαίωση Κωδικού"
                             required>
                     </div>
                 </div>

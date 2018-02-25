@@ -13,6 +13,7 @@ export class Event {
     location: string; //map_data ths vashs
     is_paid: boolean;
     img: string;
+    // categories: Array<string>;
 }
 
 // export class Category {
