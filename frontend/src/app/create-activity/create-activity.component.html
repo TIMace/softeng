@@ -31,13 +31,22 @@
       </div>
       <div class="details">
         <div>
-          <input matInput [matDatepicker]="picker" placeholder="Ημερομηνία">
+          <input matInput [matDatepicker]="picker" placeholder="Ημερομηνία" [(ngModel)] = "date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </div>
         <div class="details">
           <u>Κατηγορίες:</u>
+          <div class="form-check" *ngFor="let cat of categories;let i=index;">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"
+            (change)="changeCheckbox(i, cat.name)"
+            [checked]="cat.checked">
+            <label class="form-check-label" for="defaultCheck1">
+              {{cat.name}}
+            </label>
+          </div>
         </div>
+
         <div class="details">
           <u>Ηλικίες:</u>
           <div class="row">
@@ -58,21 +67,11 @@
             <input class="col-1 form-control form-control-sm" type="text" placeholder="Λεπτά">
           </div>
         </div>
-        &nbsp;
-        <div class="form-check" *ngFor="let cat of categories;let i=index;">
-          <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"
-          (change)="changeCheckbox(i)"
-          [checked]="cat.checked">
-          <label class="form-check-label" for="defaultCheck1">
-            {{cat.name}}
-          </label>
-        </div>
-
       </div>
 
     </div>
     <div class=" col-12 col-md-3">
-      <button (click)="createEvent()" type="button" class="btn">
+      <button (click)="temp()" type="button" class="btn">
         <div>
           <i class="fa fa-check"></i>
         </div>Δημιουργία</button>

@@ -25,6 +25,7 @@ import { MapService } from '../map.service';
 
 // Services
 import { EventService } from '../event.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-create-activity',
@@ -158,7 +159,18 @@ export class CreateActivityComponent implements OnInit {
      
    }
 
+   checkedCategories:string[] = [];
+   checkedCategoriesInit () {
+     this.categories.forEach(element => {
+       this.checkedCategories.push("false")
+     })
+   }
 
+   date:Date;
+   temp(){
+
+    console.log(this.checkedCategories);
+  }
 
   categories;
   ngOnInit() {
@@ -166,24 +178,31 @@ export class CreateActivityComponent implements OnInit {
     .subscribe(
       (data:any) => {
         this.categories = data
+        this.checkedCategoriesInit();
         console.log(this.categories);
       }
     );
     this.category = EVENTS[0];
     this.write();
-
     // this.getEvent();
   };
 
+ //l = Object.keys(this.categories).length;
   // getEvent(): void {
   //   const id = +this.route.snapshot.paramMap.get('id');
   //   this.eventService.getEvent(id)
   //     .subscribe(event => this.event = event);
   // }
-  cat:boolean;
-  changeCheckbox(cat, i) {
-    if (cat) {
-      this.cat[i].checked = !this.cat[i].checked;
+
+  changeCheckbox(catIndex,catName) {
+    if(this.checkedCategories[catIndex] === "false") {
+      this.checkedCategories[catIndex] = catName
+    }
+    else {
+      this.checkedCategories[catIndex] = "false"
     }
   }
+
+
+
 }
