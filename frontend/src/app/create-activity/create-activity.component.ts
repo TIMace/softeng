@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, NgZone, ElementRef, ViewChild } from '@angular/core';
-
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-
 import { Event } from '../event';
 import { EVENTS } from '../mock-events';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -10,7 +8,7 @@ import {MatNativeDateModule} from '@angular/material';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormControl } from '@angular/forms';
 import { CategoriesService } from '../categories.service';
-
+import { Router } from '@angular/router';
 
 // MAP
 import { AgmMap } from '@agm/core/directives/map';
@@ -19,12 +17,9 @@ import { } from 'googlemaps';
 import { MapComponent } from '../map/map.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { MapService } from '../map.service';
-
-
-
-
 // Services
 import { EventService } from '../event.service';
+import { element } from 'protractor';
 
 
 import { Observable } from 'rxjs/Observable';
@@ -44,8 +39,8 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
   styleUrls: ['./create-activity.component.css']
 })
 export class CreateActivityComponent implements OnInit {
-  @Input() category: Event;
 
+  @Input() category: Event;
 
   constructor(
     private eventService: EventService,
@@ -56,10 +51,11 @@ export class CreateActivityComponent implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private dialog: MatDialog,
+    private router: Router,
     private httpClient:HttpClient
 
-  ) { }
 
+  ) { }
 
    //-------------- MAP --------------//
 
@@ -112,7 +108,6 @@ export class CreateActivityComponent implements OnInit {
    }
  
    write() {
- 
      //create search FormControl
      this.searchControl = new FormControl();
   
@@ -157,20 +152,33 @@ export class CreateActivityComponent implements OnInit {
      }
    }
 
-
-
-
-
-
    createEvent(){
 
    }
 
-
    cancelEvent(){
-     
+    this.router.navigate(['/create-activity']);
    }
 
+   checkedCategories:string[] = [];
+   checkedCategoriesInit () {
+     this.categories.forEach(element => {
+       this.checkedCategories.push("false")
+     })
+   }
+   title:string;
+   address:string;
+   date:Date;
+   ageMin:string;
+   ageMax:string;
+   description:string;
+   euros:string;
+   cents:string;
+   temp(){
+
+    console.log(this.euros);
+    console.log(this.cents);
+  }
 
   categories;
   ngOnInit() {
@@ -178,20 +186,31 @@ export class CreateActivityComponent implements OnInit {
     .subscribe(
       (data:any) => {
         this.categories = data
+        this.checkedCategoriesInit();
         console.log(this.categories);
       }
     );
     this.category = EVENTS[0];
     this.write();
-
     // this.getEvent();
-  }
+  };
 
+ //l = Object.keys(this.categories).length;
   // getEvent(): void {
   //   const id = +this.route.snapshot.paramMap.get('id');
   //   this.eventService.getEvent(id)
   //     .subscribe(event => this.event = event);
   // }
+
+  changeCheckbox(catIndex,catName) {
+    if(this.checkedCategories[catIndex] === "false") {
+      this.checkedCategories[catIndex] = catName
+    }
+    else {
+      this.checkedCategories[catIndex] = "false"
+    }
+  }
+
 
   fileToUpload: File = null;
 
