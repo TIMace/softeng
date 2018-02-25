@@ -173,8 +173,136 @@ export class UserDetailsService {
   }
 
   addCredits(accountNum,accountPass,money){
-    this.userDetails.credits+=money*100
-    return this.getDetails()
+    // this.userDetails.credits+=money*100
+    var subject = new Subject<any>();
+    var creditDetails = new HttpParams()
+    .set('username', ""+this.userDetails.username)
+    .set('password', ""+this.userDetails.password)
+    .set('amount',""+money*100)
+
+    this.httpClient.put(
+      `${server_addr}/user/add_credits`,
+      creditDetails.toString(),
+      {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      
+      })
+      .subscribe((newUserData:parentDetailsObj) => 
+      {
+        if (newUserData==null || newUserData.hasOwnProperty("error")){
+        subject.next(false)
+        }
+        else{
+          this.userDetails = this.parent2user(newUserData)
+          subject.next(true)
+        }
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+        subject.next(false)
+      }
+    )
+    return subject.asObservable()
+  }
+
+  updateParentDetails(newParentDetails){
+    var subject = new Subject();
+    if (newParentDetails.password!= this.userDetails.password){
+      subject.next(false)
+    }
+    if (newParentDetails.new_password == ""){
+      newParentDetails.new_password = this.userDetails.password
+    }
+    var requestDetails = new HttpParams()
+    .set('username', ""+newParentDetails.username)
+    .set('password', ""+newParentDetails.password)
+    .set('new_password', ""+newParentDetails.new_password)
+    .set('email', ""+newParentDetails.email)
+    .set('address', ""+newParentDetails.address)
+    .set('phone_num1', ""+newParentDetails.phoneΝum)
+    this.httpClient.put(
+      `${server_addr}/user`,
+      requestDetails.toString(),
+      {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      
+      })
+      .subscribe(
+        (newUserData:parentDetailsObj) => 
+        {
+          if (newUserData==null || newUserData.hasOwnProperty("error")){
+          subject.next(false)
+          }
+          else{
+            this.userDetails = this.parent2user(newUserData)
+            subject.next(true)
+          }
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log("Client-side error occured.");
+          } else {
+            console.log("Server-side error occured.");
+          }
+          subject.next(false)
+        }
+      )
+    
+    return subject.asObservable()
+  }
+
+  updateProviderDetails(newProviderDetails){
+    var subject = new Subject();
+    if (newProviderDetails.password!= this.userDetails.password){
+      subject.next(false)
+    }
+    if (newProviderDetails.new_password == ""){
+      newProviderDetails.new_password = this.userDetails.password
+    }
+    var requestDetails = new HttpParams()
+    .set('username', ""+newProviderDetails.username)
+    .set('password', ""+newProviderDetails.password)
+    .set('new_password', ""+newProviderDetails.new_password)
+    .set('email', ""+newProviderDetails.email)
+    .set('address', ""+newProviderDetails.address)
+    .set('phone_num1', ""+newProviderDetails.phoneΝum)
+    .set('baccount', ""+newProviderDetails.bankAccount)
+    this.httpClient.put(
+      `${server_addr}/provider`,
+      requestDetails.toString(),
+      {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+      
+      })
+      .subscribe(
+        (newProviderData:providerDetailsObj) => 
+        {
+          if (newProviderData==null || newProviderData.hasOwnProperty("error")){
+          subject.next(false)
+          }
+          else{
+            this.userDetails = this.provider2user(newProviderData)
+            subject.next(true)
+          }
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log("Client-side error occured.");
+          } else {
+            console.log("Server-side error occured.");
+          }
+          subject.next(false)
+        }
+      )
+    
+    return subject.asObservable()
   }
 
   logout(){
@@ -194,15 +322,15 @@ export class UserDetailsService {
     this.userDetails.loginSuccess = false
   }
 
-  updateDetails(newDetails){
-    this.userDetails.password = newDetails.passwd;
-    this.userDetails.email = newDetails.email;
-    this.userDetails.compName = "Lulz";
-    this.userDetails.address = newDetails.address;
-    this.userDetails.phoneNum = newDetails.phoneNum;
-    this.userDetails.ssn = newDetails.ssn;
-    this.userDetails.bankAccount = newDetails.bankAccount;
-  }
+  // updateDetails(newDetails){
+  //   this.userDetails.password = newDetails.passwd;
+  //   this.userDetails.email = newDetails.email;
+  //   this.userDetails.compName = "Lulz";
+  //   this.userDetails.address = newDetails.address;
+  //   this.userDetails.phoneNum = newDetails.phoneNum;
+  //   this.userDetails.ssn = newDetails.ssn;
+  //   this.userDetails.bankAccount = newDetails.bankAccount;
+  // }
 
   parent2user(parentObj:parentDetailsObj){
     var res = new userDetailsObj();

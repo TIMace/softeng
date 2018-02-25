@@ -1,13 +1,19 @@
-<div class="card" *ngFor="let event of past_events">
+<div class="card" *ngFor="let event of arrayOfEvents">
   <div class="row">
     <div class="col-lg-2 col-md-3 col-5 text-center" id="img-card">
       <img class="card-img-top" src="{{event.img}}" alt="Card image cap">
-      <div>
+      <div *ngIf="userDetailsService.getUserType() === 'Parent'">
         Πόντοι: {{event.id}}
+      </div>
+      <div *ngIf="userDetailsService.getUserType() === 'Provider'">
+        Εισπραχθέν ποσό:
       </div>
     </div>
     <div class="col-lg-7 col-md-5 col-7">
-      <h5 class="card-title text-center">{{event.name}}</h5>
+      <!-- <h5 class="card-title text-center">{{event.name}}</h5> -->
+      <h5 *ngIf="userDetailsService.getUserType() === 'Parent'" class="card-title text-center">{{event.name}}</h5>      
+      <h5 style="color: red"  *ngIf="userDetailsService.getUserType() === 'Provider'" class="card-title text-center">{{event.name}} (Εκκρεμεί)</h5>
+      <h5 style="color: green"  *ngIf="userDetailsService.getUserType() === 'Provider'" class="card-title text-center">{{event.name}} (Καταβλήθηκε) </h5>
       <div class="row">
         <div class="col-md">
           Τοποθεσία: {{event.location}}

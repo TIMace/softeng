@@ -62,6 +62,14 @@ agm-map {
     margin-top: 0.75rem;
 }
 
+<<<<<<< HEAD
 .form-check {
     margin-left: 1.25rem;
+=======
+/* Image Upload */
+
+.card {
+    height: 12rem;
+    /* width: 15rem; */
+>>>>>>> b53ba18690e1e71510f51cabe6b8f87b5b6c704a
 }

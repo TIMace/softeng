@@ -45,7 +45,7 @@ export class PersonalInfoComponent implements OnInit {
       username: [this.userDetails.username, Validators.required],
       email: [this.userDetails.email, [Validators.required, Validators.email]],
       credits: [this.userDetails.credits, [Validators.required]], //Validators.pattern('[a-z0-9.@]*')
-      password: [this.userDetails.password, Validators.required],
+      password: ['', Validators.required],
       new_password: ['', Validators.required],
       confirm_password: ['', Validators.required],
     });

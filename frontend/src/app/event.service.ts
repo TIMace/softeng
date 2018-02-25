@@ -80,7 +80,7 @@ export class EventService {
         var temp = response[i].event;
         res.push(temp)
       }
-      return res;
+      return Array.from(new Set(res));
     })
     .map(response => this.server2local_event(response))
     .subscribe(data => {subject.next(data);

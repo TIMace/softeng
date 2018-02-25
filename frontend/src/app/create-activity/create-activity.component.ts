@@ -21,6 +21,18 @@ import { MapService } from '../map.service';
 import { EventService } from '../event.service';
 import { element } from 'protractor';
 
+
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import {server_addr} from '../server_addr';
+import {HttpClient} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
+import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http'; 
+
+
+
+
 @Component({
   selector: 'app-create-activity',
   templateUrl: './create-activity.component.html',
@@ -39,7 +51,11 @@ export class CreateActivityComponent implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private dialog: MatDialog,
+<<<<<<< HEAD
     private router: Router,
+=======
+    private httpClient:HttpClient
+>>>>>>> b53ba18690e1e71510f51cabe6b8f87b5b6c704a
 
 
   ) { }
@@ -147,6 +163,7 @@ export class CreateActivityComponent implements OnInit {
     this.router.navigate(['/create-activity']);
    }
 
+<<<<<<< HEAD
    checkedCategories:string[] = [];
    checkedCategoriesInit () {
      this.categories.forEach(element => {
@@ -166,6 +183,8 @@ export class CreateActivityComponent implements OnInit {
     console.log(this.euros);
     console.log(this.cents);
   }
+=======
+>>>>>>> b53ba18690e1e71510f51cabe6b8f87b5b6c704a
 
   categories;
   ngOnInit() {
@@ -189,6 +208,7 @@ export class CreateActivityComponent implements OnInit {
   //     .subscribe(event => this.event = event);
   // }
 
+<<<<<<< HEAD
   changeCheckbox(catIndex,catName) {
     if(this.checkedCategories[catIndex] === "false") {
       this.checkedCategories[catIndex] = catName
@@ -199,5 +219,43 @@ export class CreateActivityComponent implements OnInit {
   }
 
 
+=======
+  fileToUpload: File = null;
+
+  uploadFileToActivity() {
+
+    this.postFile(this.fileToUpload).subscribe( data => {
+      console.log("Success");
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  postFile(fileToUpload: File): Observable<boolean> {
+    const endpoint = 'http://localhost:8989/upload';
+    const formData: FormData = new FormData();
+    formData.append('fileKey', fileToUpload, fileToUpload.name);
+    return this.httpClient
+      .post(endpoint, formData, { headers: new HttpHeaders()
+        // .set('Content-Type', 'application/json')
+       })
+      .map(() => { return true; })
+      // .catch((e) => this.handleError(e));
+  }
+
+  url: String;
+  readUrl(event:any) {
+    if (event.target.files && event.target.files[0]) {
+      var reader = new FileReader();
+  
+      reader.onload = (event:any) => {
+        this.url = event.target.result;
+      }
+  
+      this.fileToUpload = event.target.files.item(0);
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+>>>>>>> b53ba18690e1e71510f51cabe6b8f87b5b6c704a
 
 }

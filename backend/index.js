@@ -19,6 +19,9 @@ const express = require('express')
     , Category = models.Category
     , EventCategory = models.EventCategory
 
+    // Helper function for flattening array
+    , flatten = arr => arr.reduce((acc, next) => acc.concat(Array.isArray(next) ? flatten(next) : next.category), [])
+
     // , options = {
     //     key: fs.readFileSync('./ssl/key.pem'),
     //     cert: fs.readFileSync('./ssl/cert.pem'),
@@ -144,7 +147,7 @@ app.get('/user/buy/:username/:password/:event_id', (req, res) => {
 app.put('/user/add_credits', (req, res) => {
     const uname = req.body.username
         , passwd = req.body.password
-        , amount = req.body.amount
+        , amount = parseInt(req.body.amount)
 
     User
         .findOne( { where : { username : uname, user_password : passwd } } ).then((user) => {
@@ -321,8 +324,22 @@ app.get('/event', (req, res) => {
 // GET EVENT WITH id
 app.get('/event/:id', (req, res) => {
     Evnt
-        .findOne( { where : { event_id : parseInt(req.params.id) } }  ).then((evnt) => {
-            res.json(evnt)
+        .findOne( { where : { event_id : parseInt(req.params.id) } } ).then((evnt) => {
+            if (evnt === null)
+                res.json(evnt)
+            else {
+                EventCategory
+                    .findAll( {
+                        where : { ev_cat_event_id : evnt.event_id },
+                        include : [ { model : Category } ]
+                    } ).then((ev_cat) => {
+                        const categories = flatten(ev_cat)
+                        res.json( { event : evnt, categories : categories } )
+                    })
+                    .catch((err) => {
+                        res.json( { error : err } )
+                    })
+            }
         })
         .catch((err) => {
             res.json( { error : err } )
@@ -429,12 +446,12 @@ app.all('/*', (req, res) => {
 
 // Extra DB setup
 sequelize.sync()
-Transaction.belongsTo(Evnt, { targetKey : 'event_id', foreignKey : 'transaction_event_id' })
-// Transaction.belongsTo(Evnt, { targetKey : 'user_id', foreignKey : 'transaction_user_id' })
+Transaction.belongsTo(Evnt, { targetKey : 'event_id', foreignKey : 'transaction_event_id' } )
 Transaction.sync()
-Evnt.belongsTo(Provider, { targetKey : 'provider_id', foreignKey : 'event_provider_id' })
+Evnt.belongsTo(Provider, { targetKey : 'provider_id', foreignKey : 'event_provider_id' } )
 Evnt.sync()
 EventCategory.belongsTo(Evnt, { targetKey : 'event_id', foreignKey : 'ev_cat_event_id' } )
+EventCategory.belongsTo(Category, { targetKey : 'category_id', foreignKey : 'ev_cat_category_id' } )
 EventCategory.sync()
 
 
