@@ -13,16 +13,6 @@ exports.elasticfun = {
                         console.log("Index event created : ", resp2)
                 })
         })
-
-        // client.indices.exists({ index : 'provider'}, (err, resp, status) => {
-        //     if (!resp)
-        //         client.indices.create( { index: 'provider' }, (err, resp, status) => {
-        //             if(err)
-        //                 console.log('ERROR' + err)
-        //             else
-        //                 console.log("Index provider created : ", resp)
-        //         })
-        // })
     },
 
 
@@ -62,14 +52,14 @@ exports.elasticfun = {
 
     // obj = { event_id : X , body : { DATA TO BE UPDATED } }
     updateEvent : (client, obj) => {
-        const row = { }
-        Object.keys(obj.data).forEach((key) => { row[key] = obj[key] })
+        // const row = { }
+        // Object.keys(obj.body).forEach((key) => { row[key] = obj[key] })
         client.update( {
             index : 'event',
             id : obj.event_id,
             type : 'event',
             body : {
-                doc : row,
+                doc : obj.body,
                 doc_as_upsert : true
             }
         }, (err, resp) => {
@@ -88,7 +78,13 @@ exports.elasticfun = {
             type : 'event',
             body : {
                 query : {
-                    query_string : { query : obj.term.split(' ').join(' OR ') },
+                    query_string : {
+                        query : (() => {
+                            let tel = []
+                            obj.term.split(' ').forEach(x => tel.push('*' + x + '*'))
+                            return tel.join(' OR ')
+                        })()
+                    },
                 }
             }
         }, (err, resp, status) => {
@@ -105,6 +101,20 @@ exports.elasticfun = {
                 } )
             }
         } )
+    },
+
+
+    deleteEvent : (client, obj) => {
+        client.delete({
+            index : 'event',
+            id : obj.event_id,
+            type : 'event'
+        }, (err, resp, status) => {
+            if (err)
+                console.log('Error on deleteEvent on ElasticSearch : ' + err)
+            else
+                console.log('Reponse for deleteEvent on ElasticSearch : ' + resp)
+        })
     }
 
 }

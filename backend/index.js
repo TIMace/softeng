@@ -306,6 +306,30 @@ app.get('/provider/credits/:username/:password/', (req, res) => {
 })
 
 
+app.get('/provider/event/:username/:password/:event_id', (req, res) => {
+    Provider
+        .findOne( { where : { provider_username : req.params.username, provider_password : req.params.password, provider_active : true } } ).then((provider) => {
+            if (provider === null)
+                res.json(provider)
+            else {
+                Transaction
+                    .findAll( {
+                        where : { transaction_event_id : req.params.event_id },
+                        include : [ { model : User, attributes: ['user_email', 'user_first_name','user_last_name', 'user_phone_num'] } ]
+                    } ).then((transactions) => {
+                        res.json(transactions)
+                    })
+                    .catch((err) => {
+                        res.json( { error : err } )
+                    })
+            }
+        })
+        .catch((err) => {
+            res.json( { error : err } )
+        })
+})
+
+
 
 app.post('/provider', (req, res) => {
     const uname = req.body.username
@@ -357,6 +381,19 @@ app.post('/provider/update', (req, res) => {
                 provider.provider_bank_account = baccount
                 provider.save( { fields : ['provider_password', 'provider_email', 'provider_address', 'provider_phone_num', 'provider_bank_account'] } )
                 res.json(provider)
+                Evnt.findAll( { where : { event_provider_id : provider.provider_id } } ).then((evnts) => {
+                    lazy(evnts)
+                        .each((evnt) => {
+                            elasticfun.updateEvent(client, {
+                                event_id : evnt.event_id,
+                                body : {
+                                    provider_email : provider.provider_email,
+                                    provider_address : provider.provider_address,
+                                    provider_phone_num : provider.provider_phone_num
+                                }
+                            } )
+                        })
+                })
             }
         })
         .catch((err) => {
@@ -501,6 +538,17 @@ app.post('/event/update', (req, res) => {
                         evnt.event_maximum_age = ev_max_age
                         evnt.save( { fields : ['event_price', 'event_name', 'event_description', 'event_date', 'event_minimum_age', 'event_maximum_age'] } )
                         res.json(evnt)
+                        elasticfun.updateEvent(client, {
+                            event_id : evnt.event_id,
+                            body : {
+                                event_price : evnt.event_price,
+                                event_name : evnt.event_name,
+                                event_description : evnt.event_description,
+                                event_date : evnt.event_date,
+                                event_minimum_age : evnt.event_minimum_age,
+                                event_maximum_age : evnt.event_maximum_age
+                            }
+                        } )
                     })
                     .catch((err) => {
                         res.json( { error : err } )
@@ -680,6 +728,7 @@ app.post('/admin/pay_event', (req, res) => {
                             evnt.save()
                             evnt.provider.save()
                             res.json( { 'amount_paid' : sum } )
+                            elasticfun.deleteEvent(client, { event_id : ev_id } )
                         })
                         .catch((err) => {
                             res.json( { error : err } )
@@ -710,6 +759,7 @@ app.all('/*', (req, res) => {
 // Extra DB setup
 sequelize.sync()
 Transaction.belongsTo(Evnt, { targetKey : 'event_id', foreignKey : 'transaction_event_id' } )
+Transaction.belongsTo(User, { targetKey : 'user_id', foreignKey : 'transaction_user_id' } )
 Transaction.sync()
 Evnt.belongsTo(Provider, { targetKey : 'provider_id', foreignKey : 'event_provider_id' } )
 Evnt.sync()
@@ -728,7 +778,5 @@ const server = https.createServer(options, app).listen(config.port, () => {
     console.log(`Listening on ${server.address().address} : ${server.address().port}`)
 });
 
-// const server = app.listen(config.port, () => {
-//     console.log(`Listening on ${server.address().address} : ${server.address().port}`)
-// })
+
 
