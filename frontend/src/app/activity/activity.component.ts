@@ -34,26 +34,34 @@ export class ActivityComponent implements OnInit {
     public userDetailsService: UserDetailsService
   ) { }
 
-  name: String;
-  img: String;
+  name: string;
+  img: string;
   lat: number;
   lng: number;
   price: number;
-  loc: String;
-  date: String;
+  loc: string;
+  date: string;
   categories: Array<string>;
   age_min: number;
   age_max: number;
   provider: eventProviderInfo;
-  provider_fname: String;
-  provider_lname: String;
-  provider_email: String;
-  provider_phoneNum: String;
+  provider_fname: string;
+  provider_lname: string;
+  provider_cname: string;
+  provider_email: string;
+  provider_phoneNum: string;
   available_tickets: number;
-  description: String;
+  description: string;
+
+  userDetails: userDetailsObj;
+  userFirstName: String;
+  userLastName: String;
 
   ngOnInit() {
     this.getEvent();
+    this.userDetails = this.userDetailsService.getDetails();
+    this.userFirstName = this.userDetails.firstName;
+    this.userLastName = this.userDetails.lastName;
   }
 
   getEvent(): void {
@@ -75,11 +83,11 @@ export class ActivityComponent implements OnInit {
         this.provider = this.ev.providerInfo;
         this.provider_fname = this.provider.fname;
         this.provider_lname = this.provider.lname;
+        this.provider_cname = this.provider.cname;
         this.provider_email = this.provider.email;
         this.provider_phoneNum = this.provider.phoneNum;
         this.available_tickets = this.ev.available_tickets;
         this.description = this.ev.description;
-
       });
   }
 
@@ -88,14 +96,65 @@ export class ActivityComponent implements OnInit {
   }
 
   onTicketBuy() {
-    //elegxos an o parent exei arketa credit tote, xrewse ton, typvse minima success kai typwse pdf
-    alert("Η συναλλαγή ήταν επιτυχής!");
-    var dd = { content: 'Oresti modelo.' };
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
-    pdfMake.createPdf(dd).download();
-
-    //an den exei arketa lefta tote 
-    //alert("Η συναλλαγή ήταν ανεπιτυχής!")
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.eventService.buyEvent(id)
+      .subscribe(data => {
+        if (data) {
+          console.log(data); 
+          alert("Η συναλλαγή ήταν επιτυχής!");
+          //pdf creation
+          var onoma = this.userFirstName.toString();
+          var epitheto = this.userLastName.toString();
+          var docDefinition = {
+            content: [
+              { text: 'Λεωνίδα ένα Άλογο', style: 'header' },
+              { text: ' ' },
+              { text: ' ' },
+              { text: 'Εισιτήριο για την δραστηριότητα', style: ['header', 'centerStyle'] },
+              { text: ' ' },
+              { text: this.name, style: ['header', 'centerStyle'] },
+              { text: ' ' },
+              { text: 'Στοιχεία Εισιτηρίου', style: 'leftStyleHeader' },
+              { text: ' ' },
+              { text: 'Κωδικός εισιτηρίου: '.concat('εδώ να βάλουμε το id του transaction'), style: 'leftStyle' },
+              { text: 'Τοποθεσία: '.concat(this.loc), style: 'leftStyle' },
+              { text: 'Ημερομηνία: '.concat(this.date), style: 'leftStyle' },
+              { text: 'Πάροχος: '.concat(this.provider_cname), style: 'leftStyle' },
+              { text: ' '.concat(''), style: 'leftStyle' },
+              { text: 'Στοιχεία Κατόχου', style: 'leftStyleHeader' },
+              { text: ' '.concat(''), style: 'leftStyle' },
+              { text: 'Όνομα: '.concat(onoma), style: 'leftStyle' },
+              { text: 'Επώνυμο: '.concat(epitheto), style: 'leftStyle' }
+            ],
+            styles: {
+              header: {
+                fontSize: 22,
+                bold: true
+              },
+              centerStyle: {
+                italic: true,
+                alignment: 'center'
+              },
+              leftStyleHeader: {
+                fontSize: 18,
+                italic: true,
+                alignment: 'left',
+                bold: true
+              },
+              leftStyle: {
+                fontSize: 14,
+                italic: true,
+                alignment: 'left'
+              }
+            }
+          };
+          pdfMake.vfs = pdfFonts.pdfMake.vfs;
+          pdfMake.createPdf(docDefinition).download('ticket.pdf');
+        }
+        else {
+          alert("Η συναλλαγή ήταν ανεπιτυχής!")
+        }
+      });
   }
 }
 
