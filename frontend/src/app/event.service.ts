@@ -30,6 +30,22 @@ export class EventService {
     public categoriesService: CategoriesService
   ) { }
   
+  searchEvents(){
+    var subject = new Subject<any>();
+    this.httpClient.get(
+      `${server_addr}/event`,
+    )
+    .map(response => this.server2local_event(response))
+    .subscribe((data:Event[]) => {console.log("Here comes the events of ALL");
+                        console.log(data);
+                        this.getMeanLocation(data)
+                        subject.next(data)})
+    // return of(EVENTS.find(event => event.id === id));
+    // return of(EVENTS);
+    // this.getProviderEvents().subscribe(data => console.log("done"));
+    return subject.asObservable();
+  }
+
   getEvents(free_text: String, age: String, price: String, distance: String): Observable<Event[]> {
     var subject = new Subject<any>();
     this.httpClient.get(
