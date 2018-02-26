@@ -12,6 +12,7 @@ import { Subject } from 'rxjs/Subject';
 import { UserDetailsService, userDetailsObj } from './user-details.service';
 import { Category } from './category'
 import { CategoriesService  } from './categories.service';
+import { NativeDateModule } from '@angular/material';
 
 @Injectable()
 export class EventService {
@@ -109,11 +110,29 @@ export class EventService {
   // NavBar Simple / Extended
 
   getActiveUserEvents(){
-    return this.getUserEvents();
+    var subject = new Subject()
+    this.getUserEvents()
+    .subscribe(
+      data =>
+      {
+        subject.next(this.filterActiveEvents(data))
+      }
+    )
+    // return this.getUserEvents();
+    return subject;
   }
 
   getOldUserEvents(){
-    return this.getUserEvents();
+    var subject = new Subject()
+    this.getUserEvents()
+    .subscribe(
+      data =>
+      {
+        subject.next(this.filterOldEvents(data))
+      }
+    )
+    // return this.getUserEvents();
+    return subject;
   }
 
   getUserEvents(){
@@ -157,9 +176,24 @@ export class EventService {
 
   filterActiveEvents(eventArray){
     var res = []
+    var currentDate = new Date()
     for(var i = 0; i< eventArray.length;i++){
-
+      if (new Date(eventArray[i].date)>currentDate){
+        res.push(eventArray[i])
+      }
     }
+    return res;
+  }
+
+  filterOldEvents(eventArray){
+    var res = []
+    var currentDate = new Date()
+    for(var i = 0; i< eventArray.length;i++){
+      if (new Date(eventArray[i].date)<=currentDate){
+        res.push(eventArray[i])
+      }
+    }
+    return res;
   }
 
   parentGetEventTickets(id){
@@ -334,11 +368,29 @@ export class EventService {
   }
 
   getActiveProviderEvents(){
-    return this.getProviderEvents()
+    var subject = new Subject()
+    this.getProviderEvents()
+    .subscribe(
+      (data:any) =>
+      {
+        subject.next(this.filterActiveEvents(data))
+      }
+    )
+    return subject;
+    // return this.getProviderEvents()
   }
 
   getOldProviderEvents(){
-    return this.getProviderEvents()
+    var subject = new Subject()
+    this.getProviderEvents()
+    .subscribe(
+      (data:any) =>
+      {
+        subject.next(this.filterOldEvents(data))
+      }
+    )
+    return subject;
+    // return this.getProviderEvents()
   }
 
   getProviderEvents(){
