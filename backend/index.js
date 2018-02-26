@@ -1,7 +1,7 @@
 'use strict'
 
 const express = require('express')
-    // , https = require('https')
+    , https = require('https')
     , bodyParser = require('body-parser')
     , app = express()
     , elasticsearch = require('elasticsearch')
@@ -15,6 +15,8 @@ const express = require('express')
 
     , config = require('./config').config
 
+    , elasticfun = require('./elasticfun').elasticfun
+
     , models = require('./models')
     , sequelize = models.sequelize
     , User = models.User
@@ -27,11 +29,12 @@ const express = require('express')
     // Helper function for flattening array
     , flatten = arr => arr.reduce((acc, next) => acc.concat(Array.isArray(next) ? flatten(next) : next.category), [])
 
-    // , options = {
-    //     key: fs.readFileSync('./ssl/key.pem'),
-    //     cert: fs.readFileSync('./ssl/cert.pem'),
-    //     password : 'S0ft3ng.2018'
-    // }
+    , options = {
+        key: fs.readFileSync( './ssl/selfsigned.key' ),
+        cert: fs.readFileSync( './ssl/selfsigned.cert' ),
+        requestCert: false,
+        rejectUnauthorized: false
+    }
 
 
 // Middleware
@@ -435,11 +438,11 @@ app.post('/event', (req, res) => {
                     .create( { event_price : ev_price, event_name : ev_name, event_description : ev_descr, event_date : ev_date,
                         event_provider_id : provider.provider_id, event_available_tickets : ev_avail_tick, event_lattitude : ev_latt,
                         event_longtitude : ev_long, event_minimum_age : ev_min_age, event_maximum_age : ev_max_age,
-                        event_map_data : ev_mdata } ).then((evnt => {
+                        event_map_data : ev_mdata } ).then((evnt) => {
                             // Send response. No need to wait
                             res.json(evnt)
                             // Create category associations
-                            lazy(ev_cats)
+                            ev_cats
                                 .each((ec) => {
                                     EventCategory
                                         .create( { ev_cat_event_id : evnt.event_id, ev_cat_category_id : ec })
@@ -447,7 +450,14 @@ app.post('/event', (req, res) => {
                                             console.log( { 'EventCategory Creation Error' : err } )
                                         })
                                 })
-                    }))
+                            Category
+                                .findAll( { where : { category_id : ev_cats } } ).then((categories) => {
+                                    elasticfun.addEvent(client, { evnt : evnt, categories : categories, provider : provider } )
+                                })
+                                .catch((err) => {
+                                    console.log( { 'EventCategory Creation Error' : err } )
+                                })
+                    })
             }
         })
         .catch((err) => {
@@ -694,17 +704,22 @@ Transaction.belongsTo(Evnt, { targetKey : 'event_id', foreignKey : 'transaction_
 Transaction.sync()
 Evnt.belongsTo(Provider, { targetKey : 'provider_id', foreignKey : 'event_provider_id' } )
 Evnt.sync()
+// Category.belongsTo(EventCategory, { targetKey : 'ev_cat_category_id', foreignKey : 'category_id' } )
+// Category.sync()
 EventCategory.belongsTo(Evnt, { targetKey : 'event_id', foreignKey : 'ev_cat_event_id' } )
 EventCategory.belongsTo(Category, { targetKey : 'category_id', foreignKey : 'ev_cat_category_id' } )
 EventCategory.sync()
 
 
+// Initialize ElasticSearch Indices
+elasticfun.initElasticSearchIndices(client)
 
-// const server = https.createServer(options, app).listen(config.port, () => {
-//     console.log(`Listening on ${server.address().address} : ${server.address().port}`)
-// });
 
-const server = app.listen(config.port, () => {
+const server = https.createServer(options, app).listen(config.port, () => {
     console.log(`Listening on ${server.address().address} : ${server.address().port}`)
-})
+});
+
+// const server = app.listen(config.port, () => {
+//     console.log(`Listening on ${server.address().address} : ${server.address().port}`)
+// })
 

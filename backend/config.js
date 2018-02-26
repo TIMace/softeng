@@ -1,7 +1,7 @@
 'use strict';
 
 exports.config = {
-    port : 8888,
+    port : 8443,
 
     database : '',
     db_user : '',
