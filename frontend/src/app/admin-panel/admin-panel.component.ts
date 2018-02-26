@@ -19,8 +19,6 @@ export class AdminPanelComponent implements OnInit {
   providerUsername: String = '';
   radio: String = 'parent';
 
-  temp: String;
-
   constructor(private httpClient: HttpClient, private adminDetails: UserDetailsService) { }
   onNameKeyUp(event: any) {
     // console.log(event.target.value);
@@ -39,6 +37,10 @@ export class AdminPanelComponent implements OnInit {
 
   //decision depends on radio button
   lock() {
+    console.log(this.radio);
+    console.log(this.username);
+    console.log(this.providerUsername);
+
     if (this.radio == 'parent') { this.lockUser(this.username) }
     else { this.lockProvider(this.username) }
   }
@@ -80,8 +82,8 @@ export class AdminPanelComponent implements OnInit {
     var providerLock = new HttpParams()
       .set('username', '' + this.adminDetails.userDetails.username)
       .set('password', '' + this.adminDetails.userDetails.password)
-      .set('name', '' + this.providerUsername);
-    this.httpClient.put('http://snf-806935.vm.okeanos.grnet.gr:8888/admin/pr_deactivate',
+      .set('provider_username', '' + username);
+    this.httpClient.post('http://snf-806935.vm.okeanos.grnet.gr:8888/admin/pr_deactivate',
       providerLock.toString(),
       {
         headers: new HttpHeaders()
@@ -91,6 +93,9 @@ export class AdminPanelComponent implements OnInit {
       .subscribe(
         (data: any) => {
           alert("Provider Locked Succesfully");
+          console.log(providerLock)
+          console.log('edw einai to data');
+          console.log(data)
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -132,7 +137,7 @@ export class AdminPanelComponent implements OnInit {
     var providerUnLock = new HttpParams()
       .set('username', '' + this.adminDetails.userDetails.username)
       .set('password', '' + this.adminDetails.userDetails.password)
-      .set('name', '' + this.username);
+      .set('name', '' + username);
     this.httpClient.post('http://snf-806935.vm.okeanos.grnet.gr:8888/admin/pr_activate',
       providerUnLock.toString(),
       {
@@ -155,9 +160,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   activateProvider() {
-  // activateProvider(providerUsername: String) {
-    this.radio = 'Provider';
-    this.unlock();
+    this.unlockProvider(this.providerUsername)
   }
 
   eventId;
