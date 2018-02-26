@@ -13,6 +13,7 @@ import { UserDetailsService, userDetailsObj } from './user-details.service';
 import { Category } from './category'
 import { CategoriesService } from './categories.service';
 import { NativeDateModule } from '@angular/material';
+import { element } from 'protractor';
 
 @Injectable()
 export class EventService {
@@ -32,13 +33,23 @@ export class EventService {
 
   searchEvents() {
     var subject = new Subject<any>();
+    var finalFreeText = this.freeText
+    var finalAge = this.age
+    var finalPrice = this.price
+    var finalDistance = this.distance
+    var finalSelectedCategories = this.categoriesService.selectedCategories
+    var search_string = finalFreeText
+    for (var i = 0; i < finalSelectedCategories.length; i++) {
+      search_string += " " + finalSelectedCategories[i].name
+    }
+
     this.httpClient.get(
-      `${server_addr}/event`,
+      `${server_addr}/search/${search_string}`,
     )
-      .map(response => this.server2local_event(response))
+      .map(response => this.elastic2local_event(response))
       .subscribe((data: Event[]) => {
-        console.log("Here comes the events of ALL");
-        console.log(this.filterByAge("5-11",data));
+        console.log("Here comes the SEARCH events of ALL");
+        console.log(this.filterByAge("1-1", data));
         this.getMeanLocation(data)
         subject.next(data)
       })
@@ -62,10 +73,24 @@ export class EventService {
       });
       return filteredEvents;
     }
-
-
-    return
   }
+
+  filterByPrice(maxPrice: number, eventsToFilter: Event[]) {
+    var filteredEvents: Event[];
+    if (maxPrice == -1) { return eventsToFilter }
+    else {
+      var filteredEvents: Event[];
+      eventsToFilter.forEach(element => {
+        if(element.price <= maxPrice) {
+          filteredEvents.push(element)
+        }
+      });
+      return filteredEvents
+    }
+  }
+
+
+
 
 
 
@@ -287,6 +312,7 @@ export class EventService {
     this.httpClient.get(
       `${server_addr}/provider/event/${uname}/${passwd}/${id}`,
     )
+<<<<<<< HEAD
       .subscribe(
         (data: any) => {
           console.log("Got some tickets!!!")
@@ -304,6 +330,23 @@ export class EventService {
           console.log("tickets become this")
           console.log(res)
           subject.next(res)
+=======
+    .subscribe(
+      (data:any)=>
+      {
+        console.log("Got some tickets!!!")
+        console.log(data)
+        var res = [];
+        for(var i=0;i<data.length;i++){
+          var temp = {
+            transaction_id : data[i].transaction_id,
+            user_firstName : data[i].user.user_first_name,
+            user_LastName : data[i].user.user_last_name,
+            user_email : data[i].user.user_email,
+            user_phoneNum : data[i].user.user_phone_num
+          };
+          res.push(temp)
+>>>>>>> f41bd3247bb687f431083f433b8e579528b3b325
         }
       )
 

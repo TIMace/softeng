@@ -17,6 +17,7 @@ import { MapComponent } from '../map/map.component';
 import { CategoriesService } from '../categories.service';
 import { MapService } from '../map.service';
 import { UserDetailsService } from '../user-details.service';
+import { EventService } from '../event.service';
 
 @Component({
   selector: 'app-navbar',
@@ -29,6 +30,7 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     public userDetailsService: UserDetailsService,
     public categoriesService: CategoriesService,
+    private eventService: EventService,
     private mapService: MapService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
@@ -48,7 +50,10 @@ export class NavbarComponent implements OnInit {
     this.tempLocation = (<HTMLInputElement>document.getElementById("tempLocation")).value;
     console.log(this.activity);
     console.log(this.tempLocation);
-    this.router.navigate(['/search']);
+    if ( this.activity !== null )
+      this.eventService.freeText = this.activity;
+    this.eventService.searchEvents();
+    // this.router.navigate(['/search']);
   }
 
   //-------------- MAP --------------//
