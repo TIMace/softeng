@@ -6,6 +6,7 @@ import { of } from 'rxjs/observable/of';
 import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { UserDetailsService } from '../user-details.service'
+import {server_addr} from '../server_addr'
 
 
 @Component({
@@ -57,7 +58,7 @@ export class AdminPanelComponent implements OnInit {
       .set('username', '' + this.adminDetails.userDetails.username)
       .set('password', '' + this.adminDetails.userDetails.password)
       .set('name', '' + this.username);
-    this.httpClient.post('http://snf-806935.vm.okeanos.grnet.gr:8888/admin/usr_deactivate',
+    this.httpClient.post(`${server_addr}/admin/usr_deactivate`,
       userLock.toString(),
       {
         headers: new HttpHeaders()
@@ -83,7 +84,7 @@ export class AdminPanelComponent implements OnInit {
       .set('username', '' + this.adminDetails.userDetails.username)
       .set('password', '' + this.adminDetails.userDetails.password)
       .set('provider_username', '' + username);
-    this.httpClient.post('http://snf-806935.vm.okeanos.grnet.gr:8888/admin/pr_deactivate',
+    this.httpClient.post(`${server_addr}/admin/pr_deactivate`,
       providerLock.toString(),
       {
         headers: new HttpHeaders()
@@ -112,7 +113,7 @@ export class AdminPanelComponent implements OnInit {
       .set('username', '' + this.adminDetails.userDetails.username)
       .set('password', '' + this.adminDetails.userDetails.password)
       .set('name', '' + this.username);
-    this.httpClient.post('http://snf-806935.vm.okeanos.grnet.gr:8888/admin/usr_activate',
+    this.httpClient.post(`${server_addr}/admin/usr_activate`,
       userUnLock.toString(),
       {
         headers: new HttpHeaders()
@@ -138,7 +139,7 @@ export class AdminPanelComponent implements OnInit {
       .set('username', '' + this.adminDetails.userDetails.username)
       .set('password', '' + this.adminDetails.userDetails.password)
       .set('name', '' + username);
-    this.httpClient.post('http://snf-806935.vm.okeanos.grnet.gr:8888/admin/pr_activate',
+    this.httpClient.post(`${server_addr}/admin/pr_activate`,
       providerUnLock.toString(),
       {
         headers: new HttpHeaders()
@@ -169,7 +170,7 @@ export class AdminPanelComponent implements OnInit {
       .set('username', '' + this.adminDetails.userDetails.username)
       .set('password', '' + this.adminDetails.userDetails.password)
       .set('ev_id', '' + this.eventId);
-    this.httpClient.post('http://snf-806935.vm.okeanos.grnet.gr:8888/admin/pay_event',
+    this.httpClient.post(`${server_addr}/admin/pay_event`,
       eventPayment.toString(),
       {
         headers: new HttpHeaders()
