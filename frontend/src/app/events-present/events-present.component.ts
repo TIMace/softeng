@@ -51,7 +51,7 @@ export class EventsPresentComponent implements OnInit {
 
   onClickPdf() {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
-    var dd = { content: 'your pdf data' };
+    var dd = { content: 'ORESTI MODELO  ... ' };
    pdfMake.createPdf(dd).download();
   }
 
