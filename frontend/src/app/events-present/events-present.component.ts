@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from '../event';
 
+//pdfMake
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
 // Services
 import { EventService } from '../event.service';
 import { UserDetailsService } from '../user-details.service';
@@ -43,6 +47,12 @@ export class EventsPresentComponent implements OnInit {
 
   ngOnInit() {
     this.bringUserEvent();
+  }
+
+  onClickPdf() {
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    var dd = { content: 'your pdf data' };
+   pdfMake.createPdf(dd).download();
   }
 
 }

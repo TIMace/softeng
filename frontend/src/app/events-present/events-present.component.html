@@ -3,7 +3,7 @@
     <div class="col-lg-2 col-md-3 col-5 text-center" id="img-card">
       <img class="card-img-top" src="{{event.img}}" alt="Card image cap">
       <div *ngIf="userDetailsService.getUserType() === 'Parent'">
-        Προβολή εισιτηρίου (PDF)
+        <button (click)="onClickPdf()"> Προβολή εισιτηρίου (PDF)</button>
       </div>
       <div *ngIf="userDetailsService.getUserType() === 'Provider'">
         Εισπραχθέν ποσό:
