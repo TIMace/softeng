@@ -12,6 +12,7 @@ const express = require('express')
 
     , fs = require('fs')
     , lazy = require('lazy.js')
+    , { spawn } = require('child_process')
 
     , config = require('./config').config
 
@@ -29,6 +30,23 @@ const express = require('express')
     // Helper function for flattening array
     , flatten = arr => arr.reduce((acc, next) => acc.concat(Array.isArray(next) ? flatten(next) : next.category), [])
 
+    , writeFile = (path, buffer, permission) => {
+        permission = permission || 438; // 0666
+        var fileDescriptor;
+
+        try {
+            fileDescriptor = fs.openSync(path, 'w', permission);
+        } catch (e) {
+            fs.chmodSync(path, permission);
+            fileDescriptor = fs.openSync(path, 'w', permission);
+        }
+
+        if (fileDescriptor) {
+            fs.writeSync(fileDescriptor, buffer, 0, buffer.length, 0);
+            fs.closeSync(fileDescriptor);
+        }
+    }
+
     , options = {
         key: fs.readFileSync( '/etc/ssl/private/apache-selfsigned.key' ),
         cert: fs.readFileSync( '/etc/ssl/certs/apache-selfsigned.crt' ),
@@ -41,7 +59,7 @@ const express = require('express')
 // Support JSON encoded bodies
 // Support extended URL encoded bodies
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded( { extended : true } ))
+app.use(bodyParser.urlencoded( { limit : '10mb', extended : true } ))
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*")
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
@@ -477,6 +495,7 @@ app.post('/event', (req, res) => {
         , ev_max_age = req.body.ev_max_age
         , ev_mdata = req.body.ev_mdata
         , ev_cats = req.body.ev_cats
+        , ev_base64 = req.body.ev_base64
 
     Provider
         .findOne( { where : { provider_username : uname, provider_password : passwd, provider_active : true } } ).then((provider) => {
@@ -490,21 +509,29 @@ app.post('/event', (req, res) => {
                         event_map_data : ev_mdata } ).then((evnt) => {
                             // Send response. No need to wait
                             res.json(evnt)
-                            // Create category associations
-                            ev_cats
-                                .each((ec) => {
-                                    EventCategory
-                                        .create( { ev_cat_event_id : evnt.event_id, ev_cat_category_id : ec })
-                                        .catch((err) => {
-                                            console.log( { 'EventCategory Creation Error' : err } )
-                                        })
-                                })
+                            // Add event to ElasticSearch
                             Category
                                 .findAll( { where : { category_id : ev_cats } } ).then((categories) => {
                                     elasticfun.addEvent(client, { evnt : evnt, categories : categories, provider : provider } )
                                 })
                                 .catch((err) => {
                                     console.log( { 'EventCategory Creation Error' : err } )
+                                })
+                            const buf = Buffer.from(ev_base64.replace(/ /g, '+'), 'base64')
+                                , filename = config.image_dir + evnt.event_id + '.image.png'
+                            writeFile(filename, buf)
+                            let image_creation = spawn('python3', [ config.binary_dependence, filename, filename, config.image_dir ])
+                            image_creation.stdout.on('data', (data) => { console.log(`stdout: ${data}`) })
+                            image_creation.stderr.on('data', (data) => { console.log(`stderr: ${data}`) })
+                            image_creation.on('close', (code) => { console.log(`child process exited with code ${code}`) })
+                            // Create category associations
+                            ev_cats
+                                .forEach((ec) => {
+                                    EventCategory
+                                        .create( { ev_cat_event_id : evnt.event_id, ev_cat_category_id : ec })
+                                        .catch((err) => {
+                                            console.log( { 'EventCategory Creation Error' : err } )
+                                        })
                                 })
                     })
             }

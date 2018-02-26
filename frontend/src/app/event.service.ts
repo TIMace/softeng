@@ -20,12 +20,32 @@ export class EventService {
   selectedEvents = [];
   public searchMeanLong = 0
   public searchMeanLatt = 0
+  public freeText = ""
+  public age = ""
+  public price = -1
+  public distance = -1
   constructor(
     private httpClient:HttpClient,
     public userDetailsService: UserDetailsService,
     public categoriesService: CategoriesService
   ) { }
   
+  searchEvents(){
+    var subject = new Subject<any>();
+    this.httpClient.get(
+      `${server_addr}/event`,
+    )
+    .map(response => this.server2local_event(response))
+    .subscribe((data:Event[]) => {console.log("Here comes the events of ALL");
+                        console.log(data);
+                        this.getMeanLocation(data)
+                        subject.next(data)})
+    // return of(EVENTS.find(event => event.id === id));
+    // return of(EVENTS);
+    // this.getProviderEvents().subscribe(data => console.log("done"));
+    return subject.asObservable();
+  }
+
   getEvents(free_text: String, age: String, price: String, distance: String): Observable<Event[]> {
     var subject = new Subject<any>();
     this.httpClient.get(
@@ -492,6 +512,32 @@ export class EventService {
       res.age_min = +server_event.event_minimum_age
       res.name = server_event.event_name
       res.price = +server_event.event_price
+      res.provider_id = +server_event.event_provider_id
+      res.img = "https://i.ytimg.com/vi/A4wP_VUPOAo/maxresdefault.jpg"
+      final_res.push(res);
+    }
+    // console.log("Final Res:")
+    // console.log(final_res)
+    return final_res;
+  }
+
+  elastic2local_event(server_event_array){
+    var final_res =  [];
+    
+    for(var i = 0;i<server_event_array.length;i++){
+      var res = new Event();
+      var server_event = server_event_array[i]
+      res.id = +server_event._id;
+      res.available_tickets = +server_event._source.event_available_tickets;
+      res.date = server_event._source.event_datetime
+  ​​    res.description = server_event._source.event_description
+      res.lat = +server_event._source.event_lattitude
+      res.lng = +server_event._source.event_longtitude
+      res.location = server_event._source.event_map_data
+      res.age_max = +server_event._source.event_maximum_age
+      res.age_min = +server_event._source.event_minimum_age
+      res.name = server_event._source.event_name
+      res.price = +server_event._source.event_price
       res.provider_id = +server_event.event_provider_id
       res.img = "https://i.ytimg.com/vi/A4wP_VUPOAo/maxresdefault.jpg"
       final_res.push(res);
