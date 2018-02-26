@@ -7,6 +7,9 @@ import { Filter } from '../filter';
 // MAP
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
+import { AgmCoreModule } from '@agm/core';
+import { MapService } from '../map.service';
+import { AgmMap } from '@agm/core/directives/map';
 
 // Services
 import { EventService } from '../event.service';
@@ -122,7 +125,11 @@ export class SearchComponent implements OnInit {
 
   public latitude: number;
   public longitude: number;
-  public zoom = 14;
+  // public zoom = 12;
+
+  @ViewChild(AgmMap) private map: any;
+  
+  // mapsAPILoader.load().then(() => {let latlngbounds = new google.maps.LatLngBounds();})
 
   checked: number;
 
@@ -137,8 +144,8 @@ export class SearchComponent implements OnInit {
     this.show_map = false;
 
     //set google maps defaults
-    this.latitude = 37.979499;
-    this.longitude = 23.783076;
+    this.latitude = this.eventService.searchMeanLatt;
+    this.longitude = this.eventService.searchMeanLong;
 
   }
 
