@@ -30,8 +30,8 @@ const express = require('express')
     , flatten = arr => arr.reduce((acc, next) => acc.concat(Array.isArray(next) ? flatten(next) : next.category), [])
 
     , options = {
-        key: fs.readFileSync( './ssl/selfsigned.key' ),
-        cert: fs.readFileSync( './ssl/selfsigned.crt' ),
+        key: fs.readFileSync( '/etc/ssl/private/apache-selfsigned.key' ),
+        cert: fs.readFileSync( '/etc/ssl/certs/apache-selfsigned.crt' ),
         requestCert: false,
         rejectUnauthorized: false
     }
