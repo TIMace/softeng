@@ -219,12 +219,12 @@ export class UserDetailsService {
       newParentDetails.new_password = this.userDetails.password
     }
     var requestDetails = new HttpParams()
-    .set('username', ""+newParentDetails.username)
+    .set('username', ""+this.userDetails.username)
     .set('password', ""+newParentDetails.password)
     .set('new_password', ""+newParentDetails.new_password)
     .set('email', ""+newParentDetails.email)
-    .set('address', ""+newParentDetails.address)
-    .set('phone_num', ""+newParentDetails.phoneΝum)
+    .set('address', ""+newParentDetails.location)
+    .set('phone_num', ""+newParentDetails.phone)
     this.httpClient.post(
       `${server_addr}/user/update`,
       requestDetails.toString(),
@@ -265,14 +265,16 @@ export class UserDetailsService {
     if (newProviderDetails.new_password == ""){
       newProviderDetails.new_password = this.userDetails.password
     }
+    console.log("New Data Object")
+    console.log(newProviderDetails)
     var requestDetails = new HttpParams()
-    .set('username', ""+newProviderDetails.username)
+    .set('username', ""+this.userDetails.username)
     .set('password', ""+newProviderDetails.password)
     .set('new_password', ""+newProviderDetails.new_password)
     .set('email', ""+newProviderDetails.email)
-    .set('address', ""+newProviderDetails.address)
-    .set('phone_num', ""+newProviderDetails.phoneΝum)
-    .set('baccount', ""+newProviderDetails.bankAccount)
+    .set('address', ""+newProviderDetails.location)
+    .set('phone_num', ""+newProviderDetails.phone)
+    .set('baccount', ""+newProviderDetails.account)
     this.httpClient.post(
       `${server_addr}/provider/update`,
       requestDetails.toString(),
@@ -284,6 +286,8 @@ export class UserDetailsService {
       .subscribe(
         (newProviderData:providerDetailsObj) => 
         {
+          console.log("New Data from server")
+          console.log(newProviderData)
           if (newProviderData==null || newProviderData.hasOwnProperty("error")){
           subject.next(false)
           }

@@ -2,6 +2,7 @@
 
 .navbar {
     padding: .0rem .0rem;
+    z-index: 2000;
 }
 
 .nav-link {

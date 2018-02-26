@@ -20,12 +20,30 @@ export class PersonalInfoComponent implements OnInit {
   ) { }
 
   onSubmit() {
-    this.doUpdate();
+    if (this.userDetailsService.userType == "Provider")
+      this.doUpdateProvider();
+    else
+      this.doUpdateParent();
   }
 
-  doUpdate() {
-    console.log("MPHKAAA");
-    console.log(this.formUpdate.value);
+  doUpdateParent() {
+    // console.log(this.formUpdate.value);
+    this.userDetailsService.updateParentDetails(this.formUpdate.value).
+      subscribe(
+      data => {
+        if (data) {
+          alert("Η επεξεργασία στοιχείων ολοκληρώθηκε με επιτυχία!")
+          // this.router.navigate(['']);
+        }
+        else {
+          alert("Η επεξεργασία στοιχείων απέτυχε!")
+        }
+      }
+      );
+  }
+
+  doUpdateProvider() {
+    // console.log(this.formUpdate.value);
     this.userDetailsService.updateProviderDetails(this.formUpdate.value).
       subscribe(
       data => {
@@ -52,29 +70,54 @@ export class PersonalInfoComponent implements OnInit {
 
     this.userDetails = this.userDetailsService.getDetails();
 
-    this.firstname = this.userDetails.firstName;
-    this.lastname = this.userDetails.lastName;
-    this.company = this.userDetails.compName;
-    this.afm = this.userDetails.ssn;
-    this.username = this.userDetails.username;
-    this.credits = this.userDetails.credits;
+    if (this.userDetailsService.userType == "Provider") {
+      this.firstname = this.userDetails.firstName;
+      this.lastname = this.userDetails.lastName;
+      this.company = this.userDetails.compName;
+      this.afm = this.userDetails.ssn;
+      this.username = this.userDetails.username;
+      this.credits = this.userDetails.credits;
 
 
-    this.formUpdate = this.formBuilder.group({
-      firstname: [{ value: this.userDetails.firstName, disabled: true }],
-      lastname: [{ value: this.userDetails.lastName, disabled: true }],
-      location: [this.userDetails.address, Validators.required],
-      phone: [this.userDetails.phoneNum, Validators.required],
-      company: [{ value: this.userDetails.compName, disabled: true }],
-      afm: [{ value: this.userDetails.ssn, disabled: true }],
-      account: [this.userDetails.bankAccount, Validators.required],
-      username: [{ value: this.userDetails.username, disabled: true }],
-      email: [this.userDetails.email, [Validators.required, Validators.email]],
-      credits: [{ value: this.userDetails.credits, disabled: true }],
-      password: ['', Validators.required],
-      new_password: [''],
-      confirm_password: [''],
-    }, { validator: this.matchingPasswords('new_password', 'confirm_password') });
+      this.formUpdate = this.formBuilder.group({
+        firstname: [{ value: this.userDetails.firstName, disabled: true }],
+        lastname: [{ value: this.userDetails.lastName, disabled: true }],
+        location: [this.userDetails.address, Validators.required],
+        phone: [this.userDetails.phoneNum, Validators.required],
+        company: [{ value: this.userDetails.compName, disabled: true }],
+        afm: [{ value: this.userDetails.ssn, disabled: true }],
+        account: [this.userDetails.bankAccount, Validators.required],
+        username: [{ value: this.userDetails.username, disabled: true }],
+        email: [this.userDetails.email, [Validators.required, Validators.email]],
+        credits: [{ value: this.userDetails.credits, disabled: true }],
+        password: ['', Validators.required],
+        new_password: [''],
+        confirm_password: [''],
+      }, { validator: this.matchingPasswords('new_password', 'confirm_password') });
+    } else {
+      this.firstname = this.userDetails.firstName;
+      this.lastname = this.userDetails.lastName;
+      // this.company = this.userDetails.compName;
+      // this.afm = this.userDetails.ssn;
+      this.username = this.userDetails.username;
+      this.credits = this.userDetails.credits;
+
+
+      this.formUpdate = this.formBuilder.group({
+        firstname: [{ value: this.userDetails.firstName, disabled: true }],
+        lastname: [{ value: this.userDetails.lastName, disabled: true }],
+        location: [this.userDetails.address, Validators.required],
+        phone: [this.userDetails.phoneNum, Validators.required],
+        email: [this.userDetails.email, [Validators.required, Validators.email]],
+        credits: [{ value: this.userDetails.credits, disabled: true }],
+        password: ['', Validators.required],
+        new_password: [''],
+        confirm_password: [''],
+      }, { validator: this.matchingPasswords('new_password', 'confirm_password') });
+    }
+
+
+
   }
 
   matchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
