@@ -19,6 +19,7 @@ a {
 input {
     padding: .0rem .3rem;
     border: 0px solid #ced4da;
+    background: white;
 }
 
 #GPS_button {
