@@ -27,3 +27,7 @@
 .btn-outline-info:not([disabled]):not(.disabled).active {
     box-shadow: 0 0 0 0rem;
 }
+/* 
+#pay {
+    right: 2rem;
+} */
