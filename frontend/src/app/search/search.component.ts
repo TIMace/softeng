@@ -7,6 +7,9 @@ import { Filter } from '../filter';
 // MAP
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
+import { AgmCoreModule } from '@agm/core';
+import { MapService } from '../map.service';
+import { AgmMap } from '@agm/core/directives/map';
 
 // Services
 import { EventService } from '../event.service';
@@ -15,11 +18,11 @@ import { CategoriesService } from '../categories.service';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import {server_addr} from '../server_addr';
-import {HttpClient} from '@angular/common/http';
-import {HttpErrorResponse} from '@angular/common/http';
+import { server_addr } from '../server_addr';
+import { HttpClient } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { Http, Response, Headers, RequestOptions } from '@angular/http'; 
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 
 @Component({
@@ -34,7 +37,7 @@ export class SearchComponent implements OnInit {
     private categoryService: CategoriesService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone
-  ) {}
+  ) { }
 
   // ------------------- Categories ------------------- //
 
@@ -62,9 +65,10 @@ export class SearchComponent implements OnInit {
 
   onSelect(category: Category): void {
     this.selectedCategories = this.categoryService.onClickSelectCategory(category);
+    this.eventService.searchEvents();
     // console.log(JSON.stringify(this.selectedCategories));
   }
-  
+
   // --------------------- Events --------------------- //
 
   events: Event[];
@@ -72,44 +76,67 @@ export class SearchComponent implements OnInit {
 
   getEvents(): void {
     this.eventService.getEvents("", "", "", "").
-    subscribe(events => {
-      console.log(events);
-      this.events = events});
+      subscribe(events => {
+        // console.log(events);
+        this.events = events
+        this.events.forEach(element => {
+          // element.date = new Date(       Date.parse(element.date))setTime(Date.parse(element.date)).toString());
+          var time = new Date(Date.parse(element.date));
+          var year = time.getFullYear();
+          var month = time.getMonth() + 1;
+          var date1 = time.getDate();
+          var hour = time.getHours();
+          var minutes = time.getMinutes();
+          element.date = (date1 + "-" + month + "-" + year + " " + hour + ":" + minutes);
+
+        });
+      });
   }
-  
+
   // -------------------- Filters -------------------- //
 
   show_filters: boolean;
 
-  cost = 50;
+  cost: number;
   selectCost(Cost: number): void {
     this.cost = Cost;
   }
 
-  distance: number = 2;
+  distance: number;
 
-  age: number;
+  age: string;
 
   filters() {
     console.log("Cost ", this.cost);
     console.log("Age ", this.age);
     console.log("Distance ", this.distance);
+    if ( this.age !== null )
+      this.eventService.age = this.age;
+    if ( this.cost !== null )
+      this.eventService.price = this.cost;
+    if ( this.distance !== null )
+      this.eventService.distance = this.distance;
+    this.eventService.searchEvents();
   }
 
   // -------------------- MAP -------------------- //
-  
+
   show_map: boolean;
 
   public latitude: number;
   public longitude: number;
-  public zoom = 14;
+  // public zoom = 12;
+
+  @ViewChild(AgmMap) private map: any;
+  
+  // mapsAPILoader.load().then(() => {let latlngbounds = new google.maps.LatLngBounds();})
 
   checked: number;
-  
+
   ngOnInit() {
     this.getCategories();
     this.getSelectedCategories();
-    
+
     this.getEvents();
 
     this.show_filters = false;
@@ -117,8 +144,8 @@ export class SearchComponent implements OnInit {
     this.show_map = false;
 
     //set google maps defaults
-    this.latitude = 37.979499;
-    this.longitude = 23.783076;
+    this.latitude = this.eventService.searchMeanLatt;
+    this.longitude = this.eventService.searchMeanLong;
 
   }
 

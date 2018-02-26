@@ -32,11 +32,21 @@ export class EventService {
   
   searchEvents(){
     var subject = new Subject<any>();
+    var finalFreeText = this.freeText
+    var finalAge = this.age
+    var finalPrice = this.price
+    var finalDistance = this.distance
+    var finalSelectedCategories = this.categoriesService.selectedCategories
+    var search_string = finalFreeText
+    for(var i = 0;i<finalSelectedCategories.length;i++){
+      search_string+=" "+finalSelectedCategories[i].name
+    }
+
     this.httpClient.get(
-      `${server_addr}/event`,
+      `${server_addr}/search/${search_string}`,
     )
-    .map(response => this.server2local_event(response))
-    .subscribe((data:Event[]) => {console.log("Here comes the events of ALL");
+    .map(response => this.elastic2local_event(response))
+    .subscribe((data:Event[]) => {console.log("Here comes the SEARCH events of ALL");
                         console.log(data);
                         this.getMeanLocation(data)
                         subject.next(data)})
@@ -271,12 +281,13 @@ export class EventService {
         console.log(data)
         var res = [];
         for(var i=0;i<data.length;i++){
-          var temp;
-          temp.transaction_id = data[i].transaction_id;
-          temp.user_firstName = data[i].user.user_first_name
-          temp.user_LastName = data[i].user.user_last_name
-          temp.user_email = data[i].user.user_email
-          temp.user_phoneNum = data[i].user.user_phone_num
+          var temp = {
+            transaction_id : data[i].transaction_id,
+            user_firstName : data[i].user.user_first_name,
+            user_LastName : data[i].user.user_last_name,
+            user_email : data[i].user.user_email,
+            user_phoneNum : data[i].user.user_phone_num
+          };
           res.push(temp)
         }
         console.log("tickets become this")
@@ -394,7 +405,7 @@ export class EventService {
       .set("ev_min_age",""+eventObj.age_min)
       .set("ev_max_age",""+eventObj.age_max)
       .set("ev_mdata",""+eventObj.location)
-      .set("ev_base64",""+eventObj.ev_base64)
+      // .set("ev_base64",""+eventObj.ev_base64)
 
       // console.log("This is the length of the categories array!!!!")
       // console.log(eventObj.categories.length)
@@ -404,7 +415,8 @@ export class EventService {
         // console.log(`${this.categoriesService.categoryIdByName(eventObj.categories[i])}`)
         creationDetails = creationDetails.set(`ev_cats[${i+1}]`,`${this.categoriesService.categoryIdByName(eventObj.categories[i])}`)
       }
-      // console.log(creationDetails)
+      creationDetails = creationDetails.set("ev_base64",""+eventObj.ev_base64);
+
       this.httpClient.post(
         `${server_addr}/event`,
         creationDetails.toString(),
@@ -416,6 +428,9 @@ export class EventService {
       )
       .subscribe((eventAnswer)=>
         {
+          console.log("REQUEST ANSWER")
+          console.log(eventAnswer)
+    
           if (eventAnswer==null || eventAnswer.hasOwnProperty("error")){
           subject.next(false)
           }
