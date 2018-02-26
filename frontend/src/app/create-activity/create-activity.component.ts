@@ -204,6 +204,7 @@ export class CreateActivityComponent implements OnInit {
           location: (<HTMLInputElement>document.getElementById("location")).value, //map_data ths vashs
           is_paid: null,
           img: null,
+          ev_base64: this.img,
           categories: realCheckedCategories,
           providerInfo: null
         };
@@ -267,12 +268,6 @@ export class CreateActivityComponent implements OnInit {
     // this.getEvent();
   };
 
-  //l = Object.keys(this.categories).length;
-  // getEvent(): void {
-  //   const id = +this.route.snapshot.paramMap.get('id');
-  //   this.eventService.getEvent(id)
-  //     .subscribe(event => this.event = event);
-  // }
 
   changeCheckbox(catIndex, catName) {
     if (this.checkedCategories[catIndex] === "false") {
@@ -286,43 +281,22 @@ export class CreateActivityComponent implements OnInit {
 
   fileToUpload: File = null;
 
-  uploadFileToActivity() {
-
-    // this.postFile(this.fileToUpload).subscribe(data => {
-    //   console.log("Success");
-    // }, error => {
-    //   console.log(error);
-    // });
-    console.log("Must send to Orestis");
-  }
-
-  // postFile(fileToUpload: File): Observable<boolean> {
-  //   const endpoint = 'http://localhost:8989/upload';
-  //   const formData: FormData = new FormData();
-  //   formData.append('fileKey', fileToUpload, fileToUpload.name);
-  //   return this.httpClient
-  //     .post(endpoint, formData, {
-  //       headers: new HttpHeaders()
-  //       // .set('Content-Type', 'application/json')
-  //     })
-  //     .map(() => { return true; })
-  //   // .catch((e) => this.handleError(e));
-  // }
   url: String;
+  img: string;
   readUrl(event: any) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 
       this.fileToUpload = event.target.files.item(0);
-      console.log( event.target.files.item(0));
       reader.readAsDataURL(event.target.files[0]);
 
       reader.onload = (event: any) => {
         this.url = event.target.result;
-        let v = reader.result.split(',')[1];
+        this.img = reader.result.split(',')[1];
       }
     }
   }
+
 }
 
 

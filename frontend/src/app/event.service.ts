@@ -18,7 +18,8 @@ import { NativeDateModule } from '@angular/material';
 export class EventService {
 
   selectedEvents = [];
-
+  public searchMeanLong = 0
+  public searchMeanLatt = 0
   constructor(
     private httpClient:HttpClient,
     public userDetailsService: UserDetailsService,
@@ -33,6 +34,7 @@ export class EventService {
     .map(response => this.server2local_event(response))
     .subscribe((data:Event[]) => {console.log("Here comes the events of ALL");
                         console.log(data);
+                        this.getMeanLocation(data)
                         subject.next(data)})
     // return of(EVENTS.find(event => event.id === id));
     // return of(EVENTS);
@@ -42,6 +44,18 @@ export class EventService {
 
   getSelectedEvents(): Event[] {
     return this.selectedEvents;
+  }
+
+  getMeanLocation(eventArray){
+    var eventNum = eventArray.length
+    var longSum = 0
+    var lattSum = 0
+    for(var i = 0;i< eventArray.length;i++){
+      longSum+=eventArray[i].lng
+      lattSum+=eventArray[i].lat
+    }
+    this.searchMeanLatt = lattSum/eventNum
+    this.searchMeanLong = longSum/eventNum
   }
 
   getEventById(id){
@@ -207,11 +221,43 @@ export class EventService {
     .subscribe(
       (data:any)=>
       {
+        // console.log("Got some tickets!!!")
+        // console.log(data)
+        var res = [];
+        for(var i=0;i<data.length;i++){
+          res.push(data[i].transaction_id)
+        }
+        // console.log("tickets become this")
+        // console.log(res)
+        subject.next(res)
+      }
+    )
+
+    return subject;
+  }
+
+  providerGetEventTickets(id){
+    var subject = new Subject();
+    var uname = this.userDetailsService.userDetails.username;
+    var passwd = this.userDetailsService.userDetails.password;
+
+    this.httpClient.get(
+      `${server_addr}/provider/event/${uname}/${passwd}/${id}`,
+    )
+    .subscribe(
+      (data:any)=>
+      {
         console.log("Got some tickets!!!")
         console.log(data)
         var res = [];
         for(var i=0;i<data.length;i++){
-          res.push(data[i].transaction_id)
+          var temp;
+          temp.transaction_id = data[i].transaction_id;
+          temp.user_firstName = data[i].user.user_first_name
+          temp.user_LastName = data[i].user.user_last_name
+          temp.user_email = data[i].user.user_email
+          temp.user_phoneNum = data[i].user.user_phone_num
+          res.push(temp)
         }
         console.log("tickets become this")
         console.log(res)
@@ -328,6 +374,7 @@ export class EventService {
       .set("ev_min_age",""+eventObj.age_min)
       .set("ev_max_age",""+eventObj.age_max)
       .set("ev_mdata",""+eventObj.location)
+      .set("ev_base64",""+eventObj.ev_base64)
 
       // console.log("This is the length of the categories array!!!!")
       // console.log(eventObj.categories.length)
