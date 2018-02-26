@@ -44,6 +44,7 @@ export class ActivityComponent implements OnInit {
   categories: Array<string>;
   age_min: number;
   age_max: number;
+  provider_id: number;
   provider: eventProviderInfo;
   provider_fname: string;
   provider_lname: string;
@@ -56,16 +57,19 @@ export class ActivityComponent implements OnInit {
   userDetails: userDetailsObj;
   userFirstName: String;
   userLastName: String;
+  userId: number;
 
   ngOnInit() {
     this.getEvent();
     this.userDetails = this.userDetailsService.getDetails();
     this.userFirstName = this.userDetails.firstName;
     this.userLastName = this.userDetails.lastName;
+    this.userId = parseInt(this.userDetails.id);
+    console.log(this.userId);
   }
 
   getEvent(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+    var id = +this.route.snapshot.paramMap.get('id');
     this.eventService.getEventById(id)
       .subscribe((ev: Event) => {
         this.ev = ev;
@@ -80,6 +84,7 @@ export class ActivityComponent implements OnInit {
         this.categories = this.ev.categories;
         this.age_min = this.ev.age_min;
         this.age_max = this.ev.age_max;
+        this.provider_id = this.ev.provider_id;
         this.provider = this.ev.providerInfo;
         this.provider_fname = this.provider.fname;
         this.provider_lname = this.provider.lname;
