@@ -7,6 +7,9 @@ import { Filter } from '../filter';
 // MAP
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
+import { AgmCoreModule } from '@agm/core';
+import { MapService } from '../map.service';
+import { AgmMap } from '@agm/core/directives/map';
 
 // Services
 import { EventService } from '../event.service';
@@ -62,6 +65,7 @@ export class SearchComponent implements OnInit {
 
   onSelect(category: Category): void {
     this.selectedCategories = this.categoryService.onClickSelectCategory(category);
+    this.eventService.searchEvents();
     // console.log(JSON.stringify(this.selectedCategories));
   }
 
@@ -93,19 +97,26 @@ export class SearchComponent implements OnInit {
 
   show_filters: boolean;
 
-  cost = 50;
+  cost: number;
   selectCost(Cost: number): void {
     this.cost = Cost;
   }
 
-  distance: number = 2;
+  distance: number;
 
-  age: number;
+  age: string;
 
   filters() {
     console.log("Cost ", this.cost);
     console.log("Age ", this.age);
     console.log("Distance ", this.distance);
+    if ( this.age !== null )
+      this.eventService.age = this.age;
+    if ( this.cost !== null )
+      this.eventService.price = this.cost;
+    if ( this.distance !== null )
+      this.eventService.distance = this.distance;
+    this.eventService.searchEvents();
   }
 
   // -------------------- MAP -------------------- //
@@ -114,7 +125,11 @@ export class SearchComponent implements OnInit {
 
   public latitude: number;
   public longitude: number;
-  public zoom = 14;
+  // public zoom = 12;
+
+  @ViewChild(AgmMap) private map: any;
+  
+  // mapsAPILoader.load().then(() => {let latlngbounds = new google.maps.LatLngBounds();})
 
   checked: number;
 
@@ -129,8 +144,8 @@ export class SearchComponent implements OnInit {
     this.show_map = false;
 
     //set google maps defaults
-    this.latitude = 37.979499;
-    this.longitude = 23.783076;
+    this.latitude = this.eventService.searchMeanLatt;
+    this.longitude = this.eventService.searchMeanLong;
 
   }
 

@@ -238,7 +238,7 @@ export class CreateActivityComponent implements OnInit {
     })
   }
   title: string;
-  date: Date;
+  date: Date = new Date();
   time: string;
   ageMin: number;
   ageMax: number;

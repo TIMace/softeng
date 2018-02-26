@@ -18,6 +18,7 @@ import { MapComponent } from '../map/map.component';
 // Services
 import { CategoriesService } from '../categories.service';
 import { MapService } from '../map.service';
+import { EventService } from '../event.service';
 
 @Component({
   selector: 'app-home',
@@ -29,6 +30,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
     private categoriesService: CategoriesService,
+    private eventService: EventService,
     private mapService: MapService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
@@ -47,7 +49,6 @@ export class HomeComponent implements OnInit {
   activity: string;
 
   onSubmit(){
-    
     // console.log(this.activity);
     
     // for (let i = 0; i < this.categories.length; i++ )
@@ -56,7 +57,11 @@ export class HomeComponent implements OnInit {
     
     this.categoriesService.navbar_extended = 1;
     this.categoriesService.selectedCategories = this.selectedCategories;
-    console.log("HOME: ", this.selectedCategories);
+    // console.log("HOME: ", this.selectedCategories);
+    if ( this.activity !== null )
+      this.eventService.freeText = this.activity;
+    this.eventService.searchEvents();
+
     this.router.navigate(['/search']);
   }
 
