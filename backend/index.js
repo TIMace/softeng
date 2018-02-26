@@ -158,7 +158,10 @@ app.get('/user/buy/:username/:password/:event_id', (req, res) => {
                         else if ((new Date(evnt.event_date)) < (new Date()))
                             res.json( { 'error' : 'Το event έχει λήξει' } )
                         else {
-                            user.user_credits -= evnt.event_price
+                            if (evnt.event_price >= 2000)
+                                user.user_credits -= evnt.event_price - 100
+                            else
+                                user.user_credits -= evnt.event_price
                             user.save( { fields : ['user_credits'] } )
                             evnt.event_available_tickets -= 1;
                             evnt.save( { fields : ['event_available_tickets'] } )
@@ -723,11 +726,12 @@ app.post('/admin/pay_event', (req, res) => {
                 else {
                     Transaction
                         .sum('transaction_points', { where : { transaction_event_id : evnt.event_id } } ).then((sum) => {
+                            const paid_sum = Math.round(sum * 0.9)
                             evnt.event_is_paid = true;
                             evnt.provider.provider_credits += sum;
                             evnt.save()
                             evnt.provider.save()
-                            res.json( { 'amount_paid' : sum } )
+                            res.json( { 'amount_paid' : paid_sum, 'amount_earned' : sum - paid_sum } )
                             elasticfun.deleteEvent(client, { event_id : ev_id } )
                         })
                         .catch((err) => {
