@@ -1,5 +1,3 @@
-import { write } from 'fs';
-
 'use strict'
 
 const express = require('express')
@@ -61,7 +59,7 @@ const express = require('express')
 // Support JSON encoded bodies
 // Support extended URL encoded bodies
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded( { extended : true } ))
+app.use(bodyParser.urlencoded( { limit : '10mb', extended : true } ))
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*")
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
@@ -519,7 +517,7 @@ app.post('/event', (req, res) => {
                                 .catch((err) => {
                                     console.log( { 'EventCategory Creation Error' : err } )
                                 })
-                            const buf = new Buffer(ev_base64, 'base64')
+                            const buf = Buffer.from(ev_base64.replace(/ /g, '+'), 'base64')
                                 , filename = config.image_dir + evnt.event_id + '.image.png'
                             writeFile(filename, buf)
                             let image_creation = spawn('python3', [ config.binary_dependence, filename, filename, config.image_dir ])
