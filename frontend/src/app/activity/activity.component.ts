@@ -34,6 +34,9 @@ export class ActivityComponent implements OnInit {
     public userDetailsService: UserDetailsService
   ) { }
 
+  show: boolean = false;
+  buttonName: any = 'Show';
+
   name: string;
   img: string;
   lat: number;
@@ -107,67 +110,85 @@ export class ActivityComponent implements OnInit {
         if (data) {
           alert("Η αγορά εισιτηρίου ήταν επιτυχής!");
           this.eventService.parentGetEventTickets(id)
-          .subscribe(tickets => {
-            console.log(tickets);
-            this.eventService.getEventById(id)
-              .subscribe((eventdata : Event) => {
-                console.log(eventdata);
-                //pdf creation
-                var onoma = this.userFirstName.toString();
-                var epitheto = this.userLastName.toString();
-                var docDefinition = {
-                  content: [
-                    { text: 'Λεωνίδα ένα Άλογο', style: 'header' },
-                    { text: ' ' },
-                    { text: ' ' },
-                    { text: 'Εισιτήριο για την δραστηριότητα', style: ['header', 'centerStyle'] },
-                    { text: ' ' },
-                    { text: eventdata.name, style: ['header', 'centerStyle'] },
-                    { text: ' ' },
-                    { text: 'Στοιχεία Εισιτηρίου', style: 'leftStyleHeader' },
-                    { text: ' ' },
-                    { text: 'Κωδικός εισιτηρίου: '.concat(tickets.toString()), style: 'leftStyle' },
-                    { text: 'Τοποθεσία: '.concat(eventdata.location), style: 'leftStyle' },
-                    { text: 'Ημερομηνία: '.concat(eventdata.date), style: 'leftStyle' },
-                    { text: 'Πάροχος: '.concat(eventdata.providerInfo.cname
-                                              + ' ' + eventdata.providerInfo.email
-                                              + ' ' + eventdata.providerInfo.phoneNum), style: 'leftStyle' },
-                    { text: ' '.concat(''), style: 'leftStyle' },
-                    { text: 'Στοιχεία Κατόχου', style: 'leftStyleHeader' },
-                    { text: ' '.concat(''), style: 'leftStyle' },
-                    { text: 'Όνομα: '.concat(onoma), style: 'leftStyle' },
-                    { text: 'Επώνυμο: '.concat(epitheto), style: 'leftStyle' }
-                  ],
-                  styles: {
-                    header: {
-                      fontSize: 22,
-                      bold: true
-                    },
-                    centerStyle: {
-                      italic: true,
-                      alignment: 'center'
-                    },
-                    leftStyleHeader: {
-                      fontSize: 18,
-                      italic: true,
-                      alignment: 'left',
-                      bold: true
-                    },
-                    leftStyle: {
-                      fontSize: 14,
-                      italic: true,
-                      alignment: 'left'
+            .subscribe(tickets => {
+              console.log(tickets);
+              this.eventService.getEventById(id)
+                .subscribe((eventdata: Event) => {
+                  console.log(eventdata);
+                  //pdf creation
+                  var onoma = this.userFirstName.toString();
+                  var epitheto = this.userLastName.toString();
+                  var docDefinition = {
+                    content: [
+                      { text: 'Λεωνίδα ένα Άλογο', style: 'header' },
+                      { text: ' ' },
+                      { text: ' ' },
+                      { text: 'Εισιτήριο για την δραστηριότητα', style: ['header', 'centerStyle'] },
+                      { text: ' ' },
+                      { text: eventdata.name, style: ['header', 'centerStyle'] },
+                      { text: ' ' },
+                      { text: 'Στοιχεία Εισιτηρίου', style: 'leftStyleHeader' },
+                      { text: ' ' },
+                      { text: 'Κωδικός εισιτηρίου: '.concat(tickets.toString()), style: 'leftStyle' },
+                      { text: 'Τοποθεσία: '.concat(eventdata.location), style: 'leftStyle' },
+                      { text: 'Ημερομηνία: '.concat(eventdata.date), style: 'leftStyle' },
+                      {
+                        text: 'Πάροχος: '.concat(eventdata.providerInfo.cname
+                          + ' ' + eventdata.providerInfo.email
+                          + ' ' + eventdata.providerInfo.phoneNum), style: 'leftStyle'
+                      },
+                      { text: ' '.concat(''), style: 'leftStyle' },
+                      { text: 'Στοιχεία Κατόχου', style: 'leftStyleHeader' },
+                      { text: ' '.concat(''), style: 'leftStyle' },
+                      { text: 'Όνομα: '.concat(onoma), style: 'leftStyle' },
+                      { text: 'Επώνυμο: '.concat(epitheto), style: 'leftStyle' }
+                    ],
+                    styles: {
+                      header: {
+                        fontSize: 22,
+                        bold: true
+                      },
+                      centerStyle: {
+                        italic: true,
+                        alignment: 'center'
+                      },
+                      leftStyleHeader: {
+                        fontSize: 18,
+                        italic: true,
+                        alignment: 'left',
+                        bold: true
+                      },
+                      leftStyle: {
+                        fontSize: 14,
+                        italic: true,
+                        alignment: 'left'
+                      }
                     }
-                  }
-                };
-                pdfMake.vfs = pdfFonts.pdfMake.vfs;
-                pdfMake.createPdf(docDefinition).download('ticket.pdf');
-              });
-          });
+                  };
+                  pdfMake.vfs = pdfFonts.pdfMake.vfs;
+                  pdfMake.createPdf(docDefinition).download('ticket.pdf');
+                });
+            });
         }
         else {
           alert("Η συναλλαγή ήταν ανεπιτυχής!")
         }
+      });
+  }
+
+  toggle() {
+    this.show = !this.show;
+
+    // CHANGE THE NAME OF THE BUTTON.
+    if (this.show)
+      this.buttonName = "Hide";
+    else
+      this.buttonName = "Show";
+
+    var id = +this.route.snapshot.paramMap.get('id');
+    this.eventService.providerGetEventTickets(id)
+      .subscribe(listOftickets => {
+        console.log(listOftickets);
       });
   }
 }

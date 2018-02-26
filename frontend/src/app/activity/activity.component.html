@@ -58,12 +58,15 @@
         </div>
       </div>
       <div *ngIf="userId === provider_id" class="details">
-      <!-- <div *ngIf="(userDetailsService.getUserType() === 'Provider')" class="details"> -->
-      <u>Αγορασμένα εισιτήρια:
-        <ul>
-          <li></li>
-        </ul>
-      </u>
+        <button (click)="toggle()" id="bt"> Προβολή Αγορασμένων Εισιτηρίων </button>
+        <div *ngIf="show">
+          <!-- <div *ngIf="(userDetailsService.getUserType() === 'Provider')" class="details"> -->
+          <u>Αγορασμένα εισιτήρια:
+            <ul>
+              <li *ngFor="let ticket of listOftickets"> {{ticket.transaction_id}}</li>
+            </ul>
+          </u>
+        </div>
       </div>
     </div>
   </div>
