@@ -176,6 +176,8 @@ export class ActivityComponent implements OnInit {
       });
   }
 
+  listOftickets: any;
+
   toggle() {
     this.show = !this.show;
 
@@ -187,8 +189,9 @@ export class ActivityComponent implements OnInit {
 
     var id = +this.route.snapshot.paramMap.get('id');
     this.eventService.providerGetEventTickets(id)
-      .subscribe(listOftickets => {
-        console.log(listOftickets);
+      .subscribe(data => {
+        console.log(data);
+        this.listOftickets = data;
       });
   }
 }
