@@ -32,7 +32,7 @@ export class EventsPresentComponent implements OnInit {
   bringUserEvent() {
     if (this.userDetailsService.getUserType() === 'Parent') {
       this.eventService.getActiveUserEvents().subscribe(
-        data => {
+        (data:any) => {
           console.log(data);
           this.arrayOfEvents = data;
         }
@@ -40,7 +40,7 @@ export class EventsPresentComponent implements OnInit {
     }
     else if (this.userDetailsService.getUserType() === 'Provider') {
       this.eventService.getActiveProviderEvents().subscribe(
-        data => {
+        (data:any) => {
           this.arrayOfEvents = data;
         }
       )
