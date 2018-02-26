@@ -15,11 +15,11 @@ import { CategoriesService } from '../categories.service';
 
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import {server_addr} from '../server_addr';
-import {HttpClient} from '@angular/common/http';
-import {HttpErrorResponse} from '@angular/common/http';
+import { server_addr } from '../server_addr';
+import { HttpClient } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { Http, Response, Headers, RequestOptions } from '@angular/http'; 
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class SearchComponent implements OnInit {
     private categoryService: CategoriesService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone
-  ) {}
+  ) { }
 
   // ------------------- Categories ------------------- //
 
@@ -65,7 +65,7 @@ export class SearchComponent implements OnInit {
     this.eventService.searchEvents();
     // console.log(JSON.stringify(this.selectedCategories));
   }
-  
+
   // --------------------- Events --------------------- //
 
   events: Event[];
@@ -73,11 +73,23 @@ export class SearchComponent implements OnInit {
 
   getEvents(): void {
     this.eventService.getEvents("", "", "", "").
-    subscribe(events => {
-      console.log(events);
-      this.events = events});
+      subscribe(events => {
+        // console.log(events);
+        this.events = events
+        this.events.forEach(element => {
+          // element.date = new Date(       Date.parse(element.date))setTime(Date.parse(element.date)).toString());
+          var time = new Date(Date.parse(element.date));
+          var year = time.getFullYear();
+          var month = time.getMonth() + 1;
+          var date1 = time.getDate();
+          var hour = time.getHours();
+          var minutes = time.getMinutes();
+          element.date = (date1 + "-" + month + "-" + year + " " + hour + ":" + minutes);
+
+        });
+      });
   }
-  
+
   // -------------------- Filters -------------------- //
 
   show_filters: boolean;
@@ -105,7 +117,7 @@ export class SearchComponent implements OnInit {
   }
 
   // -------------------- MAP -------------------- //
-  
+
   show_map: boolean;
 
   public latitude: number;
@@ -113,11 +125,11 @@ export class SearchComponent implements OnInit {
   public zoom = 14;
 
   checked: number;
-  
+
   ngOnInit() {
     this.getCategories();
     this.getSelectedCategories();
-    
+
     this.getEvents();
 
     this.show_filters = false;

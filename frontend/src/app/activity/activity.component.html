@@ -1,53 +1,55 @@
 <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-3 col-md-4 col text-center">
-        <button (click)="goBack()" type="button" class="btn rtrn">
-          <div class="input-group-addon">
-            <i class="fa fa-chevron-left"></i>Επιστροφή στην Προηγούμενη Σελίδα</div>
-        </button>
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col text-center">
+      <button (click)="goBack()" type="button" class="btn rtrn">
+        <div class="input-group-addon">
+          <i class="fa fa-chevron-left"></i>Επιστροφή στην Προηγούμενη Σελίδα</div>
+      </button>
+    </div>
+    <div class="col-sm text-center">
+      <u>{{name}}</u>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-md-4 col-6 text-center">
+      <img class="image" src="{{img}}">
+      <div class="details">
+        <agm-map [latitude]="lat" [longitude]="lng" [scrollwheel]="true" [zoom]="13">
+          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+        </agm-map>
       </div>
-      <div class="col-sm text-center">
-        <u>{{name}}</u>
+      <div *ngIf="userDetailsService.getUserType() === 'Anonymous'">
+        <button type="button" class="btn buy" disabled>Αγορά Eισιτηρίου</button>
+      </div>
+      <div *ngIf="userDetailsService.getUserType() === 'Parent'">
+        <button (click)="onTicketBuy()" type="button" class="btn buy" enabled>Αγορά Eισιτηρίου</button>
+      </div>
+      <div class="details">
+        Κόστος: {{price}}
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-3 col-md-4 col-6 text-center">
-        <img class="image" src="{{img}}">
-        <div class="details">
-          <agm-map [latitude]="lat" [longitude]="lng" [scrollwheel]="true" [zoom]="13">
-            <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-          </agm-map>
-        </div>
-         <div *ngIf="userDetailsService.getUserType() === 'Anonymous'" >
-          <button type="button" class="btn buy" disabled>Αγορά Eισιτηρίου</button>
-        </div>
-        <div *ngIf="userDetailsService.getUserType() === 'Parent'" >
-            <button (click)="onTicketBuy()" type="button" class="btn buy" enabled >Αγορά Eισιτηρίου</button>
-        </div>
-        <div>
-          Κόστος: {{price}}
-        </div>
+    <div class="col">
+      <div class="details">
+        <u>Τοποθεσία:</u>{{loc}}
       </div>
-      <div class="col">
-        <div class="details">
-          <u>Τοποθεσία:</u>{{loc}}
-        </div>
-        <div class="details">
-          <u>Ημερομηνία:</u> {{date}}
-        </div>
-        <div class="details">
-          <u>Κατηγορίες:</u>
-          <label *ngFor="let cat of categories"> &nbsp; {{cat}}</label>
-        </div>
-        <div class="details">
-          <u>Ηλικίες:</u> {{age_min}} - {{age_max}}
-        </div>
-        <div class="details">
-          <u>Πάροχος:</u> &nbsp; {{provider_cname}} &nbsp; {{provider_fname}} &nbsp; {{provider_lname}} &nbsp; {{provider_email}} &nbsp; {{provider_phoneNum}}
-        </div>
-        <div class="details">
-          <u>Διαθέσιμα εισιτήρια: </u> {{available_tickets}}
-        </div>
+      <div class="details">
+        <u>Ημερομηνία:</u> {{date}}
+      </div>
+      <div class="details">
+        <u>Κατηγορίες:</u>
+        <label *ngFor="let cat of categories"> &nbsp; {{cat}}</label>
+      </div>
+      <div class="details">
+        <u>Ηλικίες:</u> {{age_min}} - {{age_max}}
+      </div>
+      <div class="details">
+        <u>Πάροχος:</u> &nbsp; {{provider_cname}} &nbsp; {{provider_fname}} &nbsp; {{provider_lname}} &nbsp; {{provider_email}}
+        &nbsp; {{provider_phoneNum}}
+      </div>
+      <div class="details">
+        <u>Διαθέσιμα εισιτήρια:</u> {{available_tickets}}
+      </div>
+      <div>
         <u>Περιγραφή:</u>
         <div class="border border-secondary">
           <span class="description">
@@ -55,5 +57,17 @@
           </span>
         </div>
       </div>
+      <div *ngIf="userId === provider_id" class="details">
+        <button (click)="toggle()" id="bt"> Προβολή Αγορασμένων Εισιτηρίων </button>
+        <div *ngIf="show">
+          <!-- <div *ngIf="(userDetailsService.getUserType() === 'Provider')" class="details"> -->
+          <u>Αγορασμένα εισιτήρια:
+            <ul>
+              <li *ngFor="let ticket of listOftickets"> {{ticket.transaction_id}}</li>
+            </ul>
+          </u>
+        </div>
+      </div>
     </div>
   </div>
+</div>
