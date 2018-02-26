@@ -12,6 +12,7 @@ import { Subject } from 'rxjs/Subject';
 import { UserDetailsService, userDetailsObj } from './user-details.service';
 import { Category } from './category'
 import { CategoriesService  } from './categories.service';
+import { NativeDateModule } from '@angular/material';
 
 @Injectable()
 export class EventService {
@@ -109,11 +110,29 @@ export class EventService {
   // NavBar Simple / Extended
 
   getActiveUserEvents(){
-    return this.getUserEvents();
+    var subject = new Subject()
+    this.getUserEvents()
+    .subscribe(
+      data =>
+      {
+        subject.next(this.filterActiveEvents(data))
+      }
+    )
+    // return this.getUserEvents();
+    return subject;
   }
 
   getOldUserEvents(){
-    return this.getUserEvents();
+    var subject = new Subject()
+    this.getUserEvents()
+    .subscribe(
+      data =>
+      {
+        subject.next(this.filterOldEvents(data))
+      }
+    )
+    // return this.getUserEvents();
+    return subject;
   }
 
   getUserEvents(){
@@ -157,9 +176,24 @@ export class EventService {
 
   filterActiveEvents(eventArray){
     var res = []
+    var currentDate = new Date()
     for(var i = 0; i< eventArray.length;i++){
-
+      if (new Date(eventArray[i].date)>currentDate){
+        res.push(eventArray[i])
+      }
     }
+    return res;
+  }
+
+  filterOldEvents(eventArray){
+    var res = []
+    var currentDate = new Date()
+    for(var i = 0; i< eventArray.length;i++){
+      if (new Date(eventArray[i].date)<=currentDate){
+        res.push(eventArray[i])
+      }
+    }
+    return res;
   }
 
   parentGetEventTickets(id){
@@ -173,10 +207,14 @@ export class EventService {
     .subscribe(
       (data:any)=>
       {
+        console.log("Got some tickets!!!")
+        console.log(data)
         var res = [];
-        for(var i=0;i<data.lenght;i++){
+        for(var i=0;i<data.length;i++){
           res.push(data[i].transaction_id)
         }
+        console.log("tickets become this")
+        console.log(res)
         subject.next(res)
       }
     )
@@ -290,6 +328,7 @@ export class EventService {
       .set("ev_min_age",""+eventObj.age_min)
       .set("ev_max_age",""+eventObj.age_max)
       .set("ev_mdata",""+eventObj.location)
+      .set("ev_base64",""+eventObj.ev_base64)
 
       // console.log("This is the length of the categories array!!!!")
       // console.log(eventObj.categories.length)
@@ -334,11 +373,29 @@ export class EventService {
   }
 
   getActiveProviderEvents(){
-    return this.getProviderEvents()
+    var subject = new Subject()
+    this.getProviderEvents()
+    .subscribe(
+      (data:any) =>
+      {
+        subject.next(this.filterActiveEvents(data))
+      }
+    )
+    return subject;
+    // return this.getProviderEvents()
   }
 
   getOldProviderEvents(){
-    return this.getProviderEvents()
+    var subject = new Subject()
+    this.getProviderEvents()
+    .subscribe(
+      (data:any) =>
+      {
+        subject.next(this.filterOldEvents(data))
+      }
+    )
+    return subject;
+    // return this.getProviderEvents()
   }
 
   getProviderEvents(){

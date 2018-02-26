@@ -15,6 +15,7 @@ export class Event {
     img: string;
     categories: Array<string>;
     providerInfo:eventProviderInfo;
+    ev_base64: string;
 }
 
 export class eventProviderInfo{
