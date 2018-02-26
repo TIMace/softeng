@@ -71,7 +71,10 @@ export class SearchComponent implements OnInit {
   selectedEvents: Event[];
 
   getEvents(): void {
-    this.eventService.getEvents("", "", "", "").subscribe(events => this.events = events);
+    this.eventService.getEvents("", "", "", "").
+    subscribe(events => {
+      console.log(events);
+      this.events = events});
   }
   
   // -------------------- Filters -------------------- //

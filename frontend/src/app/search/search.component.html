@@ -34,7 +34,7 @@
             </div>
           </li>
           <li>
-            <button mat-button class="example-radio-group"  (click)="filters()">Εφαρμογή Φίλτρων</button>
+            <button mat-button class="example-radio-group" (click)="filters()">Εφαρμογή Φίλτρων</button>
           </li>
         </ul>
       </mat-sidenav>
@@ -50,7 +50,8 @@
 
           <!-- Categories -->
           <!-- <input class="form-check-input" type="checkbox" value="" id="defaultCheck1"  [checked]="findChecked(cat)"> -->
-          <label *ngFor="let cat of categories;" class="btn btn-outline-info" for="defaultCheck1" [class.active]="findChecked(cat)" (click)="onSelect(cat)">
+          <label *ngFor="let cat of categories;" class="btn btn-outline-info" for="defaultCheck1" [class.active]="findChecked(cat)"
+            (click)="onSelect(cat)">
             {{cat.name}}
           </label>
         </div>
@@ -89,40 +90,17 @@
                       Ημερομηνία: {{event.date}}
                     </div>
                   </div>
-                  <!-- <div class="border border-secondary">
-                    <p class="card-text">
-                      Περιγραφή: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    </p>
-                  </div> -->
                   <div class="row">
-                    <!-- <div class="col-md">
-                      <p class="card-text">
-                        Πάροχος: {{event.provider_id}}
-                      </p>
-                    </div> -->
                     <div class="col-md">
                       <p class="card-text">
                         Ηλικίες: {{event.age_min}}-{{event.age_max}}
                       </p>
                     </div>
                     <div class="col-md">
-                        <p class="card-text">
-                          Διαθέσιμα Εισιτήρια:
-                        </p>
-                      </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md">
                       <p class="card-text">
-                        <!-- Διαθέσιμα Εισιτήρια: -->
-                        Κατηγορίες:
+                        Διαθέσιμα Εισιτήρια: {{event.available_tickets}}
                       </p>
                     </div>
-                  </div>
-                  <div>
-                    <p class="card-text">
-                      Πάροχος: {{event.provider_id}} &nbsp; Μπάμπης &nbsp; Αλόγου &nbsp; 210-1234567
-                    </p>
                   </div>
                   <div>
                     <a href="#" routerLink="/activity/{{event.id}}">Λεπτομέρειες Δραστηριότητας</a>
