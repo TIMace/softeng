@@ -33,13 +33,12 @@
       </div>
 
       <div class="row">
-        <div class="col-md-3 col-lg-4"></div>
-        <div class="col-md-3 col-lg-2">
+        <div class="col-md-3"></div>
+        <div class="col-md-6" style="text-align:center">
           <button (click)="lock()" type="button" class="btn">Κλείδωμα Χρήστη</button>
-        </div>
-        <div class="col-md-3 col-lg-2">
           <button (click)="unlock()" class="btn">Ξεκλείδωμα Χρήστη</button>
         </div>
+
       </div>
     </div>
   </div>
@@ -49,7 +48,7 @@
 <br>
 <br>
 
-<div class="container" style="text-align:center" >
+<div class="container" style="text-align:center">
   <h5>Ενεργοποίηση Λογαριασμού Παρόχου</h5>
   <form>
     <div class=" row">
@@ -62,8 +61,8 @@
     </div>
   </form>
   <div class="row">
-    <div class="col-md-3 col-lg-4"></div>
-    <div class="col-md-3 col-lg-2">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
       <button (click)="activateProvider()" type="button" class="btn">Ενεργοποίηση Λογαριασμού Παρόχου</button>
     </div>
   </div>
@@ -75,21 +74,21 @@
 <br>
 
 <div class="container" style="text-align:center">
-    <h5>Πληρωμή Δραστηριότητας</h5>
-    <form>
-      <div class=" row">
-        <label for="ID" class="col-form-label col-12 ">ID δραστηριότητας προς πληρωμή</label>
-        <div class="col-3"></div>
-        <div class="col-6 form-group">
-          <input type="text" name="payEvent" class="form-control form-control-sm" id="ID" [(ngModel)]="eventId">
-        </div>
-        <div class="col-3"></div>
+  <h5>Πληρωμή Δραστηριότητας</h5>
+  <form>
+    <div class=" row">
+      <label for="ID" class="col-form-label col-12 ">ID δραστηριότητας προς πληρωμή</label>
+      <div class="col-3"></div>
+      <div class="col-6 form-group">
+        <input type="text" class="form-control form-control-sm" id="ID" [(ngModel)]="eventId">
       </div>
-    </form>
-    <div class="row">
-      <div class="col-md-4 col-lg-5" ></div>&nbsp;&nbsp;
-      <div class="col-md-3 col-lg-1" style="text-align:center">
-        <button (click)="payEvent()" type="button" class="btn" id="pay">Πληρωμή Δραστηριότητας</button>
-      </div>
+      <div class="col-3"></div>
     </div>
-    <br>
+  </form>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6" style="text-align:center">
+      <button (click)="payEvent()" type="button" class="btn" id="pay">Πληρωμή Δραστηριότητας</button>
+    </div>
+  </div>
+  <br>
