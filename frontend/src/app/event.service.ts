@@ -168,6 +168,9 @@ export class EventService {
           subject.next(false)
         }
         else{
+          var uname = this.userDetailsService.userDetails.username;
+          var passwd = this.userDetailsService.userDetails.password;
+          this.userDetailsService.login(uname,passwd,"Parent")
           subject.next(true)
         }
 
