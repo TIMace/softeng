@@ -10,6 +10,9 @@ const express = require('express')
         log: 'trace'
     })
 
+    , nodemailer = require('nodemailer')
+    , sha256 = require('sha256')
+
     , fs = require('fs')
     , lazy = require('lazy.js')
     , { spawn } = require('child_process')
@@ -45,6 +48,10 @@ const express = require('express')
             fs.writeSync(fileDescriptor, buffer, 0, buffer.length, 0);
             fs.closeSync(fileDescriptor);
         }
+    }
+
+    , createRandomPassword = () => {
+        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
     }
 
     , options = {
@@ -203,6 +210,41 @@ app.get('/user/buy/:username/:password/:event_id', (req, res) => {
         })
 })
 
+app.get('/user/reset/:email', (req, res) => {
+    const new_passwd = createRandomPassword()
+    User
+        .findOne( { where : { user_email : req.params.email, user_active : true } } ).then((user) => {
+            if (user === null)
+                res.json(null)
+            else {
+                res.json(true)
+                user.user_password = sha256(new_passwd)
+                user.save( { fields : ['user_password'] } )
+                nodemailer.createTestAccount((err, account) => {
+                    let transporter = nodemailer.createTransport({
+                        service : 'gmail',
+                        auth: {
+                            user: 'me.kourazeis.poly@gmail.com',
+                            pass: config.db_pass
+                        }
+                    })
+                    let mailOptions = {
+                        from: '"Leonidas o 300os" <me.kourazeis.poly@gmail.com>',
+                        to: req.params.email,
+                        subject: 'Password reset ✔',
+                        text: 'Your password has been reset to : ' + new_passwd,
+                        html: 'Your password has been reset to : <b>' + new_passwd + '</b>'
+                    }
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) { return console.log(error) }
+                        console.log('Message sent: %s', info.messageId)
+                        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
+                    })
+                })
+            }
+        })
+})
+
 
 // USER UPDATE (PUT) CREDITS
 app.post('/user/add_credits', (req, res) => {
@@ -277,7 +319,6 @@ app.post('/user/update', (req, res) => {
 /**
  * PROVIDER
  */
-
 app.get('/provider/:username/:password', (req, res) => {
     Provider
         .findOne( { where : { provider_username : req.params.username, provider_password : req.params.password, provider_active : true } } ).then((provider) => {
@@ -349,7 +390,6 @@ app.get('/provider/event/:username/:password/:event_id', (req, res) => {
             res.json( { error : err } )
         })
 })
-
 
 
 app.post('/provider', (req, res) => {
