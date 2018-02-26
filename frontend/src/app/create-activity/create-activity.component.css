@@ -70,6 +70,7 @@ agm-map {
 
 .card {
     height: 12rem;
+    max-width: 12rem;
     /* width: 15rem; */
 }
 
