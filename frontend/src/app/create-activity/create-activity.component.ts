@@ -263,6 +263,7 @@ export class CreateActivityComponent implements OnInit {
       );
     this.category = EVENTS[0];
     this.write();
+    this.time="13:45:00";
     // this.getEvent();
   };
 

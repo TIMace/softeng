@@ -4,13 +4,11 @@
     <div class="col text-center">
       <input class="form-control form-control-lg" type="text" placeholder="Τίτλος Δραστηριότητας" [(ngModel)]="title">
     </div>
-
     <span class="col-0 col-md-3"></span>
-
   </div>
 
-  
-  <div class="row">
+
+  <div class="row" >
     <div class="col-12 col-md-3 text-center">
       <!-- <img class="image" src="{{category.img}}">
       <button (click)="onSubmit()" type="button" class="btn buy">Προσθήκη Εικόνας</button> -->
@@ -37,6 +35,11 @@
           <input matInput [matDatepicker]="picker" placeholder="Ημερομηνία" [(ngModel)]="date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+        </div>
+        <div class="form-group row">
+          <div class="col-10">
+            <input class="form-control" type="time" value="13:45:00" id="example-time-input" [(ngModel)]="time">
+          </div>
         </div>
         <div class="details">
           <u>Κατηγορίες:</u>
@@ -86,9 +89,3 @@
 
 
 </div>
-<div class="form-group row">
-    <label for="example-time-input" class="col-2 col-form-label">Time</label>
-    <div class="col-10">
-      <input class="form-control" type="time" value="13:45:00" id="example-time-input" [(ngModel)]="time">
-    </div>
-  </div>
