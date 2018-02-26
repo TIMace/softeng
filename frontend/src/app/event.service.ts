@@ -108,6 +108,14 @@ export class EventService {
 
   // NavBar Simple / Extended
 
+  getActiveUserEvents(){
+    return this.getUserEvents();
+  }
+
+  getOldUserEvents(){
+    return this.getUserEvents();
+  }
+
   getUserEvents(){
     var subject = new Subject<any>();
     var userDetails = this.userDetailsService.getDetails();
@@ -275,6 +283,14 @@ export class EventService {
     }
     // subject.next(true)
     return subject.asObservable()
+  }
+
+  getActiveProviderEvents(){
+    return this.getProviderEvents()
+  }
+
+  getOldProviderEvents(){
+    return this.getProviderEvents()
   }
 
   getProviderEvents(){
