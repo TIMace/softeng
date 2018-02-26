@@ -156,6 +156,8 @@ export class CreateActivityComponent implements OnInit {
 
 
   createEvent() {
+    console.log(this.date);
+    return;
     console.log("AAAAA");
     var eventDetails: Event;
     var localDate = new Date();
@@ -238,7 +240,7 @@ export class CreateActivityComponent implements OnInit {
     })
   }
   title: string;
-  date: Date;
+  date: Date = new Date();
   time: string;
   ageMin: number;
   ageMax: number;
