@@ -6,7 +6,7 @@ import { of } from 'rxjs/observable/of';
 import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { UserDetailsService } from '../user-details.service'
-import {server_addr} from '../server_addr'
+import { server_addr } from '../server_addr'
 
 
 @Component({
@@ -38,9 +38,9 @@ export class AdminPanelComponent implements OnInit {
 
   //decision depends on radio button
   lock() {
-    console.log(this.radio);
-    console.log(this.username);
-    console.log(this.providerUsername);
+    // console.log(this.radio);
+    // console.log(this.username);
+    // console.log(this.providerUsername);
 
     if (this.radio == 'parent') { this.lockUser(this.username) }
     else { this.lockProvider(this.username) }
@@ -179,8 +179,10 @@ export class AdminPanelComponent implements OnInit {
     )
       .subscribe(
         (data: any) => {
-          console.log(data);
-          if (data === null) {
+          // console.log("AMOUNTTTT")
+          // console.log(this.eventId)
+          // console.log(data);
+          if (data == null) {
             alert("Event is already paid")
           }
           else if (Number.isInteger(data)) {
