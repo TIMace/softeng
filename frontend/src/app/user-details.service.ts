@@ -213,7 +213,7 @@ export class UserDetailsService {
   updateParentDetails(newParentDetails){
     var subject = new Subject();
     if (newParentDetails.password!= this.userDetails.password){
-      subject.next(false)
+      return of(false)
     }
     if (newParentDetails.new_password == ""){
       newParentDetails.new_password = this.userDetails.password
@@ -260,7 +260,7 @@ export class UserDetailsService {
   updateProviderDetails(newProviderDetails){
     var subject = new Subject();
     if (newProviderDetails.password!= this.userDetails.password){
-      subject.next(false)
+      return of(false)
     }
     if (newProviderDetails.new_password == ""){
       newProviderDetails.new_password = this.userDetails.password
