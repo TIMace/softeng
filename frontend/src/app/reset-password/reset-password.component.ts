@@ -19,8 +19,7 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.formReset = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]], //Validators.pattern('[a-z0-9.@]*')
-      type: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
