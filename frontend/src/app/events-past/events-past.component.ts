@@ -26,14 +26,14 @@ export class EventsPastComponent implements OnInit {
 
   bringUserEvent() {
     if (this.userDetailsService.getUserType() === 'Parent') {
-      this.eventService.getUserEvents().subscribe(
+      this.eventService.getOldUserEvents().subscribe(
         data => {
           this.arrayOfEvents = data;
         }
       )
     }
     else if (this.userDetailsService.getUserType() === 'Provider') {
-      this.eventService.getProviderEvents().subscribe(
+      this.eventService.getOldProviderEvents().subscribe(
         data => {
           this.arrayOfEvents = data;
         }
