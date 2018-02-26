@@ -207,10 +207,14 @@ export class EventService {
     .subscribe(
       (data:any)=>
       {
+        console.log("Got some tickets!!!")
+        console.log(data)
         var res = [];
-        for(var i=0;i<data.lenght;i++){
+        for(var i=0;i<data.length;i++){
           res.push(data[i].transaction_id)
         }
+        console.log("tickets become this")
+        console.log(res)
         subject.next(res)
       }
     )
