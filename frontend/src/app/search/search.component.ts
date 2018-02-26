@@ -62,6 +62,7 @@ export class SearchComponent implements OnInit {
 
   onSelect(category: Category): void {
     this.selectedCategories = this.categoryService.onClickSelectCategory(category);
+    this.eventService.searchEvents();
     // console.log(JSON.stringify(this.selectedCategories));
   }
   
@@ -81,19 +82,26 @@ export class SearchComponent implements OnInit {
 
   show_filters: boolean;
 
-  cost = 50;
+  cost: number;
   selectCost(Cost: number): void {
     this.cost = Cost;
   }
 
-  distance: number = 2;
+  distance: number;
 
-  age: number;
+  age: string;
 
   filters() {
     console.log("Cost ", this.cost);
     console.log("Age ", this.age);
     console.log("Distance ", this.distance);
+    if ( this.age !== null )
+      this.eventService.age = this.age;
+    if ( this.cost !== null )
+      this.eventService.price = this.cost;
+    if ( this.distance !== null )
+      this.eventService.distance = this.distance;
+    this.eventService.searchEvents();
   }
 
   // -------------------- MAP -------------------- //
