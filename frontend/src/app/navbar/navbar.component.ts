@@ -45,9 +45,9 @@ export class NavbarComponent implements OnInit {
   activity: string;
 
   onSubmit() {
-    for (let i = 0; i < this.categories.length; i++ )
-      if ( ( this.activity != null) && ( this.categories[i].name == this.activity ) )
-        this.categoriesService.selectedCategories.push(this.categories[i]);
+    this.tempLocation = (<HTMLInputElement>document.getElementById("tempLocation")).value;
+    console.log(this.activity);
+    console.log(this.tempLocation);
     this.router.navigate(['/search']);
   }
 

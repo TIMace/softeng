@@ -120,6 +120,8 @@ export class EventService {
         var temp = response[i].event;
         res.push(temp)
       }
+      console.log("ALL THE USER EVENTS")
+      console.log(res)
       return Array.from(new Set(res));
     })
     .map(response => this.server2local_event(response))
@@ -129,14 +131,96 @@ export class EventService {
     return subject.asObservable();
   }
 
+  buyEvent(id){
+    var subject = new Subject();
+    var userDetails = this.userDetailsService.getDetails()
+    this.httpClient.get(
+      `${server_addr}/user/buy/${userDetails.username}/${userDetails.password}/${id}`,
+    )
+    .subscribe(
+      (data:any)=>{
+        console.log(data)
+        if (data==null || data.hasOwnProperty("error")){
+          subject.next(false)
+        }
+        else{
+          subject.next(true)
+        }
+
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log("Client-side error occured.");
+        } else {
+          console.log("Server-side error occured.");
+        }
+        subject.next(false)
+      }
+    )
+    return subject;
+  }
+
+  updateEvent(eventObj:Event){
+    var subject = new Subject()
+    if (this.userDetailsService.userType != "Provider"){
+      subject.next(false)
+    }
+    else{
+      console.log("This is what the update will look like")
+      console.log(eventObj)
+      var updateDetails = new HttpParams()
+      .set("username",""+this.userDetailsService.userDetails.username)
+      .set("password",""+this.userDetailsService.userDetails.password)
+      .set("ev_price",""+eventObj.price)
+      .set("ev_id",""+eventObj.id)
+      .set("ev_name",""+eventObj.name)
+      .set("ev_descr",""+eventObj.description)
+      .set("ev_date",""+eventObj.date)
+      .set("ev_min_age",""+eventObj.age_min)
+      .set("ev_max_age",""+eventObj.age_max)
+      this.httpClient.post(
+        `${server_addr}/event/update`,
+        updateDetails.toString(),
+        {
+          headers: new HttpHeaders()
+            .set('Content-Type', 'application/x-www-form-urlencoded')
+        
+        }
+      )
+      .subscribe(
+        (data:any)=>{
+          console.log("This is what came after event update")
+          console.log(data)
+          if (data==null || data.hasOwnProperty("error")){
+            subject.next(false)
+          }
+          else{
+            subject.next(true)
+          }
+  
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error instanceof Error) {
+            console.log("Client-side error occured.");
+          } else {
+            console.log("Server-side error occured.");
+          }
+          subject.next(false)
+        }
+      )
+    }
+    // return of(true)
+    return subject;
+  }
+
   createEvent(eventObj:Event){
     var subject = new Subject()
     if (this.userDetailsService.userType != "Provider"){
       subject.next(false)
     }
     else{
-      console.log("This is the event creation object")
-      console.log(eventObj)
+      // console.log("This is the event creation object")
+      // console.log(eventObj)
       var creationDetails = new HttpParams()
       .set("username",""+this.userDetailsService.userDetails.username)
       .set("password",""+this.userDetailsService.userDetails.password)
@@ -150,10 +234,16 @@ export class EventService {
       .set("ev_min_age",""+eventObj.age_min)
       .set("ev_max_age",""+eventObj.age_max)
       .set("ev_mdata",""+eventObj.location)
-      
+
+      // console.log("This is the length of the categories array!!!!")
+      // console.log(eventObj.categories.length)
       for(var i = 0;i<eventObj.categories.length;i++){
-        creationDetails.set("ev_cats[]",""+this.categoriesService.categoryIdByName(eventObj.categories[i]))
+        // console.log( `Loopa ${i}, id ${this.categoriesService.categoryIdByName(eventObj.categories[i])}`)
+        // console.log(`ev_cats[${i+1}]`)
+        // console.log(`${this.categoriesService.categoryIdByName(eventObj.categories[i])}`)
+        creationDetails = creationDetails.set(`ev_cats[${i+1}]`,`${this.categoriesService.categoryIdByName(eventObj.categories[i])}`)
       }
+      // console.log(creationDetails)
       this.httpClient.post(
         `${server_addr}/event`,
         creationDetails.toString(),
