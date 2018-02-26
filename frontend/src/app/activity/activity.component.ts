@@ -7,7 +7,7 @@ import { Event, eventProviderInfo } from '../event';
 import { CategoriesService } from '../categories.service';
 import { EventService } from '../event.service';
 import { UserDetailsService } from '../user-details.service';
-import { userDetailsObj } from '../user-details.service'
+import { userDetailsObj } from '../user-details.service';
 
 //pdfMake
 import * as pdfMake from 'pdfmake/build/pdfmake';
