@@ -11,13 +11,13 @@
             <form class="form-horizontal" [formGroup]="formRegisterParent" (ngSubmit)="doRegisterProvider()">
                 <div class="row">
                     <div class="col-md-3 field-label-responsive">
-                        <label for="parent_name">Όνομα:</label>
+                        <label class="control-label required" for="parent_name">Όνομα:</label>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                                 <input type="text" id="parent_name" class="form-control" formControlName="parent_name" 
-                                        placeholder="Γιάννης" required autofocus>
+                                        placeholder="Λεωνίδας" required autofocus>
                             </div>
                         </div>
                     </div>
@@ -34,13 +34,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 field-label-responsive">
-                        <label for="parent_lastname">Επίθετο:</label>
+                        <label class="control-label required" for="parent_lastname">Επίθετο:</label>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                                 <input type="text" id="parent_lastname" class="form-control" formControlName="parent_lastname" 
-                                        placeholder="Παπαδόπουλος" required>
+                                        placeholder="Αλόγου" required>
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 field-label-responsive">
-                        <label for="parent_location">Διεύθυνση Κατοικίας:</label>
+                        <label class="control-label required" for="parent_location">Διεύθυνση Κατοικίας:</label>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -70,7 +70,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 field-label-responsive">
-                        <label for="parent_phone">Τηλέφωνο Επικοινωνίας:</label>
+                        <label class="control-label required" for="parent_phone">Τηλέφωνο Επικοινωνίας:</label>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -83,7 +83,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 field-label-responsive">
-                        <label for="parent_username">Username:</label>
+                        <label class="control-label required" for="parent_username">Username:</label>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -107,7 +107,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 field-label-responsive">
-                        <label for="parent_email">E-Mail:</label>
+                        <label class="control-label required" for="parent_email">E-Mail:</label>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -131,7 +131,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 field-label-responsive">
-                        <label for="parent_password">Κωδικός:</label>
+                        <label class="control-label required" for="parent_password">Κωδικός:</label>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group has-danger">
@@ -152,7 +152,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 field-label-responsive">
-                        <label for="parent_confirm_password">Επιβεβαίωση Κωδικού:</label>
+                        <label class="control-label required" for="parent_confirm_password">Επιβεβαίωση Κωδικού:</label>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
@@ -170,7 +170,7 @@
                             <span class="text-danger align-middle">
                                 <!-- <i class="fa fa-close"> Example Error Message</i> -->
                                 <div *ngIf="(formRegisterParent.get('parent_confirm_password').touched)&&(pass !== conf_pass)">
-                                    Oops, wrong pattern buddy!
+                                    Οι κωδικοί δεν ταιριάζουν!
                                 </div> 
                             </span>
                         </div>

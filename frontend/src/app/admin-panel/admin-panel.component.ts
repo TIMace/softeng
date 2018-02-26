@@ -19,6 +19,8 @@ export class AdminPanelComponent implements OnInit {
   providerUsername: String = '';
   radio: String = 'parent';
 
+  temp: String;
+
   constructor(private httpClient: HttpClient, private adminDetails: UserDetailsService) { }
   onNameKeyUp(event: any) {
     // console.log(event.target.value);
@@ -152,7 +154,8 @@ export class AdminPanelComponent implements OnInit {
       )
   }
 
-  activateProvider(providerUsername: String) {
+  activateProvider() {
+  // activateProvider(providerUsername: String) {
     this.radio = 'Provider';
     this.unlock();
   }
