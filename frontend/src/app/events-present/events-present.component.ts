@@ -33,7 +33,6 @@ export class EventsPresentComponent implements OnInit {
     if (this.userDetailsService.getUserType() === 'Parent') {
       this.eventService.getActiveUserEvents().subscribe(
         (data:any) => {
-          console.log(data);
           this.arrayOfEvents = data;
         }
       )
