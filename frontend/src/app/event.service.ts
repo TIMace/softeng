@@ -128,9 +128,25 @@ export class EventService {
         var temp = response[i].event;
         res.push(temp)
       }
-      console.log("ALL THE USER EVENTS")
-      console.log(res)
-      return Array.from(new Set(res));
+      // console.log("ALL THE USER EVENTS")
+      // console.log(res)
+      var res2 = []
+      var dict = {}
+      for(var i = 0;i<response.length;i++){
+        var temp = res[i];
+        // console.log("Checking if the next object exists in dict")
+        // console.log(temp)
+        if (!((""+temp.event_id) in dict)){
+          // console.log("It does")
+          res2.push(temp)
+          dict[""+temp.event_id] = true
+        }
+        else{
+          // console.log("It exists")
+          
+        }
+      }
+      return res2;
     })
     .map(response => this.server2local_event(response))
     .subscribe((data:Event[]) => {subject.next(data);
@@ -152,6 +168,9 @@ export class EventService {
           subject.next(false)
         }
         else{
+          var uname = this.userDetailsService.userDetails.username;
+          var passwd = this.userDetailsService.userDetails.password;
+          this.userDetailsService.login(uname,passwd,"Parent")
           subject.next(true)
         }
 
