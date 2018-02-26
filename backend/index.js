@@ -79,6 +79,15 @@ app.get('/DBSchema', (req, res) => {
 
 
 /**
+ * SEARCH
+ */
+app.get('/search/:term', (req, res) => {
+    elasticfun.searchEvent(client, res, { term : req.params.term } )
+})
+
+
+
+/**
  * USER
  */
 app.get('/user/:username/:password', (req, res) => {
