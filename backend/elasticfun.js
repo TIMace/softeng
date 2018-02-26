@@ -4,13 +4,13 @@ exports.elasticfun = {
 
     initElasticSearchIndices : (client) => {
 
-        client.indices.exists({ index : 'event'}, (err, resp, status) => {
-            if (!resp)
-                client.indices.create( { index: 'event' }, (err, resp, status) => {
-                    if(err)
-                        console.log('ERROR' + err)
+        client.indices.exists({ index : 'event'}, (err1, resp1, status1) => {
+            if (!resp1)
+                client.indices.create( { index: 'event' }, (err2, resp2, status2) => {
+                    if(err2)
+                        console.log('ERROR' + err2)
                     else
-                        console.log("Index event created : ", resp)
+                        console.log("Index event created : ", resp2)
                 })
         })
 
@@ -82,20 +82,21 @@ exports.elasticfun = {
 
 
     // obj = { term : 'xxxx' }
-    searchEvent : (client, obj) => {
+    searchEvent : (client, res, obj) => {
         client.search( {
             index : 'event',
             type : 'event',
             body : {
                 query : {
                     query_string : { query : obj.term.split(' ').join(' OR ') },
-                    auto_generate_synonyms_phrase_query : true
                 }
             }
         }, (err, resp, status) => {
             if (err) {
                 console.log("search error: " + err)
+                res.json(err)
             } else {
+                res.json(resp.hits.hits)
                 console.log("--- Response ---")
                 console.log(resp)
                 console.log("--- Hits ---")
