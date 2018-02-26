@@ -57,7 +57,7 @@ export class AdminPanelComponent implements OnInit {
     var userLock = new HttpParams()
       .set('username', '' + this.adminDetails.userDetails.username)
       .set('password', '' + this.adminDetails.userDetails.password)
-      .set('name', '' + this.username);
+      .set('user_username', '' + username);
     this.httpClient.post(`${server_addr}/admin/usr_deactivate`,
       userLock.toString(),
       {
@@ -112,7 +112,7 @@ export class AdminPanelComponent implements OnInit {
     var userUnLock = new HttpParams()
       .set('username', '' + this.adminDetails.userDetails.username)
       .set('password', '' + this.adminDetails.userDetails.password)
-      .set('name', '' + this.username);
+      .set('user_username', '' + username);
     this.httpClient.post(`${server_addr}/admin/usr_activate`,
       userUnLock.toString(),
       {
@@ -138,7 +138,7 @@ export class AdminPanelComponent implements OnInit {
     var providerUnLock = new HttpParams()
       .set('username', '' + this.adminDetails.userDetails.username)
       .set('password', '' + this.adminDetails.userDetails.password)
-      .set('name', '' + username);
+      .set('provider_username', '' + username);
     this.httpClient.post(`${server_addr}/admin/pr_activate`,
       providerUnLock.toString(),
       {
