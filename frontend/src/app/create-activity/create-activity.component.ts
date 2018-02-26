@@ -156,8 +156,6 @@ export class CreateActivityComponent implements OnInit {
 
 
   createEvent() {
-    console.log(this.date);
-    return;
     console.log("AAAAA");
     var eventDetails: Event;
     var localDate = new Date();
