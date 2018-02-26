@@ -47,8 +47,10 @@ export class EventsPresentComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.bringUserEvent();
+    this.userDetails = this.userDetailsService.getDetails();
+    this.userFirstName = this.userDetails.firstName;
+    this.userLastName = this.userDetails.lastName;
   }
 
   userDetails: userDetailsObj;
