@@ -116,7 +116,8 @@ export class EditActivityComponent implements OnInit {
         is_paid: null,
         img: null,
         categories: this.categories,
-        providerInfo:null
+        providerInfo:null,
+        ev_base64:null
       };
 
       this.eventService.updateEvent(eventDetails)
