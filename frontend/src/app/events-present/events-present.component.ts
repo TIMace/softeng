@@ -30,14 +30,14 @@ export class EventsPresentComponent implements OnInit {
 
   bringUserEvent() {
     if (this.userDetailsService.getUserType() === 'Parent') {
-      this.eventService.getUserEvents().subscribe(
+      this.eventService.getActiveUserEvents().subscribe(
         data => {
           this.arrayOfEvents = data;
         }
       )
     }
     else if (this.userDetailsService.getUserType() === 'Provider') {
-      this.eventService.getProviderEvents().subscribe(
+      this.eventService.getActiveProviderEvents().subscribe(
         data => {
           this.arrayOfEvents = data;
         }
@@ -46,6 +46,7 @@ export class EventsPresentComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.bringUserEvent();
   }
 
