@@ -1,7 +1,6 @@
 <div class="container-fluid">
   <div class="title" style="text-align:center">Admin Panel</div>
   <br>
-  <br>
 </div>
 
 <div class="container">
@@ -17,8 +16,8 @@
       <div class="col-3"></div>
 
       <div class="col-12 ">
-        <input type="radio" name="type" value="parent" id="a" checked (click)="temp = 'user'"> Γονέας &nbsp;&nbsp;
-        <input type="radio" name="type" value="provider" id="b" (click)="temp = 'provider'"> Πάροχος
+        <input type="radio" name="type" value="parent" id="a" checked (click)="radio = 'user'"> Γονέας &nbsp;&nbsp;
+        <input type="radio" name="type" value="provider" id="b" (click)="radio = 'provider'"> Πάροχος
       </div>
     </div>
   </form>
@@ -39,7 +38,7 @@
           <button (click)="lock()" type="button" class="btn">Κλείδωμα Χρήστη</button>
         </div>
         <div class="col-md-3 col-lg-2">
-          <button (click)="lock()" class="btn">Ξεκλείδωμα Χρήστη</button>
+          <button (click)="unlock()" class="btn">Ξεκλείδωμα Χρήστη</button>
         </div>
       </div>
     </div>
@@ -93,3 +92,4 @@
         <button (click)="payEvent()" type="button" class="btn">Πληρωμή Δραστηριότητας</button>
       </div>
     </div>
+    <br>
