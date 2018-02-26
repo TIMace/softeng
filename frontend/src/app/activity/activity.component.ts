@@ -34,6 +34,9 @@ export class ActivityComponent implements OnInit {
     public userDetailsService: UserDetailsService
   ) { }
 
+  show: boolean = false;
+  buttonName: any = 'Show';
+
   name: string;
   img: string;
   lat: number;
@@ -44,6 +47,7 @@ export class ActivityComponent implements OnInit {
   categories: Array<string>;
   age_min: number;
   age_max: number;
+  provider_id: number;
   provider: eventProviderInfo;
   provider_fname: string;
   provider_lname: string;
@@ -56,16 +60,19 @@ export class ActivityComponent implements OnInit {
   userDetails: userDetailsObj;
   userFirstName: String;
   userLastName: String;
+  userId: number;
 
   ngOnInit() {
     this.getEvent();
     this.userDetails = this.userDetailsService.getDetails();
     this.userFirstName = this.userDetails.firstName;
     this.userLastName = this.userDetails.lastName;
+    this.userId = parseInt(this.userDetails.id);
+    console.log(this.userId);
   }
 
   getEvent(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+    var id = +this.route.snapshot.paramMap.get('id');
     this.eventService.getEventById(id)
       .subscribe((ev: Event) => {
         this.ev = ev;
@@ -80,6 +87,7 @@ export class ActivityComponent implements OnInit {
         this.categories = this.ev.categories;
         this.age_min = this.ev.age_min;
         this.age_max = this.ev.age_max;
+        this.provider_id = this.ev.provider_id;
         this.provider = this.ev.providerInfo;
         this.provider_fname = this.provider.fname;
         this.provider_lname = this.provider.lname;
@@ -102,67 +110,85 @@ export class ActivityComponent implements OnInit {
         if (data) {
           alert("Η αγορά εισιτηρίου ήταν επιτυχής!");
           this.eventService.parentGetEventTickets(id)
-          .subscribe(tickets => {
-            console.log(tickets);
-            this.eventService.getEventById(id)
-              .subscribe((eventdata : Event) => {
-                console.log(eventdata);
-                //pdf creation
-                var onoma = this.userFirstName.toString();
-                var epitheto = this.userLastName.toString();
-                var docDefinition = {
-                  content: [
-                    { text: 'Λεωνίδα ένα Άλογο', style: 'header' },
-                    { text: ' ' },
-                    { text: ' ' },
-                    { text: 'Εισιτήριο για την δραστηριότητα', style: ['header', 'centerStyle'] },
-                    { text: ' ' },
-                    { text: eventdata.name, style: ['header', 'centerStyle'] },
-                    { text: ' ' },
-                    { text: 'Στοιχεία Εισιτηρίου', style: 'leftStyleHeader' },
-                    { text: ' ' },
-                    { text: 'Κωδικός εισιτηρίου: '.concat(tickets.toString()), style: 'leftStyle' },
-                    { text: 'Τοποθεσία: '.concat(eventdata.location), style: 'leftStyle' },
-                    { text: 'Ημερομηνία: '.concat(eventdata.date), style: 'leftStyle' },
-                    { text: 'Πάροχος: '.concat(eventdata.providerInfo.cname
-                                              + ' ' + eventdata.providerInfo.email
-                                              + ' ' + eventdata.providerInfo.phoneNum), style: 'leftStyle' },
-                    { text: ' '.concat(''), style: 'leftStyle' },
-                    { text: 'Στοιχεία Κατόχου', style: 'leftStyleHeader' },
-                    { text: ' '.concat(''), style: 'leftStyle' },
-                    { text: 'Όνομα: '.concat(onoma), style: 'leftStyle' },
-                    { text: 'Επώνυμο: '.concat(epitheto), style: 'leftStyle' }
-                  ],
-                  styles: {
-                    header: {
-                      fontSize: 22,
-                      bold: true
-                    },
-                    centerStyle: {
-                      italic: true,
-                      alignment: 'center'
-                    },
-                    leftStyleHeader: {
-                      fontSize: 18,
-                      italic: true,
-                      alignment: 'left',
-                      bold: true
-                    },
-                    leftStyle: {
-                      fontSize: 14,
-                      italic: true,
-                      alignment: 'left'
+            .subscribe(tickets => {
+              console.log(tickets);
+              this.eventService.getEventById(id)
+                .subscribe((eventdata: Event) => {
+                  console.log(eventdata);
+                  //pdf creation
+                  var onoma = this.userFirstName.toString();
+                  var epitheto = this.userLastName.toString();
+                  var docDefinition = {
+                    content: [
+                      { text: 'Λεωνίδα ένα Άλογο', style: 'header' },
+                      { text: ' ' },
+                      { text: ' ' },
+                      { text: 'Εισιτήριο για την δραστηριότητα', style: ['header', 'centerStyle'] },
+                      { text: ' ' },
+                      { text: eventdata.name, style: ['header', 'centerStyle'] },
+                      { text: ' ' },
+                      { text: 'Στοιχεία Εισιτηρίου', style: 'leftStyleHeader' },
+                      { text: ' ' },
+                      { text: 'Κωδικός εισιτηρίου: '.concat(tickets.toString()), style: 'leftStyle' },
+                      { text: 'Τοποθεσία: '.concat(eventdata.location), style: 'leftStyle' },
+                      { text: 'Ημερομηνία: '.concat(eventdata.date), style: 'leftStyle' },
+                      {
+                        text: 'Πάροχος: '.concat(eventdata.providerInfo.cname
+                          + ' ' + eventdata.providerInfo.email
+                          + ' ' + eventdata.providerInfo.phoneNum), style: 'leftStyle'
+                      },
+                      { text: ' '.concat(''), style: 'leftStyle' },
+                      { text: 'Στοιχεία Κατόχου', style: 'leftStyleHeader' },
+                      { text: ' '.concat(''), style: 'leftStyle' },
+                      { text: 'Όνομα: '.concat(onoma), style: 'leftStyle' },
+                      { text: 'Επώνυμο: '.concat(epitheto), style: 'leftStyle' }
+                    ],
+                    styles: {
+                      header: {
+                        fontSize: 22,
+                        bold: true
+                      },
+                      centerStyle: {
+                        italic: true,
+                        alignment: 'center'
+                      },
+                      leftStyleHeader: {
+                        fontSize: 18,
+                        italic: true,
+                        alignment: 'left',
+                        bold: true
+                      },
+                      leftStyle: {
+                        fontSize: 14,
+                        italic: true,
+                        alignment: 'left'
+                      }
                     }
-                  }
-                };
-                pdfMake.vfs = pdfFonts.pdfMake.vfs;
-                pdfMake.createPdf(docDefinition).download('ticket.pdf');
-              });
-          });
+                  };
+                  pdfMake.vfs = pdfFonts.pdfMake.vfs;
+                  pdfMake.createPdf(docDefinition).download('ticket.pdf');
+                });
+            });
         }
         else {
           alert("Η συναλλαγή ήταν ανεπιτυχής!")
         }
+      });
+  }
+
+  toggle() {
+    this.show = !this.show;
+
+    // CHANGE THE NAME OF THE BUTTON.
+    if (this.show)
+      this.buttonName = "Hide";
+    else
+      this.buttonName = "Show";
+
+    var id = +this.route.snapshot.paramMap.get('id');
+    this.eventService.providerGetEventTickets(id)
+      .subscribe(listOftickets => {
+        console.log(listOftickets);
       });
   }
 }
