@@ -134,9 +134,16 @@ export class EventService {
       var dict = {}
       for(var i = 0;i<response.length;i++){
         var temp = res[i];
-        if (!(temp.id in dict)){
+        // console.log("Checking if the next object exists in dict")
+        // console.log(temp)
+        if (!((""+temp.event_id) in dict)){
+          // console.log("It does")
           res2.push(temp)
-          dict[temp.id] = true
+          dict[""+temp.event_id] = true
+        }
+        else{
+          // console.log("It exists")
+          
         }
       }
       return res2;
