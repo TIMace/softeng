@@ -1,25 +1,22 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-// import { Location } from '@angular/common';
-import { Category } from '../category';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
-
+import { Location } from '@angular/common';
 import { Event, eventProviderInfo } from '../event';
+
+// Services
+import { CategoriesService } from '../categories.service';
+import { EventService } from '../event.service';
+import { UserDetailsService } from '../user-details.service';
+import { userDetailsObj } from '../user-details.service'
 
 //pdfMake
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
-// Services
-import { CategoriesService } from '../categories.service';
-import { UserDetailsService } from '../user-details.service';
-import { userDetailsObj } from '../user-details.service';   
-import { EventService } from '../event.service';
-
-
 // MAP
 import { MapsAPILoader } from '@agm/core';
 import { } from 'googlemaps';
+
 
 @Component({
   selector: 'app-activity',
@@ -27,41 +24,63 @@ import { } from 'googlemaps';
   styleUrls: ['./activity.component.css']
 })
 export class ActivityComponent implements OnInit {
-  @Input() category: Category;
+  @Input() ev: Event;
 
   constructor(
-    private categoriesService: CategoriesService,
+    private eventService: EventService,
     private route: ActivatedRoute,
     private location: Location,
     private mapsAPILoader: MapsAPILoader,
-    public userDetailsService: UserDetailsService,
-    private eventService: EventService,
-    // private eventDetails: Event
+    public userDetailsService: UserDetailsService
   ) { }
 
-  userDetails = this.userDetailsService.getDetails();
-  eventDetails :any = new Event() ;
-  zaxos : string;
-  
-  ngOnInit() {
-    this.getCategory();
-   // Sto enentId[2] pairnoume to id tou event apo to path url
-    var path = this.location.path();
-    var eventId = path.split("/", 3);
+  name: String;
+  img: String;
+  lat: number;
+  lng: number;
+  price: number;
+  loc: String;
+  date: String;
+  categories: Array<string>;
+  age_min: number;
+  age_max: number;
+  provider: eventProviderInfo;
+  provider_fname: String;
+  provider_lname: String;
+  provider_email: String;
+  provider_phoneNum: String;
+  available_tickets: number;
+  description: String;
 
-    this.eventService.getEventById(eventId[2]).subscribe(
-      data => {
-        console.log(data); 
-        this.eventDetails = data;
-        this.zaxos = this.eventDetails.categories;
-        console.log(this.zaxos);
-      }
-    )
+  ngOnInit() {
+    this.getEvent();
   }
-  getCategory(): void {
+
+  getEvent(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.categoriesService.getCategory(id)
-      .subscribe(category => this.category = category);
+    this.eventService.getEventById(id)
+      .subscribe((ev: Event) => {
+        this.ev = ev;
+        console.log(this.ev);
+        this.name = this.ev.name;
+        this.img = this.ev.img;
+        this.lat = this.ev.lat;
+        this.lng = this.ev.lng;
+        this.price = this.ev.price;
+        this.loc = this.ev.location;
+        this.date = this.ev.date;
+        this.categories = this.ev.categories;
+        this.age_min = this.ev.age_min;
+        this.age_max = this.ev.age_max;
+        this.provider = this.ev.providerInfo;
+        this.provider_fname = this.provider.fname;
+        this.provider_lname = this.provider.lname;
+        this.provider_email = this.provider.email;
+        this.provider_phoneNum = this.provider.phoneNum;
+        this.available_tickets = this.ev.available_tickets;
+        this.description = this.ev.description;
+
+      });
   }
 
   goBack(): void {
@@ -78,6 +97,6 @@ export class ActivityComponent implements OnInit {
     //an den exei arketa lefta tote 
     //alert("Η συναλλαγή ήταν ανεπιτυχής!")
   }
-
-
 }
+
+
