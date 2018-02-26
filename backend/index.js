@@ -31,7 +31,7 @@ const express = require('express')
 
     , options = {
         key: fs.readFileSync( './ssl/selfsigned.key' ),
-        cert: fs.readFileSync( './ssl/selfsigned.cert' ),
+        cert: fs.readFileSync( './ssl/selfsigned.crt' ),
         requestCert: false,
         rejectUnauthorized: false
     }
