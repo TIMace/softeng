@@ -155,6 +155,13 @@ export class EventService {
     return subject.asObservable();
   }
 
+  filterActiveEvents(eventArray){
+    var res = []
+    for(var i = 0; i< eventArray.length;i++){
+
+    }
+  }
+
   parentGetEventTickets(id){
     var subject = new Subject();
     var uname = this.userDetailsService.userDetails.username;
@@ -173,6 +180,8 @@ export class EventService {
         subject.next(res)
       }
     )
+
+    return subject;
   }
 
   buyEvent(id){
