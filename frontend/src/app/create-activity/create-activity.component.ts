@@ -263,6 +263,7 @@ export class CreateActivityComponent implements OnInit {
       );
     this.category = EVENTS[0];
     this.write();
+    this.time="13:45:00";
     // this.getEvent();
   };
 
@@ -287,36 +288,39 @@ export class CreateActivityComponent implements OnInit {
 
   uploadFileToActivity() {
 
-    this.postFile(this.fileToUpload).subscribe(data => {
-      console.log("Success");
-    }, error => {
-      console.log(error);
-    });
+    // this.postFile(this.fileToUpload).subscribe(data => {
+    //   console.log("Success");
+    // }, error => {
+    //   console.log(error);
+    // });
+    console.log("Must send to Orestis");
   }
 
-  postFile(fileToUpload: File): Observable<boolean> {
-    const endpoint = 'http://localhost:8989/upload';
-    const formData: FormData = new FormData();
-    formData.append('fileKey', fileToUpload, fileToUpload.name);
-    return this.httpClient
-      .post(endpoint, formData, {
-        headers: new HttpHeaders()
-        // .set('Content-Type', 'application/json')
-      })
-      .map(() => { return true; })
-    // .catch((e) => this.handleError(e));
-  }
+  // postFile(fileToUpload: File): Observable<boolean> {
+  //   const endpoint = 'http://localhost:8989/upload';
+  //   const formData: FormData = new FormData();
+  //   formData.append('fileKey', fileToUpload, fileToUpload.name);
+  //   return this.httpClient
+  //     .post(endpoint, formData, {
+  //       headers: new HttpHeaders()
+  //       // .set('Content-Type', 'application/json')
+  //     })
+  //     .map(() => { return true; })
+  //   // .catch((e) => this.handleError(e));
+  // }
   url: String;
   readUrl(event: any) {
     if (event.target.files && event.target.files[0]) {
       var reader = new FileReader();
 
+      this.fileToUpload = event.target.files.item(0);
+      console.log( event.target.files.item(0));
+      reader.readAsDataURL(event.target.files[0]);
+
       reader.onload = (event: any) => {
         this.url = event.target.result;
+        let v = reader.result.split(',')[1];
       }
-
-      this.fileToUpload = event.target.files.item(0);
-      reader.readAsDataURL(event.target.files[0]);
     }
   }
 }

@@ -4,13 +4,11 @@
     <div class="col text-center">
       <input class="form-control form-control-lg" type="text" placeholder="Τίτλος Δραστηριότητας" [(ngModel)]="title">
     </div>
-
     <span class="col-0 col-md-3"></span>
-
   </div>
 
-  
-  <div class="row">
+
+  <div class="row" >
     <div class="col-12 col-md-3 text-center">
       <!-- <img class="image" src="{{category.img}}">
       <button (click)="onSubmit()" type="button" class="btn buy">Προσθήκη Εικόνας</button> -->
@@ -20,7 +18,7 @@
       <button (click)="uploadFileToActivity()">Upload File</button>
     </div>
 
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-7">
       <div class="form-group">
         <div class="input-group">
           <button matTooltip="Press me to open map!" (click)="openMap()" id="GPS_button" type="button">
@@ -37,6 +35,11 @@
           <input matInput [matDatepicker]="picker" placeholder="Ημερομηνία" [(ngModel)]="date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+        </div>
+        <div class="form-group row">
+          <div class="col-10">
+            <input class="form-control" type="time" value="13:45:00" id="example-time-input" [(ngModel)]="time">
+          </div>
         </div>
         <div class="details">
           <u>Κατηγορίες:</u>
@@ -71,7 +74,7 @@
       </div>
 
     </div>
-    <div class=" col-12 col-md-3">
+    <div class=" col-12 col-md-2">
       <button (click)="createEvent()" type="button" class="btn">
         <div>
           <i class="fa fa-check"></i>
@@ -86,9 +89,3 @@
 
 
 </div>
-<div class="form-group row">
-    <label for="example-time-input" class="col-2 col-form-label">Time</label>
-    <div class="col-10">
-      <input class="form-control" type="time" value="13:45:00" id="example-time-input" [(ngModel)]="time">
-    </div>
-  </div>

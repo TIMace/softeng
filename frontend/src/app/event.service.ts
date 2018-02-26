@@ -155,6 +155,35 @@ export class EventService {
     return subject.asObservable();
   }
 
+  filterActiveEvents(eventArray){
+    var res = []
+    for(var i = 0; i< eventArray.length;i++){
+
+    }
+  }
+
+  parentGetEventTickets(id){
+    var subject = new Subject();
+    var uname = this.userDetailsService.userDetails.username;
+    var passwd = this.userDetailsService.userDetails.password;
+
+    this.httpClient.get(
+      `${server_addr}/user/event/${uname}/${passwd}/${id}`,
+    )
+    .subscribe(
+      (data:any)=>
+      {
+        var res = [];
+        for(var i=0;i<data.lenght;i++){
+          res.push(data[i].transaction_id)
+        }
+        subject.next(res)
+      }
+    )
+
+    return subject;
+  }
+
   buyEvent(id){
     var subject = new Subject();
     var userDetails = this.userDetailsService.getDetails()
@@ -357,6 +386,7 @@ export class EventService {
       res.name = server_event.event_name
       res.price = +server_event.event_price
       res.provider_id = +server_event.event_provider_id
+      res.img = "https://i.ytimg.com/vi/A4wP_VUPOAo/maxresdefault.jpg"
       final_res.push(res);
     }
     // console.log("Final Res:")
@@ -382,6 +412,7 @@ export class EventService {
       res.name = server_event.event_name
       res.price = +server_event.event_price
       res.provider_id = +server_event.event_provider_id
+      res.img = "https://i.ytimg.com/vi/A4wP_VUPOAo/maxresdefault.jpg"
       // final_res.push(res);
     // }
     // console.log("Final Res:")
