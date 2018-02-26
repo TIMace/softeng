@@ -374,7 +374,7 @@ export class EventService {
       .set("ev_min_age",""+eventObj.age_min)
       .set("ev_max_age",""+eventObj.age_max)
       .set("ev_mdata",""+eventObj.location)
-      .set("ev_base64",""+eventObj.ev_base64)
+      // .set("ev_base64",""+eventObj.ev_base64)
 
       // console.log("This is the length of the categories array!!!!")
       // console.log(eventObj.categories.length)
@@ -384,7 +384,8 @@ export class EventService {
         // console.log(`${this.categoriesService.categoryIdByName(eventObj.categories[i])}`)
         creationDetails = creationDetails.set(`ev_cats[${i+1}]`,`${this.categoriesService.categoryIdByName(eventObj.categories[i])}`)
       }
-      // console.log(creationDetails)
+      creationDetails = creationDetails.set("ev_base64",""+eventObj.ev_base64);
+
       this.httpClient.post(
         `${server_addr}/event`,
         creationDetails.toString(),
@@ -396,6 +397,9 @@ export class EventService {
       )
       .subscribe((eventAnswer)=>
         {
+          console.log("REQUEST ANSWER")
+          console.log(eventAnswer)
+    
           if (eventAnswer==null || eventAnswer.hasOwnProperty("error")){
           subject.next(false)
           }
