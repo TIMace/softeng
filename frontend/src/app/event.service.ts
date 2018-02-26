@@ -108,6 +108,14 @@ export class EventService {
 
   // NavBar Simple / Extended
 
+  getActiveUserEvents(){
+    return this.getUserEvents();
+  }
+
+  getOldUserEvents(){
+    return this.getUserEvents();
+  }
+
   getUserEvents(){
     var subject = new Subject<any>();
     var userDetails = this.userDetailsService.getDetails();
@@ -120,7 +128,25 @@ export class EventService {
         var temp = response[i].event;
         res.push(temp)
       }
-      return Array.from(new Set(res));
+      // console.log("ALL THE USER EVENTS")
+      // console.log(res)
+      var res2 = []
+      var dict = {}
+      for(var i = 0;i<response.length;i++){
+        var temp = res[i];
+        // console.log("Checking if the next object exists in dict")
+        // console.log(temp)
+        if (!((""+temp.event_id) in dict)){
+          // console.log("It does")
+          res2.push(temp)
+          dict[""+temp.event_id] = true
+        }
+        else{
+          // console.log("It exists")
+          
+        }
+      }
+      return res2;
     })
     .map(response => this.server2local_event(response))
     .subscribe((data:Event[]) => {subject.next(data);
@@ -217,8 +243,8 @@ export class EventService {
       subject.next(false)
     }
     else{
-      console.log("This is the event creation object")
-      console.log(eventObj)
+      // console.log("This is the event creation object")
+      // console.log(eventObj)
       var creationDetails = new HttpParams()
       .set("username",""+this.userDetailsService.userDetails.username)
       .set("password",""+this.userDetailsService.userDetails.password)
@@ -232,10 +258,16 @@ export class EventService {
       .set("ev_min_age",""+eventObj.age_min)
       .set("ev_max_age",""+eventObj.age_max)
       .set("ev_mdata",""+eventObj.location)
-      
+
+      // console.log("This is the length of the categories array!!!!")
+      // console.log(eventObj.categories.length)
       for(var i = 0;i<eventObj.categories.length;i++){
-        creationDetails.set("ev_cats[]",""+this.categoriesService.categoryIdByName(eventObj.categories[i]))
+        // console.log( `Loopa ${i}, id ${this.categoriesService.categoryIdByName(eventObj.categories[i])}`)
+        // console.log(`ev_cats[${i+1}]`)
+        // console.log(`${this.categoriesService.categoryIdByName(eventObj.categories[i])}`)
+        creationDetails = creationDetails.set(`ev_cats[${i+1}]`,`${this.categoriesService.categoryIdByName(eventObj.categories[i])}`)
       }
+      // console.log(creationDetails)
       this.httpClient.post(
         `${server_addr}/event`,
         creationDetails.toString(),
@@ -267,6 +299,14 @@ export class EventService {
     }
     // subject.next(true)
     return subject.asObservable()
+  }
+
+  getActiveProviderEvents(){
+    return this.getProviderEvents()
+  }
+
+  getOldProviderEvents(){
+    return this.getProviderEvents()
   }
 
   getProviderEvents(){

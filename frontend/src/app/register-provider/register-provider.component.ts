@@ -28,6 +28,9 @@ export class RegisterProviderComponent implements OnInit {
     )
   }
 
+  pass: String;
+  conf_pass: String;
+  
   ngOnInit() {
     this.formRegisterProvider = this.formBuilder.group({
       name: this.name,

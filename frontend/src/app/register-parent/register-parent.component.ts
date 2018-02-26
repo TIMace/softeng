@@ -33,6 +33,9 @@ export class RegisterParentComponent implements OnInit {
       );
   }
 
+  pass: String;
+  conf_pass: String;
+  
   ngOnInit() {
     this.formRegisterParent = this.formBuilder.group({
       parent_name: this.parent_name,

@@ -16,14 +16,15 @@ export class AdminLoginComponent implements OnInit {
 
   constructor(private httpClient:HttpClient, private router: Router, private userDetails:UserDetailsService) { }
 
-  username:string;
-  password:string;
+  username:String="";
+  password:String="";
 
   adminLogin() {
+    console.log(`${server_addr}/admin/${this.username}/${this.password}`);
     this.httpClient.get(`${server_addr}/admin/${this.username}/${this.password}`)
     .subscribe(
       (data) => {
-        if(data) {
+        if(data===true) {
           this.userDetails.userType = "Admin";
           this.userDetails.userDetails.password = this.password;
           this.userDetails.userDetails.username = this.username;

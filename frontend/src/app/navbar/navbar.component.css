@@ -2,6 +2,7 @@
 
 .navbar {
     padding: .0rem .0rem;
+    z-index: 2000;
 }
 
 .nav-link {
@@ -18,6 +19,7 @@ a {
 input {
     padding: .0rem .3rem;
     border: 0px solid #ced4da;
+    background: white;
 }
 
 #GPS_button {

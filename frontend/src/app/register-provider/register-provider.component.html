@@ -11,7 +11,7 @@
                 <form class="form-horizontal" [formGroup]="formRegisterProvider" (ngSubmit)="doRegisterProvider()">
                     <div class="row">
                         <div class="col-md-3 field-label-responsive">
-                            <label for="name">Όνομα:</label>
+                            <label class="control-label required" for="name">Όνομα:</label>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -34,7 +34,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 field-label-responsive">
-                            <label for="lastname">Επίθετο:</label>
+                            <label class="control-label required" for="lastname">Επίθετο:</label>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -57,7 +57,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 field-label-responsive">
-                            <label for="location">Διεύθυνση Κατοικίας:</label>
+                            <label class="control-label required" for="location">Διεύθυνση Κατοικίας:</label>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -70,7 +70,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 field-label-responsive">
-                            <label for="phone">Τηλέφωνο Επικοινωνίας:</label>
+                            <label class="control-label required" for="phone">Τηλέφωνο Επικοινωνίας:</label>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -83,7 +83,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 field-label-responsive">
-                            <label for="company">Επωνυμία Επιχείρησης:</label>
+                            <label class="control-label required" for="company">Επωνυμία Επιχείρησης:</label>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -95,7 +95,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 field-label-responsive">
-                            <label for="afm">ΑΦΜ:</label>
+                            <label class="control-label required" for="afm">ΑΦΜ:</label>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -108,7 +108,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 field-label-responsive">
-                            <label for="account">Αριθμός Λογαριασμού:</label>
+                            <label class="control-label required" for="account">Αριθμός Λογαριασμού:</label>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -121,7 +121,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 field-label-responsive">
-                            <label for="username">Username:</label>
+                            <label class="control-label required" for="username">Username:</label>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -145,7 +145,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 field-label-responsive">
-                            <label for="email">E-Mail:</label>
+                            <label class="control-label required" for="email">E-Mail:</label>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -169,14 +169,14 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 field-label-responsive">
-                            <label for="password">Κωδικός:</label>
+                            <label class="control-label required" for="password">Κωδικός:</label>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group has-danger">
                                 <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                                     <div class="input-group-addon" style="width: 2.6rem"><i class="fa fa-key"></i></div>
                                     <input type="password" id="password" class="form-control" formControlName="password"
-                                            placeholder="Password" required>
+                                            placeholder="Password" [(ngModel)]="pass" required>
                                 </div>
                             </div>
                         </div>
@@ -190,7 +190,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 field-label-responsive">
-                            <label for="password">Επιβεβαίωση Κωδικού:</label>
+                            <label class="control-label required" for="confirm_password">Επιβεβαίωση Κωδικού:</label>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -199,8 +199,18 @@
                                         <i class="fa fa-repeat"></i>
                                     </div>
                                     <input type="password" id="confirm_password" class="form-control" formControlName="confirm_password" 
-                                            placeholder="Password" required>
+                                            placeholder="Password" [(ngModel)]="conf_pass" required>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-control-feedback">
+                                <span class="text-danger align-middle">
+                                    <!-- <i class="fa fa-close"> Example Error Message</i> -->
+                                    <div *ngIf="(formRegisterProvider.get('confirm_password').touched)&&(pass !== conf_pass)">
+                                        Οι κωδικοί δεν ταιριάζουν!
+                                    </div> 
+                                </span>
                             </div>
                         </div>
                     </div>
