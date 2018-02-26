@@ -125,7 +125,7 @@ export class SearchComponent implements OnInit {
 
   public latitude: number;
   public longitude: number;
-  // public zoom = 12;
+  public zoom = 12;
 
   @ViewChild(AgmMap) private map: any;
   
