@@ -70,7 +70,9 @@ export class AdminPanelComponent implements OnInit {
     )
       .subscribe(
         (data: any) => {
-          alert("User Locked Succesfully");
+          if (data != null) {
+            alert("User Locked Succesfully");
+          }
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -96,10 +98,12 @@ export class AdminPanelComponent implements OnInit {
     )
       .subscribe(
         (data: any) => {
-          alert("Provider Locked Succesfully");
-          console.log(providerLock)
-          console.log('edw einai to data');
-          console.log(data)
+          if (data != null) {
+            alert("Provider Locked Succesfully");
+            // console.log(providerLock)
+            // console.log('edw einai to data');
+            // console.log(data)
+          }
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -125,7 +129,9 @@ export class AdminPanelComponent implements OnInit {
     )
       .subscribe(
         (data: any) => {
-          alert("User Unlocked Succesfully");
+          if (data != null) {
+            alert("User Unlocked Succesfully");
+          }
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -151,7 +157,9 @@ export class AdminPanelComponent implements OnInit {
     )
       .subscribe(
         (data: any) => {
-          alert("Provider Unlocked Succesfully");
+          if (data != null) {
+            alert("Provider Unlocked Succesfully");
+          }
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
