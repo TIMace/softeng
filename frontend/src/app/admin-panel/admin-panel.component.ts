@@ -5,9 +5,9 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { UserDetailsService } from '../user-details.service'
 import { server_addr } from '../server_addr'
-
+import { UserDetailsService, userDetailsObj } from '../user-details.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-panel',
@@ -20,7 +20,10 @@ export class AdminPanelComponent implements OnInit {
   providerUsername: String = '';
   radio: String = 'parent';
 
-  constructor(private httpClient: HttpClient, private adminDetails: UserDetailsService) { }
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router, 
+    private adminDetails:UserDetailsService) { }
   onNameKeyUp(event: any) {
     // console.log(event.target.value);
     this.username = event.target.value;
@@ -198,6 +201,13 @@ export class AdminPanelComponent implements OnInit {
         }
       )
   }
+
+  adminLogout(){
+    this.adminDetails.userType = "Anonymous";
+    this.adminDetails.userDetails.username = ""
+    this.adminDetails.userDetails.password = "";
+    this.router.navigate([""]);
+    }
 
   ngOnInit() {
   }
