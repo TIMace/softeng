@@ -226,6 +226,8 @@ export class EventService {
     this.getUserEvents()
       .subscribe(
         data => {
+          console.log("Woohoo got active user data")
+          console.log(data)
           subject.next(this.filterActiveEvents(data))
         }
       )
@@ -279,6 +281,8 @@ export class EventService {
       })
       .map(response => this.server2local_event(response))
       .subscribe((data: Event[]) => {
+        // console.log("Woohoo got user dataaa")
+        // console.log(data)
         subject.next(data);
         // console.log("here come the events of a user");console.log(data)
       })
@@ -355,6 +359,7 @@ export class EventService {
             };
             res.push(temp)
           }
+          subject.next(res)
         }
       )
 
@@ -584,7 +589,7 @@ export class EventService {
       res.name = server_event.event_name
       res.price = +server_event.event_price
       res.provider_id = +server_event.event_provider_id
-      res.img = "https://i.ytimg.com/vi/A4wP_VUPOAo/maxresdefault.jpg"
+      res.img = `/images/${res.id}.image.png`
       final_res.push(res);
     }
     // console.log("Final Res:")
@@ -610,7 +615,7 @@ export class EventService {
       res.name = server_event._source.event_name
       res.price = +server_event._source.event_price
       res.provider_id = +server_event.event_provider_id
-      res.img = "https://i.ytimg.com/vi/A4wP_VUPOAo/maxresdefault.jpg"
+      res.img = `/images/${res.id}.image.png`
       final_res.push(res);
     }
     // console.log("Final Res:")
@@ -636,12 +641,22 @@ export class EventService {
     res.name = server_event.event_name
     res.price = +server_event.event_price
     res.provider_id = +server_event.event_provider_id
-    res.img = "https://i.ytimg.com/vi/A4wP_VUPOAo/maxresdefault.jpg"
+    res.img = `/images/${res.id}.image.png`
     // final_res.push(res);
     // }
     // console.log("Final Res:")
     // console.log(final_res)
     return res;
+  }
+
+  humanReadableDatetime(externalDate){
+      var time = new Date(Date.parse(externalDate));
+      var year = time.getFullYear();
+      var month = time.getMonth() + 1;
+      var date1 = time.getDate();
+      var hour = time.getHours();
+      var minutes = time.getMinutes();
+      return (date1 + "-" + month + "-" + year + " " + hour + ":" + minutes);
   }
 
   navbar_extended = 0;
