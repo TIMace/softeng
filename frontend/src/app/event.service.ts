@@ -64,6 +64,7 @@ export class EventService {
         // console.log("DATA: ", data);
         temp = this.filterByDistance(this.distance, temp);
         temp = this.filterByPrice(+this.price, temp);
+        temp = this.filterActiveEvents(temp);
         // console.log("TEMP: ", temp);
         // console.log("AGE: ", this.age);
         // console.log("DATA: ", data);
