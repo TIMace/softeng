@@ -27,7 +27,7 @@ export class ActivityComponent implements OnInit {
   @Input() ev: Event;
 
   constructor(
-    public eventService: EventService,
+    public eventService: EventService, 
     private route: ActivatedRoute,
     private location: Location,
     private mapsAPILoader: MapsAPILoader,
@@ -109,6 +109,7 @@ export class ActivityComponent implements OnInit {
       .subscribe(data => {
         if (data) {
           alert("Η αγορά εισιτηρίου ήταν επιτυχής!");
+          location.reload();
           this.eventService.parentGetEventTickets(id)
             .subscribe(tickets => {
               console.log(tickets);
