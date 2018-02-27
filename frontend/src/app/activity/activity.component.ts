@@ -177,6 +177,7 @@ export class ActivityComponent implements OnInit {
   }
 
   listOftickets: any;
+  i = 1;
 
   toggle() {
     this.show = !this.show;
