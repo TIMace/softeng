@@ -27,7 +27,7 @@ export class ActivityComponent implements OnInit {
   @Input() ev: Event;
 
   constructor(
-    public eventService: EventService,
+    public eventService: EventService, 
     private route: ActivatedRoute,
     private location: Location,
     private mapsAPILoader: MapsAPILoader,
@@ -109,6 +109,7 @@ export class ActivityComponent implements OnInit {
       .subscribe(data => {
         if (data) {
           alert("Η αγορά εισιτηρίου ήταν επιτυχής!");
+          location.reload();
           this.eventService.parentGetEventTickets(id)
             .subscribe(tickets => {
               console.log(tickets);
@@ -131,7 +132,7 @@ export class ActivityComponent implements OnInit {
                       { text: ' ' },
                       { text: 'Κωδικός εισιτηρίου: '.concat(tickets.toString()), style: 'leftStyle' },
                       { text: 'Τοποθεσία: '.concat(eventdata.location), style: 'leftStyle' },
-                      { text: 'Ημερομηνία: '.concat(eventdata.date), style: 'leftStyle' },
+                      { text: 'Ημερομηνία: '.concat(this.eventService.humanReadableDatetime(eventdata.date)), style: 'leftStyle' },
                       {
                         text: 'Πάροχος: '.concat(eventdata.providerInfo.cname
                           + ' ' + eventdata.providerInfo.email
