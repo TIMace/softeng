@@ -192,12 +192,14 @@ export class AdminPanelComponent implements OnInit {
         (data: any) => {
           // console.log("AMOUNTTTT")
           // console.log(this.eventId)
-          // console.log(data);
-          if (data == null) {
-            alert("Event is already paid")
+          console.log(data);
+          if (data === null) {
+            alert("Event ID doesn't exist or Event is already Paid")
           }
-          else if (Number.isInteger(data)) {
-            alert("Event Paid Successfully");
+          else {
+            //console.log(data)
+            alert(`Successfully Paid ${data.amount_paid} \n
+                   Earned ${data.amount_earned}`);
           }
         },
         (err: HttpErrorResponse) => {
