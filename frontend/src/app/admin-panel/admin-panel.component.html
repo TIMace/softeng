@@ -80,7 +80,7 @@
       <label for="ID" class="col-form-label col-12 ">ID δραστηριότητας προς πληρωμή</label>
       <div class="col-3"></div>
       <div class="col-6 form-group">
-        <input type="text" class="form-control form-control-sm" id="ID" [(ngModel)]="eventId">
+        <input type="text" class="form-control form-control-sm" id="ID" [(ngModel)]="eventId" name="id">
       </div>
       <div class="col-3"></div>
     </div>
@@ -90,5 +90,14 @@
     <div class="col-md-6" style="text-align:center">
       <button (click)="payEvent()" type="button" class="btn" id="pay">Πληρωμή Δραστηριότητας</button>
     </div>
+
   </div>
-  <br>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-6" style="text-align:center">
+    <button (click)="adminLogout()" type="button" class="btn">Έξοδος</button>
+  </div>
+</div>
+<br>

@@ -13,6 +13,7 @@ import {server_addr} from './server_addr'
 export class UserDetailsService {
   userType : String;
   userDetails : userDetailsObj;
+  sha256 = require('sha256')
   public editMode : String; //"edit" or "create"
   constructor(
     private httpClient:HttpClient
@@ -49,6 +50,7 @@ export class UserDetailsService {
 
   login(uname:String,passwd:String,utype:String){
     console.log("UserService ", uname, passwd, utype);
+    passwd = this.sha256(passwd)
     var subject = new Subject<any>();
     if (utype === "Parent") {
         this.httpClient.get(
@@ -87,7 +89,7 @@ export class UserDetailsService {
     var subject = new Subject<any>();
     var userDetails = new HttpParams()
     .set('username', ""+detailsObj.parent_username)
-    .set('password', ""+detailsObj.parent_password)
+    .set('password', ""+this.sha256(detailsObj.parent_password))
     .set('email', ""+detailsObj.parent_email)
     .set('fname', ""+detailsObj.parent_name)
     .set('lname', ""+detailsObj.parent_lastname)
@@ -128,7 +130,7 @@ export class UserDetailsService {
     var subject = new Subject<any>();
     var userDetails = new HttpParams()
     .set('username', ""+detailsObj.username)
-    .set('password', ""+detailsObj.password)
+    .set('password', ""+this.sha256(detailsObj.password))
     .set('email', ""+detailsObj.email)
     .set('fname', ""+detailsObj.name)
     .set('lname', ""+detailsObj.lastname)
@@ -212,15 +214,18 @@ export class UserDetailsService {
 
   updateParentDetails(newParentDetails){
     var subject = new Subject();
-    if (newParentDetails.password!= this.userDetails.password){
+    if (this.sha256(newParentDetails.password)!= this.userDetails.password){
       return of(false)
     }
     if (newParentDetails.new_password == ""){
       newParentDetails.new_password = this.userDetails.password
     }
+    else{
+      newParentDetails.new_password = this.sha256(newParentDetails.new_password)
+    }
     var requestDetails = new HttpParams()
     .set('username', ""+this.userDetails.username)
-    .set('password', ""+newParentDetails.password)
+    .set('password', ""+this.sha256(newParentDetails.password))
     .set('new_password', ""+newParentDetails.new_password)
     .set('email', ""+newParentDetails.email)
     .set('address', ""+newParentDetails.location)
@@ -259,11 +264,14 @@ export class UserDetailsService {
 
   updateProviderDetails(newProviderDetails){
     var subject = new Subject();
-    if (newProviderDetails.password!= this.userDetails.password){
+    if (this.sha256(newProviderDetails.password)!= this.userDetails.password){
       return of(false)
     }
     if (newProviderDetails.new_password == ""){
       newProviderDetails.new_password = this.userDetails.password
+    }
+    else{
+      newProviderDetails.new_password = this.sha256(newProviderDetails.new_password)
     }
     console.log("New Data Object")
     console.log(newProviderDetails)

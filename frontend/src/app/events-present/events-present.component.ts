@@ -80,7 +80,7 @@ export class EventsPresentComponent implements OnInit {
                 { text: ' ' },
                 { text: 'Κωδικός εισιτηρίου: '.concat(tickets.toString()), style: 'leftStyle' },
                 { text: 'Τοποθεσία: '.concat(eventdata.location), style: 'leftStyle' },
-                { text: 'Ημερομηνία: '.concat(eventdata.date), style: 'leftStyle' },
+                { text: 'Ημερομηνία: '.concat(this.eventService.humanReadableDatetime(eventdata.date)), style: 'leftStyle' },
                 { text: 'Πάροχος: '.concat(eventdata.providerInfo.cname
                                           + ' ' + eventdata.providerInfo.email
                                           + ' ' + eventdata.providerInfo.phoneNum), style: 'leftStyle' },

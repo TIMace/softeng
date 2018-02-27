@@ -26,7 +26,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 field-label-responsive">
-                <label for="location">Διεύθυνση:</label>
+                <label  class="control-label required" for="location">Διεύθυνση:</label>
             </div>
             <div class="col-sm-5 col-md-4">
                 <div class="form-group">
@@ -41,7 +41,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 field-label-responsive">
-                <label for="phone">Τηλέφωνο Επικοινωνίας:</label>
+                <label class="control-label required" for="phone">Τηλέφωνο Επικοινωνίας:</label>
             </div>
             <div class="col-sm-5 col-md-4">
                 <div class="form-group">
@@ -83,7 +83,7 @@
         </div>
         <div *ngIf="userDetailsService.getUserType() === 'Provider'" class="row">
             <div class="col-md-4 field-label-responsive">
-                <label for="company">Αριθμός Λογαριασμού:</label>
+                <label  class="control-label required" for="company">Αριθμός Λογαριασμού:</label>
             </div>
             <div class="col-sm-5 col-md-4">
                 <div class="form-group">
@@ -98,7 +98,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 field-label-responsive">
-                <label for="email">E-Mail:</label>
+                <label class="control-label required" for="email">E-Mail:</label>
             </div>
             <div class="col-sm-5 col-md-4">
                 <div class="form-group">
@@ -147,7 +147,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 field-label-responsive">
-                <label for="password">Τρέχων Κωδικός:</label>
+                <label  class="control-label required" for="password">Τρέχων Κωδικός:</label>
             </div>
             <div class="col-sm-5 col-md-4">
                 <div class="form-group has-danger">
@@ -162,7 +162,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 field-label-responsive">
-                <label for="new_password">Νέος Κωδικός:</label>
+                <label class="control-label required" for="new_password">Νέος Κωδικός:</label>
             </div>
             <div class="col-sm-5 col-md-4">
                 <div class="form-group has-danger">
@@ -177,7 +177,7 @@
         </div>
         <div class="row">
             <div class="col-md-4 field-label-responsive">
-                <label for="confirm_password">Επιβεβαίωση Κωδικού:</label>
+                <label class="control-label required" for="confirm_password">Επιβεβαίωση Κωδικού:</label>
             </div>
             <div class="col-sm-5 col-md-4">
                 <div class="form-group">

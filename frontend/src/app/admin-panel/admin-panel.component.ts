@@ -5,9 +5,9 @@ import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { HttpParams, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { UserDetailsService } from '../user-details.service'
 import { server_addr } from '../server_addr'
-
+import { UserDetailsService, userDetailsObj } from '../user-details.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-panel',
@@ -20,7 +20,10 @@ export class AdminPanelComponent implements OnInit {
   providerUsername: String = '';
   radio: String = 'parent';
 
-  constructor(private httpClient: HttpClient, private adminDetails: UserDetailsService) { }
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router, 
+    private adminDetails:UserDetailsService) { }
   onNameKeyUp(event: any) {
     // console.log(event.target.value);
     this.username = event.target.value;
@@ -67,7 +70,9 @@ export class AdminPanelComponent implements OnInit {
     )
       .subscribe(
         (data: any) => {
-          alert("User Locked Succesfully");
+          if (data != null) {
+            alert("User Locked Succesfully");
+          }
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -93,10 +98,12 @@ export class AdminPanelComponent implements OnInit {
     )
       .subscribe(
         (data: any) => {
-          alert("Provider Locked Succesfully");
-          console.log(providerLock)
-          console.log('edw einai to data');
-          console.log(data)
+          if (data != null) {
+            alert("Provider Locked Succesfully");
+            // console.log(providerLock)
+            // console.log('edw einai to data');
+            // console.log(data)
+          }
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -122,7 +129,9 @@ export class AdminPanelComponent implements OnInit {
     )
       .subscribe(
         (data: any) => {
-          alert("User Unlocked Succesfully");
+          if (data != null) {
+            alert("User Unlocked Succesfully");
+          }
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -148,7 +157,9 @@ export class AdminPanelComponent implements OnInit {
     )
       .subscribe(
         (data: any) => {
-          alert("Provider Unlocked Succesfully");
+          if (data != null) {
+            alert("Provider Unlocked Succesfully");
+          }
         },
         (err: HttpErrorResponse) => {
           if (err.error instanceof Error) {
@@ -181,12 +192,14 @@ export class AdminPanelComponent implements OnInit {
         (data: any) => {
           // console.log("AMOUNTTTT")
           // console.log(this.eventId)
-          // console.log(data);
-          if (data == null) {
-            alert("Event is already paid")
+          console.log(data);
+          if (data === null) {
+            alert("Event ID doesn't exist or Event is already Paid")
           }
-          else if (Number.isInteger(data)) {
-            alert("Event Paid Successfully");
+          else {
+            //console.log(data)
+            alert(`Successfully Paid ${data.amount_paid} \n
+                   Earned ${data.amount_earned}`);
           }
         },
         (err: HttpErrorResponse) => {
@@ -198,6 +211,13 @@ export class AdminPanelComponent implements OnInit {
         }
       )
   }
+
+  adminLogout(){
+    this.adminDetails.userType = "Anonymous";
+    this.adminDetails.userDetails.username = ""
+    this.adminDetails.userDetails.password = "";
+    this.router.navigate([""]);
+    }
 
   ngOnInit() {
   }

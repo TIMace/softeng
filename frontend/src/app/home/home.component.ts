@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit {
     // console.log("HOME: ", this.selectedCategories);
     if ( this.activity !== null )
       this.eventService.freeText = this.activity;
-    this.eventService.searchEvents();
+    // this.eventService.searchEvents();
 
     this.router.navigate(['/search']);
   }
@@ -169,7 +169,8 @@ export class HomeComponent implements OnInit {
     // this.categoriesService.navbar_extended = 1;
     // this.categoriesService.selectedCategories.push(category);
     // this.router.navigate(['/search']);
-    this.selectedCategories.push(category);
+    // this.selectedCategories.push(category);
+    this.selectedCategories = this.categoriesService.onClickSelectCategory(category);
   }
 
   ngOnInit() {
