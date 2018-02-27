@@ -14,6 +14,10 @@ import { Category } from './category'
 import { CategoriesService } from './categories.service';
 import { NativeDateModule } from '@angular/material';
 import { element } from 'protractor';
+import { } from 'googlemaps';
+import { AgmMap } from '@agm/core/directives/map';
+import { MapsAPILoader } from '@agm/core';
+import { MapService } from './map.service';
 
 @Injectable()
 export class EventService {
@@ -29,7 +33,8 @@ export class EventService {
   constructor(
     private httpClient: HttpClient,
     public userDetailsService: UserDetailsService,
-    public categoriesService: CategoriesService
+    public categoriesService: CategoriesService,
+    private mapService: MapService
   ) { }
 
   searchEvents() {
@@ -52,12 +57,13 @@ export class EventService {
         // console.log("Here comes the SEARCH events of ALL");
         // console.log(this.filterByAge("1-1", data));
         this.getMeanLocation(data);
-        console.log("DATA BEFORE: ", data);
+        // console.log("DATA BEFORE: ", data);
         var temp = this.filterByAge(this.age, data);
-        console.log("TEMP: ", temp);
-        console.log("AGE: ", this.age);
-        console.log("DATA: ", data);
-        this.eventSubscriber.next(temp)
+        // console.log("TEMP: ", temp);
+        // console.log("AGE: ", this.age);
+        // console.log("DATA: ", data);
+        temp = this.filterByDistance(this.distance, temp);
+        this.eventSubscriber.next(temp);
       })
     // return of(EVENTS.find(event => event.id === id));
     // return of(EVENTS);
@@ -71,13 +77,13 @@ export class EventService {
       var filteredEvents: Event[] = [];
       eventsToFilter.forEach(element => {
         var tempIndex = age.indexOf('-');
-        console.log(tempIndex);
+        // console.log(tempIndex);
         var minAge = age.substring(0, tempIndex);
         var maxAge = age.substring(tempIndex + 1);
-        console.log("min_age: ", minAge);
-        console.log("max_age: ", maxAge);
+        // console.log("min_age: ", minAge);
+        // console.log("max_age: ", maxAge);
         if (!(element.age_min > +maxAge) || (element.age_max < +minAge)) {
-          console.log("ELEMENT ", element);
+          // console.log("ELEMENT ", element);
           filteredEvents.push(element);
         }
       });
@@ -101,24 +107,49 @@ export class EventService {
   filterByDistance(distance: number, eventsToFilter: Event[]) {
     if (distance == -1) { return eventsToFilter }
     else {
-      var filteredEvents: Event[];
-      this.setCurrentPosition();
+      var filteredEvents: Event[] = [];
+      // this.setCurrentPosition();
+      this.myLat = this.mapService.getLatitude();
+      this.myLong = this.mapService.getLongitude();
+      if ( (this.myLat === undefined ) || ( this.myLong === undefined) )
+        return eventsToFilter;
+      console.log("MY LAT, LNG: ", this.myLat, this.myLong);
       eventsToFilter.forEach(element => {
-        function DIS(x1: number, y1: number, x2: number, y2: number) {
-          return Math.sqrt((Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2)))
+        // function DIS(x1: number, y1: number, x2: number, y2: number) {
+        //   return Math.sqrt((Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2)));
+        // }
+        function getDistanceFromLatLonInKm(lat1: number,lon1: number,lat2: number,lon2: number) {
+          var R = 6371; // Radius of the earth in km
+          var dLat = deg2rad(lat2-lat1);  // deg2rad below
+          var dLon = deg2rad(lon2-lon1);
+          var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2); 
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+          var d = R * c; // Distance in km
+          console.log("DISTANCE ",a, c, d);
+          return d;
         }
-        if (DIS(this.myLat, this.myLong, element.lat, element.lng) <= distance) {
-          filteredEvents.push(element)
+        
+        function deg2rad(deg) {
+          return deg * (Math.PI/180)
+        }
+        // if (DIS(this.myLat, this.myLong, element.lat, element.lng) <= distance) {
+        //   filteredEvents.push(element)
+        // }
+        if (getDistanceFromLatLonInKm(element.lat, element.lng, this.myLat, this.myLong) <= distance) {
+          filteredEvents.push(element);
+          console.log("MPHKA: ", getDistanceFromLatLonInKm(element.lat, element.lng, this.myLat, this.myLong) );
         }
       });
       return filteredEvents
     }
   }
 
-  myLat;
-  myLong;
+  myLat: number;
+  myLong: number;
   private setCurrentPosition() {
+    console.log("SET CURRENT POS");
     if ("geolocation" in navigator) {
+      console.log("mphka");
       navigator.geolocation.getCurrentPosition((position) => {
         this.myLat = position.coords.latitude;
         this.myLong = position.coords.longitude;

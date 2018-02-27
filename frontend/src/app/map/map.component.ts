@@ -27,6 +27,7 @@ export class MapComponent implements OnInit {
   markerDragEnd(event) {
     this.mapService.setLatitude(event.coords.lat);
     this.mapService.setLongitude(event.coords.lng);
+    
   }
 
 }

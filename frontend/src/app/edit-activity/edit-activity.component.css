@@ -69,6 +69,6 @@ agm-map {
 /* Image Upload */
 
 .card {
-    height: 12rem;
-    /* width: 15rem; */
+    max-height: 12rem;
+    max-width: 12rem;
 }

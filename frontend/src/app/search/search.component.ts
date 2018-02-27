@@ -131,7 +131,7 @@ export class SearchComponent implements OnInit {
 
   public latitude: number;
   public longitude: number;
-  public zoom = 20;
+  public zoom = 10;
 
   @ViewChild(AgmMap) private map: any;
   
@@ -144,16 +144,19 @@ export class SearchComponent implements OnInit {
     this.getSelectedCategories();
 
     // this.getEvents();
-    this.eventService.eventSubscriber.subscribe((events:any) => this.events = events)
+    this.eventService.eventSubscriber.subscribe((events:any) => {
+      this.events = events;
+      //set google maps defaults
+      this.latitude = this.eventService.searchMeanLatt;
+      this.longitude = this.eventService.searchMeanLong;
+    })
     this.eventService.searchEvents()
 
     this.show_filters = false;
 
     this.show_map = false;
 
-    //set google maps defaults
-    this.latitude = this.eventService.searchMeanLatt;
-    this.longitude = this.eventService.searchMeanLong;
+    
 
   }
 
