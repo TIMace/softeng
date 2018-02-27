@@ -122,7 +122,6 @@ const Sequelize = require('sequelize')
 
     , Transaction = sequelize.define('transaction', {
         transaction_id : { type : Sequelize.BIGINT, autoIncrement : true, primaryKey : true },
-        transaction_date : Sequelize.DATE,
         transaction_event_id : { type : Sequelize.BIGINT, references : { model : Evnt, key : 'event_id', deferrable : Sequelize.Deferrable.INITIALLY_IMMEDIATE } },
         transaction_user_id : { type : Sequelize.BIGINT, references : { model : User, key : 'user_id', deferrable : Sequelize.Deferrable.INITIALLY_IMMEDIATE } },
         transaction_points : { type : Sequelize.INTEGER, allowNull : false, validate : { min : 1 } }
