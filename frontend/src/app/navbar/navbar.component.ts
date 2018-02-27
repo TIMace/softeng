@@ -48,6 +48,8 @@ export class NavbarComponent implements OnInit {
 
   onSubmit() {
     this.tempLocation = (<HTMLInputElement>document.getElementById("tempLocation")).value;
+    this.mapService.setLatitude(this.latitude);
+    this.mapService.setLongitude(this.longitude);
     console.log(this.activity);
     console.log(this.tempLocation);
     if ( this.activity !== null )

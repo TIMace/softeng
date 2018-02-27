@@ -55,6 +55,9 @@ export class HomeComponent implements OnInit {
     //   if ( ( this.activity != null) && ( this.categories[i].name == this.activity ) )
     //     this.categoriesService.selectedCategories.push(this.categories[i]);
 
+    this.mapService.setLatitude(this.latitude);
+    this.mapService.setLongitude(this.longitude);
+    
     this.categoriesService.navbar_extended = 1;
     this.categoriesService.selectedCategories = this.selectedCategories;
     // console.log("HOME: ", this.selectedCategories);

@@ -68,7 +68,7 @@ export class EventService {
         // console.log("TEMP: ", temp);
         // console.log("AGE: ", this.age);
         // console.log("DATA: ", data);
-        this.eventSubscriber.next(temp)
+        this.eventSubscriber.next(temp);
       })
     // return of(EVENTS.find(event => event.id === id));
     // return of(EVENTS);
