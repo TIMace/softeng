@@ -109,7 +109,7 @@ export class ActivityComponent implements OnInit {
       .subscribe(data => {
         if (data) {
           alert("Η αγορά εισιτηρίου ήταν επιτυχής!");
-          location.reload();
+          // location.reload();
           this.eventService.parentGetEventTickets(id)
             .subscribe(tickets => {
               console.log(tickets);
@@ -117,6 +117,7 @@ export class ActivityComponent implements OnInit {
                 .subscribe((eventdata: Event) => {
                   console.log(eventdata);
                   //pdf creation
+                  this.available_tickets = eventdata.available_tickets
                   var onoma = this.userFirstName.toString();
                   var epitheto = this.userLastName.toString();
                   var docDefinition = {
