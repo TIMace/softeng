@@ -54,7 +54,7 @@ export class EventService {
         this.getMeanLocation(data);
         console.log("DATA BEFORE: ", data);
         var temp = this.filterByAge(this.age, data);
-        temp = this.filterByPrice(this.price, temp);
+        temp = this.filterByPrice(+this.price, temp);
         console.log("TEMP: ", temp);
         console.log("AGE: ", this.age);
         console.log("DATA: ", data);
