@@ -339,41 +339,21 @@ export class EventService {
     this.httpClient.get(
       `${server_addr}/provider/event/${uname}/${passwd}/${id}`,
     )
-<<<<<<< HEAD
       .subscribe(
         (data: any) => {
           console.log("Got some tickets!!!")
           console.log(data)
           var res = [];
           for (var i = 0; i < data.length; i++) {
-            var temp;
-            temp.transaction_id = data[i].transaction_id;
-            temp.user_firstName = data[i].user.user_first_name
-            temp.user_LastName = data[i].user.user_last_name
-            temp.user_email = data[i].user.user_email
-            temp.user_phoneNum = data[i].user.user_phone_num
+            var temp = {
+              transaction_id: data[i].transaction_id,
+              user_firstName: data[i].user.user_first_name,
+              user_LastName: data[i].user.user_last_name,
+              user_email: data[i].user.user_email,
+              user_phoneNum: data[i].user.user_phone_num
+            };
             res.push(temp)
           }
-          console.log("tickets become this")
-          console.log(res)
-          subject.next(res)
-=======
-    .subscribe(
-      (data:any)=>
-      {
-        console.log("Got some tickets!!!")
-        console.log(data)
-        var res = [];
-        for(var i=0;i<data.length;i++){
-          var temp = {
-            transaction_id : data[i].transaction_id,
-            user_firstName : data[i].user.user_first_name,
-            user_LastName : data[i].user.user_last_name,
-            user_email : data[i].user.user_email,
-            user_phoneNum : data[i].user.user_phone_num
-          };
-          res.push(temp)
->>>>>>> f41bd3247bb687f431083f433b8e579528b3b325
         }
       )
 
