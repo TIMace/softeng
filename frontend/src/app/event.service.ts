@@ -49,10 +49,15 @@ export class EventService {
     )
       .map(response => this.elastic2local_event(response))
       .subscribe((data: Event[]) => {
-        console.log("Here comes the SEARCH events of ALL");
-        console.log(this.filterByAge("1-1", data));
-        this.getMeanLocation(data)
-        this.eventSubscriber.next(data)
+        // console.log("Here comes the SEARCH events of ALL");
+        // console.log(this.filterByAge("1-1", data));
+        this.getMeanLocation(data);
+        console.log("DATA BEFORE: ", data);
+        var temp = this.filterByAge(this.age, data);
+        console.log("TEMP: ", temp);
+        console.log("AGE: ", this.age);
+        console.log("DATA: ", data);
+        this.eventSubscriber.next(temp)
       })
     // return of(EVENTS.find(event => event.id === id));
     // return of(EVENTS);
@@ -63,12 +68,16 @@ export class EventService {
   filterByAge(age: string, eventsToFilter: Event[]) {
     if (this.age === "") { return eventsToFilter }
     else {
-      var filteredEvents: Event[];
+      var filteredEvents: Event[] = [];
       eventsToFilter.forEach(element => {
         var tempIndex = age.indexOf('-');
+        console.log(tempIndex);
         var minAge = age.substring(0, tempIndex);
         var maxAge = age.substring(tempIndex + 1);
-        if (!(element.age_min > +maxAge || element.age_max < +minAge)) {
+        console.log("min_age: ", minAge);
+        console.log("max_age: ", maxAge);
+        if (!(element.age_min > +maxAge) || (element.age_max < +minAge)) {
+          console.log("ELEMENT ", element);
           filteredEvents.push(element);
         }
       });
@@ -649,14 +658,20 @@ export class EventService {
     return res;
   }
 
-  humanReadableDatetime(externalDate){
-      var time = new Date(Date.parse(externalDate));
-      var year = time.getFullYear();
-      var month = time.getMonth() + 1;
-      var date1 = time.getDate();
-      var hour = time.getHours();
-      var minutes = time.getMinutes();
-      return (date1 + "-" + month + "-" + year + " " + hour + ":" + minutes);
+  humanReadableDatetime(externalDate) {
+    var time = new Date(Date.parse(externalDate));
+    var year = time.getFullYear();
+    var month = time.getMonth() + 1;
+    var date1 = time.getDate();
+    // var hour = time.getHours();
+
+
+    // var minutes = time.getMinutes();
+    var minutes = ("0" + time.getMinutes()).slice(-2);
+    var hour= ("0" + time.getHours()).slice(-2);
+    // var formattedMin= ("0" + minutes).slice(-2);
+
+    return (date1 + "-" + month + "-" + year + " " + hour + ":" + minutes);
   }
 
   navbar_extended = 0;

@@ -110,19 +110,19 @@ export class SearchComponent implements OnInit {
     console.log("Cost ", this.cost);
     console.log("Age ", this.age);
     console.log("Distance ", this.distance);
-    if ( this.age !== null )
+    if ( ( this.age !== null ) && ( this.age !== undefined ) )
       this.eventService.age = this.age;
     else 
       this.eventService.age = "";
-    if ( this.cost !== null )
+    if (  ( this.cost !== null ) &&  ( this.cost !== undefined ) )
       this.eventService.price = this.cost;
     else
       this.eventService.price = -1;
-    if ( this.distance !== null )
+    if ( ( this.distance !== null ) && ( this.distance !== undefined ) )
       this.eventService.distance = this.distance;
     else
       this.eventService.distance = -1;
-    this.eventService.searchEvents()
+    this.eventService.searchEvents();
   }
 
   // -------------------- MAP -------------------- //
@@ -131,7 +131,7 @@ export class SearchComponent implements OnInit {
 
   public latitude: number;
   public longitude: number;
-  public zoom = 12;
+  public zoom = 20;
 
   @ViewChild(AgmMap) private map: any;
   
