@@ -210,7 +210,7 @@ app.get('/user/buy/:username/:password/:event_id', (req, res) => {
         })
 })
 
-app.get('/user/reset/:email', (req, res) => {
+app.get('/user_reset/:email', (req, res) => {
     const new_passwd = createRandomPassword()
     User
         .findOne( { where : { user_email : req.params.email, user_active : true } } ).then((user) => {
@@ -793,6 +793,7 @@ app.post('/admin/pay_event', (req, res) => {
                 else {
                     Transaction
                         .sum('transaction_points', { where : { transaction_event_id : evnt.event_id } } ).then((sum) => {
+                            if (isNaN(sum)) sum = 0
                             const paid_sum = Math.round(sum * 0.9)
                             evnt.event_is_paid = true;
                             evnt.provider.provider_credits += sum;
@@ -834,8 +835,6 @@ Transaction.belongsTo(User, { targetKey : 'user_id', foreignKey : 'transaction_u
 Transaction.sync()
 Evnt.belongsTo(Provider, { targetKey : 'provider_id', foreignKey : 'event_provider_id' } )
 Evnt.sync()
-// Category.belongsTo(EventCategory, { targetKey : 'ev_cat_category_id', foreignKey : 'category_id' } )
-// Category.sync()
 EventCategory.belongsTo(Evnt, { targetKey : 'event_id', foreignKey : 'ev_cat_event_id' } )
 EventCategory.belongsTo(Category, { targetKey : 'category_id', foreignKey : 'ev_cat_category_id' } )
 EventCategory.sync()
@@ -847,7 +846,6 @@ elasticfun.initElasticSearchIndices(client)
 
 const server = https.createServer(options, app).listen(config.port, () => {
     console.log(`Listening on ${server.address().address} : ${server.address().port}`)
-});
-
+})
 
 
