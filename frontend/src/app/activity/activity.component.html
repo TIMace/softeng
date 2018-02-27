@@ -62,9 +62,26 @@
         <div *ngIf="show">
           <!-- <div *ngIf="(userDetailsService.getUserType() === 'Provider')" class="details"> -->
           <u>Αγορασμένα εισιτήρια:
-            <ul>
-              <li *ngFor="let ticket of listOftickets"></li>
-            </ul>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Κωδικός</th>
+                  <th scope="col">Όνομα</th>
+                  <th scope="col">Επίθετο</th>
+                  <th scope="col">Τηλέφωνο</th>
+                  <th scope="col">Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ticket of listOftickets">
+                  <td>{{ticket.transaction_id}}</td>
+                  <td>{{ticket.user_firstName}}</td>
+                  <td>{{ticket.user_LastName}}</td>
+                  <td>{{ticket.user_phoneNum}}</td>
+                  <td>{{ticket.user_email}}</td>
+                </tr>
+              </tbody>
+            </table>
           </u>
         </div>
       </div>
