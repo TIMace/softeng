@@ -226,6 +226,8 @@ export class EventService {
     this.getUserEvents()
       .subscribe(
         data => {
+          console.log("Woohoo got active user data")
+          console.log(data)
           subject.next(this.filterActiveEvents(data))
         }
       )
@@ -279,6 +281,8 @@ export class EventService {
       })
       .map(response => this.server2local_event(response))
       .subscribe((data: Event[]) => {
+        // console.log("Woohoo got user dataaa")
+        // console.log(data)
         subject.next(data);
         // console.log("here come the events of a user");console.log(data)
       })
@@ -355,6 +359,7 @@ export class EventService {
             };
             res.push(temp)
           }
+          subject.next(res)
         }
       )
 
@@ -574,7 +579,7 @@ export class EventService {
       var server_event = server_event_array[i]
       res.id = +server_event.event_id;
       res.available_tickets = +server_event.event_available_tickets;
-      res.date = this.humanReadableDatetime(server_event.event_date)
+      res.date = server_event.event_date
       res.description = server_event.event_description
       res.lat = +server_event.event_lattitude
       res.lng = +server_event.event_longtitude
@@ -584,7 +589,7 @@ export class EventService {
       res.name = server_event.event_name
       res.price = +server_event.event_price
       res.provider_id = +server_event.event_provider_id
-      res.img = "https://i.ytimg.com/vi/A4wP_VUPOAo/maxresdefault.jpg"
+      res.img = `/images/${res.id}.image.png`
       final_res.push(res);
     }
     // console.log("Final Res:")
@@ -600,7 +605,7 @@ export class EventService {
       var server_event = server_event_array[i]
       res.id = +server_event._id;
       res.available_tickets = +server_event._source.event_available_tickets;
-      res.date = this.humanReadableDatetime(server_event._source.event_datetime)
+      res.date = server_event._source.event_datetime
       res.description = server_event._source.event_description
       res.lat = +server_event._source.event_lattitude
       res.lng = +server_event._source.event_longtitude
@@ -610,7 +615,7 @@ export class EventService {
       res.name = server_event._source.event_name
       res.price = +server_event._source.event_price
       res.provider_id = +server_event.event_provider_id
-      res.img = "https://i.ytimg.com/vi/A4wP_VUPOAo/maxresdefault.jpg"
+      res.img = `/images/${res.id}.image.png`
       final_res.push(res);
     }
     // console.log("Final Res:")
@@ -626,7 +631,7 @@ export class EventService {
     // var server_event = server_event_array[i]
     res.id = +server_event.event_id;
     res.available_tickets = +server_event.event_available_tickets;
-    res.date = this.humanReadableDatetime(server_event.event_date)
+    res.date = server_event.event_date
     res.description = server_event.event_description
     res.lat = +server_event.event_lattitude
     res.lng = +server_event.event_longtitude
@@ -636,7 +641,7 @@ export class EventService {
     res.name = server_event.event_name
     res.price = +server_event.event_price
     res.provider_id = +server_event.event_provider_id
-    res.img = "https://i.ytimg.com/vi/A4wP_VUPOAo/maxresdefault.jpg"
+    res.img = `/images/${res.id}.image.png`
     // final_res.push(res);
     // }
     // console.log("Final Res:")

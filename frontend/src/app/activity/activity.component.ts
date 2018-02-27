@@ -27,7 +27,7 @@ export class ActivityComponent implements OnInit {
   @Input() ev: Event;
 
   constructor(
-    private eventService: EventService,
+    public eventService: EventService,
     private route: ActivatedRoute,
     private location: Location,
     private mapsAPILoader: MapsAPILoader,
@@ -177,7 +177,6 @@ export class ActivityComponent implements OnInit {
   }
 
   listOftickets: any;
-  i = 1;
 
   toggle() {
     this.show = !this.show;

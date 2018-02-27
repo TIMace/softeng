@@ -33,7 +33,7 @@
         <u>Τοποθεσία:</u>{{loc}}
       </div>
       <div class="details">
-        <u>Ημερομηνία:</u> {{date}}
+        <u>Ημερομηνία:</u> {{eventService.humanReadableDatetime(date)}}
       </div>
       <div class="details">
         <u>Κατηγορίες:</u>
@@ -57,7 +57,7 @@
           </span>
         </div>
       </div>
-      <div *ngIf="userId === provider_id" class="details">
+      <div *ngIf="((userId === provider_id) && (userDetailsService.getUserType() === 'Provider'))" class="details">
         <button (click)="toggle()" id="bt"> Προβολή Αγορασμένων Εισιτηρίων </button>
         <div *ngIf="show">
           <!-- <div *ngIf="(userDetailsService.getUserType() === 'Provider')" class="details"> -->
