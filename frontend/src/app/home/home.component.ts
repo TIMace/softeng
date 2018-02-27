@@ -61,7 +61,9 @@ export class HomeComponent implements OnInit {
     if ( this.activity !== null )
       this.eventService.freeText = this.activity;
     // this.eventService.searchEvents();
-
+    if ( ( this.activity == null ) && ( this.selectedCategories.length == 0 ) ){
+      this.categoriesService.selectedCategories = this.categories;
+    }
     this.router.navigate(['/search']);
   }
 
