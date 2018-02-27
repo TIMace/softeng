@@ -56,7 +56,7 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'admin',
+    path: 'login/admin',
     component: AdminLoginComponent
   },
   {

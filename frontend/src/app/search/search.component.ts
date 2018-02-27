@@ -65,7 +65,7 @@ export class SearchComponent implements OnInit {
 
   onSelect(category: Category): void {
     this.selectedCategories = this.categoryService.onClickSelectCategory(category);
-    this.eventService.searchEvents();
+    this.eventService.searchEvents().subscribe( events => this.events = events );
     // console.log(JSON.stringify(this.selectedCategories));
   }
 
@@ -112,11 +112,17 @@ export class SearchComponent implements OnInit {
     console.log("Distance ", this.distance);
     if ( this.age !== null )
       this.eventService.age = this.age;
+    else 
+      this.eventService.age = "";
     if ( this.cost !== null )
       this.eventService.price = this.cost;
+    else
+      this.eventService.price = -1;
     if ( this.distance !== null )
       this.eventService.distance = this.distance;
-    this.eventService.searchEvents();
+    else
+      this.eventService.distance = -1;
+    this.eventService.searchEvents().subscribe( events => this.events = events );
   }
 
   // -------------------- MAP -------------------- //
@@ -125,7 +131,7 @@ export class SearchComponent implements OnInit {
 
   public latitude: number;
   public longitude: number;
-  // public zoom = 12;
+  public zoom = 12;
 
   @ViewChild(AgmMap) private map: any;
   
@@ -137,7 +143,8 @@ export class SearchComponent implements OnInit {
     this.getCategories();
     this.getSelectedCategories();
 
-    this.getEvents();
+    // this.getEvents();
+    this.eventService.searchEvents().subscribe( events => this.events = events );
 
     this.show_filters = false;
 

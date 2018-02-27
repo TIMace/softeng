@@ -52,7 +52,9 @@ export class NavbarComponent implements OnInit {
     console.log(this.tempLocation);
     if ( this.activity !== null )
       this.eventService.freeText = this.activity;
-    this.eventService.searchEvents();
+    else
+      this.eventService.freeText = "";
+    this.eventService.searchEvents().subscribe( events => this.router.navigate(['/search']) );
     // this.router.navigate(['/search']);
   }
 
