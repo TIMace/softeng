@@ -169,7 +169,8 @@ export class HomeComponent implements OnInit {
     // this.categoriesService.navbar_extended = 1;
     // this.categoriesService.selectedCategories.push(category);
     // this.router.navigate(['/search']);
-    this.selectedCategories.push(category);
+    // this.selectedCategories.push(category);
+    this.selectedCategories = this.categoriesService.onClickSelectCategory(category);
   }
 
   ngOnInit() {
