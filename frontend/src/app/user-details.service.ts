@@ -277,7 +277,7 @@ export class UserDetailsService {
     console.log(newProviderDetails)
     var requestDetails = new HttpParams()
     .set('username', ""+this.userDetails.username)
-    .set('password', ""+newProviderDetails.password)
+    .set('password', ""+this.sha256(newProviderDetails.password))
     .set('new_password', ""+newProviderDetails.new_password)
     .set('email', ""+newProviderDetails.email)
     .set('address', ""+newProviderDetails.location)

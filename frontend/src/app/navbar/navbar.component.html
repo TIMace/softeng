@@ -91,6 +91,20 @@
     </div>
 
 
+    <div *ngIf="userDetailsService.getUserType() === 'Admin'" class="ml-auto">
+      <ul class="nav navbar-nav">
+        <li class="nav-item">
+          <div>
+            <!-- data-toggle="collapse" data-target=".navbar-collapse" -->
+            <a class="nav-link" routerLink="" (click)="exit()">Έξοδος</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
+
+
   </div>
 
 </nav>

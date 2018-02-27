@@ -16,7 +16,7 @@ import { MapComponent } from '../map/map.component';
 // Services
 import { CategoriesService } from '../categories.service';
 import { MapService } from '../map.service';
-import { UserDetailsService } from '../user-details.service';
+import { UserDetailsService, userDetailsObj } from '../user-details.service';
 import { EventService } from '../event.service';
 
 @Component({
