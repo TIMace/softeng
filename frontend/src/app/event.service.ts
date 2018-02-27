@@ -658,14 +658,20 @@ export class EventService {
     return res;
   }
 
-  humanReadableDatetime(externalDate){
-      var time = new Date(Date.parse(externalDate));
-      var year = time.getFullYear();
-      var month = time.getMonth() + 1;
-      var date1 = time.getDate();
-      var hour = time.getHours();
-      var minutes = time.getMinutes();
-      return (date1 + "-" + month + "-" + year + " " + hour + ":" + minutes);
+  humanReadableDatetime(externalDate) {
+    var time = new Date(Date.parse(externalDate));
+    var year = time.getFullYear();
+    var month = time.getMonth() + 1;
+    var date1 = time.getDate();
+    // var hour = time.getHours();
+
+
+    // var minutes = time.getMinutes();
+    var minutes = ("0" + time.getMinutes()).slice(-2);
+    var hour= ("0" + time.getHours()).slice(-2);
+    // var formattedMin= ("0" + minutes).slice(-2);
+
+    return (date1 + "-" + month + "-" + year + " " + hour + ":" + minutes);
   }
 
   navbar_extended = 0;
