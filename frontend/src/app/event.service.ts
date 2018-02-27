@@ -76,16 +76,43 @@ export class EventService {
   }
 
   filterByPrice(maxPrice: number, eventsToFilter: Event[]) {
-    var filteredEvents: Event[];
     if (maxPrice == -1) { return eventsToFilter }
     else {
       var filteredEvents: Event[];
       eventsToFilter.forEach(element => {
-        if(element.price <= maxPrice) {
+        if (element.price <= maxPrice) {
           filteredEvents.push(element)
         }
       });
       return filteredEvents
+    }
+  }
+
+  filterByDistance(distance: number, eventsToFilter: Event[]) {
+    if (distance == -1) { return eventsToFilter }
+    else {
+      var filteredEvents: Event[];
+      this.setCurrentPosition();
+      eventsToFilter.forEach(element => {
+        function DIS(x1: number, y1: number, x2: number, y2: number) {
+          return Math.sqrt((Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2)))
+        }
+        if (DIS(this.myLat, this.myLong, element.lat, element.lng) <= distance) {
+          filteredEvents.push(element)
+        }
+      });
+      return filteredEvents
+    }
+  }
+
+  myLat;
+  myLong;
+  private setCurrentPosition() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.myLat = position.coords.latitude;
+        this.myLong = position.coords.longitude;
+      });
     }
   }
 
