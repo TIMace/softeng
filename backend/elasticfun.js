@@ -75,6 +75,7 @@ exports.elasticfun = {
         client.search( {
             index : 'event',
             type : 'event',
+            size : 100,
             body : {
                 query : {
                     query_string : {

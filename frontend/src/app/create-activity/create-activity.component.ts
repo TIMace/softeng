@@ -191,7 +191,7 @@ export class CreateActivityComponent implements OnInit {
       else {
         eventDetails = {
           id: null,
-          price: +(this.euros) * 100 + this.cents,
+          price: +(this.euros) * 100 + (+this.cents),
           name: this.title,
           description: this.description,
           date: this.date.toISOString(),

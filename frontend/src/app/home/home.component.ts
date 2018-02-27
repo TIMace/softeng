@@ -48,20 +48,20 @@ export class HomeComponent implements OnInit {
 
   activity: string;
 
-  onSubmit(){
+  onSubmit() {
     // console.log(this.activity);
-    
+
     // for (let i = 0; i < this.categories.length; i++ )
     //   if ( ( this.activity != null) && ( this.categories[i].name == this.activity ) )
     //     this.categoriesService.selectedCategories.push(this.categories[i]);
-    
+
     this.categoriesService.navbar_extended = 1;
     this.categoriesService.selectedCategories = this.selectedCategories;
     // console.log("HOME: ", this.selectedCategories);
-    if ( this.activity !== null )
+    if (this.activity !== null)
       this.eventService.freeText = this.activity;
     // this.eventService.searchEvents();
-    if ( ( this.activity == null ) && ( this.selectedCategories.length == 0 ) ){
+    if ((this.activity == null) && (this.selectedCategories.length == 0)) {
       this.categoriesService.selectedCategories = this.categories;
     }
     this.router.navigate(['/search']);
@@ -100,8 +100,8 @@ export class HomeComponent implements OnInit {
 
   location: string;
   geocodeLatLng(geocoder) {
-    var latlng = {lat: this.mapService.getLatitude(), lng: this.mapService.getLongitude()};
-    geocoder.geocode({'location': latlng}, function(results, status) {
+    var latlng = { lat: this.mapService.getLatitude(), lng: this.mapService.getLongitude() };
+    geocoder.geocode({ 'location': latlng }, function (results, status) {
       if (status === 'OK') {
         if (results[0]) {
           // console.log(results[0].formatted_address);
@@ -121,7 +121,7 @@ export class HomeComponent implements OnInit {
 
     //create search FormControl
     this.searchControl = new FormControl();
- 
+
     //set current position
     this.setCurrentPosition();
 
@@ -177,14 +177,19 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     // Appearance Initializations
+    // console.log("KAI PALIIII")
+    this.eventService.freeText = ""
+    this.eventService.age = ""//apo-ews
+    this.eventService.price = -1
+    this.eventService.distance = -1
     this.categoriesService.navbar_extended = 0;
-    this.categoriesService.selectedCategories = [];
+this.categoriesService.selectedCategories = [];
 
-    // Requests from service
-    this.getCategories();
-    this.selectedCategories = this.categoriesService.getSelectedCategories();
+// Requests from service
+this.getCategories();
+this.selectedCategories = this.categoriesService.getSelectedCategories();
 
-    this.write();
+this.write();
   }
 
 }
