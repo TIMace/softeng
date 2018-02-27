@@ -16,7 +16,7 @@
               Κόστος πόντων: {{cost}}
             </div>
             <div>
-              <mat-slider thumbLabel tickInterval="auto" min="0" max="100" step="10" [value]="cost" [(ngModel)]="cost" (drag)=selectCost(cost)></mat-slider>
+              <mat-slider thumbLabel tickInterval="auto" min="0" max="10000" step="100" [value]="cost" [(ngModel)]="cost" (drag)=selectCost(cost)></mat-slider>
             </div>
           </li>
           <li class="nav-item">
@@ -30,7 +30,7 @@
               Απόσταση: {{distance}}km
             </div>
             <div>
-              <mat-slider thumbLabel tickInterval="auto" min="0" max="10" step="1" [value]="distance" [(ngModel)]="distance" (drag)=selectCost(cost)></mat-slider>
+              <mat-slider thumbLabel tickInterval="auto" min="0" max="30" step="1" [value]="distance" [(ngModel)]="distance" (drag)=selectCost(cost)></mat-slider>
             </div>
           </li>
           <li>
