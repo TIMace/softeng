@@ -589,7 +589,7 @@ export class EventService {
       res.name = server_event.event_name
       res.price = +server_event.event_price
       res.provider_id = +server_event.event_provider_id
-      res.img = "https://i.ytimg.com/vi/A4wP_VUPOAo/maxresdefault.jpg"
+      res.img = `/images/${res.id}.image.png`
       final_res.push(res);
     }
     // console.log("Final Res:")
@@ -615,7 +615,7 @@ export class EventService {
       res.name = server_event._source.event_name
       res.price = +server_event._source.event_price
       res.provider_id = +server_event.event_provider_id
-      res.img = "https://i.ytimg.com/vi/A4wP_VUPOAo/maxresdefault.jpg"
+      res.img = `/images/${res.id}.image.png`
       final_res.push(res);
     }
     // console.log("Final Res:")
@@ -641,7 +641,7 @@ export class EventService {
     res.name = server_event.event_name
     res.price = +server_event.event_price
     res.provider_id = +server_event.event_provider_id
-    res.img = "https://i.ytimg.com/vi/A4wP_VUPOAo/maxresdefault.jpg"
+    res.img = `/images/${res.id}.image.png`
     // final_res.push(res);
     // }
     // console.log("Final Res:")
