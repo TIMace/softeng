@@ -574,7 +574,7 @@ export class EventService {
       var server_event = server_event_array[i]
       res.id = +server_event.event_id;
       res.available_tickets = +server_event.event_available_tickets;
-      res.date = server_event.event_date
+      res.date = this.humanReadableDatetime(server_event.event_date)
       res.description = server_event.event_description
       res.lat = +server_event.event_lattitude
       res.lng = +server_event.event_longtitude
@@ -600,7 +600,7 @@ export class EventService {
       var server_event = server_event_array[i]
       res.id = +server_event._id;
       res.available_tickets = +server_event._source.event_available_tickets;
-      res.date = server_event._source.event_datetime
+      res.date = this.humanReadableDatetime(server_event._source.event_datetime)
       res.description = server_event._source.event_description
       res.lat = +server_event._source.event_lattitude
       res.lng = +server_event._source.event_longtitude
@@ -626,7 +626,7 @@ export class EventService {
     // var server_event = server_event_array[i]
     res.id = +server_event.event_id;
     res.available_tickets = +server_event.event_available_tickets;
-    res.date = server_event.event_date
+    res.date = this.humanReadableDatetime(server_event.event_date)
     res.description = server_event.event_description
     res.lat = +server_event.event_lattitude
     res.lng = +server_event.event_longtitude
@@ -642,6 +642,16 @@ export class EventService {
     // console.log("Final Res:")
     // console.log(final_res)
     return res;
+  }
+
+  humanReadableDatetime(externalDate){
+      var time = new Date(Date.parse(externalDate));
+      var year = time.getFullYear();
+      var month = time.getMonth() + 1;
+      var date1 = time.getDate();
+      var hour = time.getHours();
+      var minutes = time.getMinutes();
+      return (date1 + "-" + month + "-" + year + " " + hour + ":" + minutes);
   }
 
   navbar_extended = 0;
