@@ -55,7 +55,7 @@ export class NavbarComponent implements OnInit {
     else
       this.eventService.freeText = "";
     this.eventService.searchEvents()
-    // this.router.navigate(['/search']);
+    this.router.navigate(['/search']);
   }
 
   //-------------- MAP --------------//
