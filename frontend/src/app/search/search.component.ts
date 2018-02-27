@@ -65,7 +65,7 @@ export class SearchComponent implements OnInit {
 
   onSelect(category: Category): void {
     this.selectedCategories = this.categoryService.onClickSelectCategory(category);
-    this.eventService.searchEvents().subscribe( events => this.events = events );
+    this.eventService.searchEvents()
     // console.log(JSON.stringify(this.selectedCategories));
   }
 
@@ -122,7 +122,7 @@ export class SearchComponent implements OnInit {
       this.eventService.distance = this.distance;
     else
       this.eventService.distance = -1;
-    this.eventService.searchEvents().subscribe( events => this.events = events );
+    this.eventService.searchEvents()
   }
 
   // -------------------- MAP -------------------- //
@@ -144,7 +144,8 @@ export class SearchComponent implements OnInit {
     this.getSelectedCategories();
 
     // this.getEvents();
-    this.eventService.searchEvents().subscribe( events => this.events = events );
+    this.eventService.eventSubscriber.subscribe((events:any) => this.events = events)
+    this.eventService.searchEvents()
 
     this.show_filters = false;
 

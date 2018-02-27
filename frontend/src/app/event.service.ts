@@ -25,6 +25,7 @@ export class EventService {
   public age = ""//apo-ews
   public price = -1
   public distance = -1
+  public eventSubscriber = new Subject();
   constructor(
     private httpClient: HttpClient,
     public userDetailsService: UserDetailsService,
@@ -32,7 +33,7 @@ export class EventService {
   ) { }
 
   searchEvents() {
-    var subject = new Subject<any>();
+    // var subject = new Subject<any>();
     var finalFreeText = this.freeText
     var finalAge = this.age
     var finalPrice = this.price
@@ -51,12 +52,12 @@ export class EventService {
         console.log("Here comes the SEARCH events of ALL");
         console.log(this.filterByAge("1-1", data));
         this.getMeanLocation(data)
-        subject.next(data)
+        this.eventSubscriber.next(data)
       })
     // return of(EVENTS.find(event => event.id === id));
     // return of(EVENTS);
     // this.getProviderEvents().subscribe(data => console.log("done"));
-    return subject.asObservable();
+    // return subject.asObservable();
   }
 
   filterByAge(age: string, eventsToFilter: Event[]) {
