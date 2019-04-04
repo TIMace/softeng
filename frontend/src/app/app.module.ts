@@ -91,7 +91,7 @@ import { EditActivityComponent } from './edit-activity/edit-activity.component';
     MatIconModule,
     MatButtonModule,
     AgmCoreModule.forRoot({
-      apiKey: "AIzaSyC-2M4YYjFXikW0RagBCfh6yxSgrTpplqw",
+      apiKey: "",
       libraries: ["places"]
     }),
     HttpClientModule,
